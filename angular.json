@@ -63,14 +63,16 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "sistema-sah-front:build:production"
+              "buildTarget": "sistema-sah-front:build:production",
+              "port": 4200,
+              "proxyConfig": "proxy.prod.conf.js"
             },
             "development": {
-              "buildTarget": "sistema-sah-front:build:development"
+              "buildTarget": "sistema-sah-front:build:development",
+              "port": 4200,
+              "proxyConfig": "proxy.dev.conf.js" 
             }
-          },
-          "defaultConfiguration": "development"
-     
+          }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n"

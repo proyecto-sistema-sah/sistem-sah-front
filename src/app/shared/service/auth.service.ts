@@ -14,7 +14,7 @@ export class AuthService {
 
     public loginUser(newClient: ILogin): Observable<IResponse> {
         console.log(newClient)
-        return this.httpClient.post<IResponse>("http://localhost:8001/api/v1/usuario/login", newClient);
+        return this.httpClient.post<IResponse>(environment.api.getAuthLogin, newClient);
     }
 
 }

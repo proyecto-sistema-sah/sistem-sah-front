@@ -66,8 +66,8 @@ export class LoginComponent implements OnInit{
     this.authService.loginUser(objectUsuario).pipe(
       tap((data) => {
         console.log(data);
-        
-          const cliente = this.base64Service.objectoToBase64(data.data.cliente);
+
+          const cliente = this.base64Service.objectoToBase64(data.data);
           this.subjectService.setValueBase64(cliente);
           this.utilitiesService.showSucessMessage(data.mensaje, 'inicio-sesion', 'Aceptar');
       }),
