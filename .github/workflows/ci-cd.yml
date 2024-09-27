@@ -17,18 +17,18 @@ jobs:
       # Instalar Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
-        if: succes()
+        if: success()
         with:
           node-version: 20
 
       # Instalar dependencias
       - name: Install dependencies
-        if: succes()
+        if: success()
         run: npm install
 
       # Construir la aplicación Angular
       - name: Build Angular app
-        if: succes()
+        if: success()
         run: npm run build -- --configuration production
 
       # Configurar Docker Hub para autenticar
