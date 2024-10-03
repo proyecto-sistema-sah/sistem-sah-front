@@ -5,7 +5,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { LOGIN_ROUTES } from './login.routes';
 import { SharedModule } from '../../shared/shared.module';
-import { HttpClient, HttpClientModule, provideHttpClient } from '@angular/common/http';
+import {  HttpClientModule } from '@angular/common/http';
+import { UtilitiesService } from '@sharedModule/service/utilities.service';
+import { AuthService } from '@sharedModule/service/auth.service';
+import { ErrorHandlerService } from '@sharedModule/service/errorHandler.service';
 
 
 
@@ -20,6 +23,6 @@ import { HttpClient, HttpClientModule, provideHttpClient } from '@angular/common
     ReactiveFormsModule,
     RouterModule.forChild(LOGIN_ROUTES),
   ],
-  providers: [provideHttpClient()]
+  providers: [AuthService, ErrorHandlerService, UtilitiesService]
 })
 export class LoginModule { }

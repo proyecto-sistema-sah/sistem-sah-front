@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { emailValidator } from '../../common/helpers/validators/formats.validators';
 import { ErrorHandlerService } from '../../shared/service/errorHandler.service';
-import { ILogin } from '../../shared/models/ILogin';
+import { ILogin } from '../../shared/models/Login';
 import { AuthService } from '../../shared/service/auth.service';
 import { catchError, finalize, of, tap } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -65,7 +65,6 @@ export class LoginComponent implements OnInit{
     this.spinner.show(); // Show Spinner
     this.authService.loginUser(objectUsuario).pipe(
       tap((data) => {
-        console.log(data);
 
           const cliente = this.base64Service.objectoToBase64(data.data);
           this.subjectService.setValueBase64(cliente);
