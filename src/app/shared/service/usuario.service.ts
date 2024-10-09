@@ -13,7 +13,7 @@ export class UsuarioService {
 
 
     public crearUsuario(usuario:Usuario): Observable<IResponse> {
-        return this.httpClient.post<IResponse>(environment.api.createUsuario,usuario);
+        return this.httpClient.post<IResponse>(`${environment.api.baseUrlAPI}${environment.api.createUsuario}`,usuario);
     }
 
 }

@@ -6,6 +6,7 @@ import { ISafeAny } from '@sharedModule/models/ISafeAny';
 export class Base64Service {
      // Codifica un objeto en Base64
   objectoToBase64(objeto: ISafeAny): string {
+    
     // Convierte el objeto a una cadena JSON
     const jsonString = JSON.stringify(objeto);
     // Convierte la cadena JSON a Buffer con codificación UTF-8

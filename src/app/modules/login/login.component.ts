@@ -9,6 +9,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { UtilitiesService } from '@sharedModule/service/utilities.service';
 import { SubjectService } from '@sharedModule/service/subjectService.service';
 import { Base64Service } from '@sharedModule/service/base64.service';
+import {jwtDecode, JwtPayload} from 'jwt-decode'
+import { JwtData } from '@sharedModule/models/JwtData';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +23,7 @@ export class LoginComponent implements OnInit{
   public hide = true;
   public formLogin!:FormGroup;
 
+
   constructor(
     private formBuilder: FormBuilder,
     public readonly errorHandlerService: ErrorHandlerService,
@@ -27,8 +31,13 @@ export class LoginComponent implements OnInit{
     private base64Service: Base64Service,
     private subjectService: SubjectService,
     private utilitiesService: UtilitiesService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private router:Router
   ){}
+
+  onRegisterUser(){
+      this.router.navigate(['/registrar'])
+  }
 
   ngOnInit(): void {
     this.buildFormLogin();
@@ -56,6 +65,7 @@ export class LoginComponent implements OnInit{
       this.formLogin.markAllAsTouched();
       return;
     }
+    let mensaje = ''
     const {correoUsuario, contrasenaUsuario} = this.formLogin.value
     const objectUsuario:ILogin = {
       email:correoUsuario,
@@ -65,17 +75,24 @@ export class LoginComponent implements OnInit{
     this.spinner.show(); // Show Spinner
     this.authService.loginUser(objectUsuario).pipe(
       tap((data) => {
-
-          const cliente = this.base64Service.objectoToBase64(data.data);
-          this.subjectService.setValueBase64(cliente);
-          this.utilitiesService.showSucessMessage(data.mensaje, 'inicio-sesion', 'Aceptar');
+          let cliente:JwtData = jwtDecode(data.data['token']);
+          const obj64 = this.base64Service.objectoToBase64(cliente)
+          this.subjectService.setValueBase64(obj64);
+          mensaje = data.mensaje
       }),
       catchError((err) => {
         console.error("Error: ", err);
         this.utilitiesService.showErrorMessage(err.message)
+        this.spinner.hide()
         return of(null)
       }),
-      finalize(() => this.spinner.hide() ) // Hiden Spinner
+      finalize(() => {
+        this.spinner.hide().then(() => {
+          this.utilitiesService.showSucessMessage(mensaje, 'inicio-sesion', 'Aceptar').then(() => {
+            this.router.navigate(['/inicio']);
+          });
+        });
+      } ) // Hiden Spinner
     ).subscribe();
   }
 

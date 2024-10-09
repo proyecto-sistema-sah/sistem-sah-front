@@ -12,7 +12,7 @@ export class TipoUsuarioService {
 
 
     public getAllTipoUsuario(): Observable<IResponse> {
-        return this.httpClient.get<IResponse>(environment.api.getAllTipoUsuario);
+        return this.httpClient.get<IResponse>(`${environment.api.baseUrlAPI}${environment.api.getAllTipoUsuario}`);
     }
 
 }

@@ -1,6 +1,8 @@
 export const api = {
     getExample: 'example',
-    getAuthLogin: '/api/v1/usuario/login',
-    getAllTipoUsuario: '/api/v1/tipo-usuario/all',
-    createUsuario: '/api/v1/usuario/crear'
+    getAuthLogin: '/usuario/login',
+    getAllTipoUsuario: '/tipo-usuario/all',
+    createUsuario: '/usuario/crear',
+    getLogouthUsuario: '/usuario/logout',
+    getAllTipoCuarto: '/tipo-cuarto/buscar-todos'
 }

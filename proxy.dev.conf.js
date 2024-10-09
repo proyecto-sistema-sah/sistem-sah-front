@@ -14,5 +14,13 @@ module.exports = {
         "pathRewrite": {
           "^/api/v1/tipo-usuario/": ""
         }
-    }     
+    },
+    "/api/v1/tipo-cuarto/*": {
+      "target": "http://localhost:8002/api/v1/tipo-cuarto/",
+      "secure": false,
+      "logLevel": "debug",
+      "pathRewrite": {
+        "^/api/v1/tipo-cuarto/": ""
+      }
+  }        
 }

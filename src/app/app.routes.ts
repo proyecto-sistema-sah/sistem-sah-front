@@ -1,9 +1,16 @@
 import { Routes } from '@angular/router';
+import { RouterGuard } from '@core/guards/router.guard';
 
 export const APP_ROUTES: Routes = [
     {
         path: 'login',
         loadChildren: () => import('./modules/login/login.module').then((m) => m.LoginModule),
+    },
+    {
+        path: 'inicio',
+        canActivate: [RouterGuard], // Protege la ruta de 'inicio'
+        canActivateChild: [RouterGuard], // Si hay rutas hijas, aplica el guardián para los hijos
+        loadChildren: () => import('./modules/inicio/inicio.module').then((m) => m.InicioModule),
     },
     {
         path: 'registrar',

@@ -23,6 +23,7 @@
     "@azure/storage-blob": "^12.25.0",
     "@sweetalert2/ngx-sweetalert2": "^12.4.0",
     "bootstrap": "^5.3.3",
+    "jwt-decode": "^4.0.0",
     "ngx-spinner": "^17.0.0",
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.14.1",

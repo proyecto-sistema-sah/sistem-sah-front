@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import { BlobServiceClient } from '@azure/storage-blob';
+import { environment } from '@env/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BlobStorageService {
-  private containerName = 'imagenes';
-  private sasToken = 'sp=racwdl&st=2024-09-27T20:50:57Z&se=2025-12-12T04:50:57Z&sip=201.190.119.66&sv=2022-11-02&sr=c&sig=CzrRkCOCRU6G2ZLEz3Ev0kwUxx137H4MWOr1JX7K5zU%3D';
+  private containerName = environment.repoImg.name;
+  private sasToken = environment.repoImg.sasToken;
   private blobServiceClient: BlobServiceClient;
 
   constructor() {
     this.blobServiceClient = new BlobServiceClient(
-      `https://imagenesmf.blob.core.windows.net?${this.sasToken}`
+      `${environment.repoImg.urlBase}${this.sasToken}`
     );
   }
 
@@ -43,7 +44,7 @@ export class BlobStorageService {
   
 
   generateRandomCode(length: number): string {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const characters = environment.file.charactersValidation;
     let result = '';
     const charactersLength = characters.length;
     
@@ -51,7 +52,7 @@ export class BlobStorageService {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     
-    return result + '.png';
+    return result + environment.file.extension;
   }
 
 }

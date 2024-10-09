@@ -1,5 +1,6 @@
 import { AfterContentInit, AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { emailValidator, sizeFileSelect, strongPassword } from '@common/helpers/validators/formats.validators';
 import { ITipoUsuario } from '@sharedModule/models/ITipoUsuario';
 import { IResponse } from '@sharedModule/models/Response';
@@ -32,11 +33,17 @@ export class RegistrarUsuarioComponent implements OnInit{
     private formBuilder: FormBuilder,
     private utilitiesService: UtilitiesService,
     private usuarioService: UsuarioService,
-    private tipoUsuarioService:TipoUsuarioService) {}
+    private tipoUsuarioService:TipoUsuarioService,
+    private router:Router
+  ) {}
  
   ngOnInit(): void {
     this.buildFormRegister()
     this.getDataDefault()
+  }
+
+  onLogin(){
+    this.router.navigate(['/login'])
   }
 
   buildFormRegister(): void {
