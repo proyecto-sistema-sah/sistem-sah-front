@@ -9,21 +9,23 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HeaderModule } from '../header/header.module';
 import { UtilitiesService } from '@sharedModule/service/utilities.service';
 import { ErrorHandlerService } from '@sharedModule/service/errorHandler.service';
+import { CuartosComponent } from './cuartos/cuartos.component';
+import { PrincipalComponent } from './principal/principal.component';
 
 
 
 @NgModule({
-  declarations: [
-    InicioComponent
-  ],
   imports: [
     CommonModule,
     SharedModule,
     HttpClientModule,
     ReactiveFormsModule,
+    HeaderModule,
     RouterModule.forChild(INICIO_ROUTES),
-    HeaderModule
   ],
+  declarations: [
+    InicioComponent,CuartosComponent, PrincipalComponent
+ ],
   providers: [ ErrorHandlerService, UtilitiesService]
 })
 export class InicioModule { }

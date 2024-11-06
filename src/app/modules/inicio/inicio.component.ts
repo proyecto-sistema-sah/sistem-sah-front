@@ -10,8 +10,11 @@ import { catchError, finalize, of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-inicio',
-  templateUrl: './inicio.component.html',
-  styleUrl: './inicio.component.css'
+  template: `
+    <!-- Header Component -->
+    <app-header [url]="urlImg" [nombreCompleto]="nombreCompleto"></app-header>
+    <router-outlet></router-outlet>
+  `,
 })
 export class InicioComponent implements OnInit{
   public urlImg:string = '';

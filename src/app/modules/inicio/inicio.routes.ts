@@ -1,9 +1,14 @@
 import { Routes } from '@angular/router';
-import { InicioComponent } from './inicio.component';
+import { CuartosComponent } from './cuartos/cuartos.component';
+import { PrincipalComponent } from './principal/principal.component';
 
 export const INICIO_ROUTES: Routes = [
     {
         path: '',
-        component: InicioComponent
+        component: PrincipalComponent
+    },
+    {
+        path: 'cuartos',
+        component: CuartosComponent
     }
 ]

@@ -8,7 +8,6 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
 import { DefaultInterceptor } from '@core/interceptors/default.interceptor';
-import { HttpRequestMockInterceptorService } from '@core/interceptors/http-request-mock-interceptor.service';
 import { DatePipe } from '@angular/common';
 import { CoreModule } from '@core/core.module';
 import { HeaderModule } from "./modules/header/header.module";
@@ -30,7 +29,7 @@ const INTERCEPTOR_PROVIDES = [
     LayoutModule,
     NgxSpinnerModule.forRoot({ type: 'square-jelly-box' }),
     RouterModule.forRoot(APP_ROUTES),
-    HeaderModule
+    HeaderModule,
 ],
   providers: [
     provideHttpClient(),

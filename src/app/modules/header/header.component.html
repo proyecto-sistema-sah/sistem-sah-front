@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
   <div class="container-fluid">
     <!-- Imagen del logo en forma de círculo -->
-    <a class="navbar-brand d-flex align-items-center" href="#">
+    <a class="navbar-brand d-flex align-items-center">
       <img [src]="urlLogo" alt="Logo" class="img-fluid rounded-circle" style="width: 50px; height: 50px;">
     </a>
 
@@ -15,29 +15,29 @@
       <!-- Menú de navegación -->
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+          <a class="nav-link active" aria-current="page" [routerLink]="'/inicio/'">Inicio</a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" [routerLink]="'/inicio/cuartos'">
             Cuartos
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li *ngFor="let data of listTipoCuarto">
-              <a class="dropdown-item" href="#">{{ data.nombreTipoCuarto | modifyString }}</a>
+              <a class="dropdown-item">{{ data.nombreTipoCuarto | modifyString }}</a>
             </li>
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Gastronomía</a>
+          <a class="nav-link">Gastronomía</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Servicios</a>
+          <a class="nav-link">Servicios</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Compras</a>
+          <a class="nav-link">Compras</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Facturación</a>
+          <a class="nav-link">Facturación</a>
         </li>
       </ul>
 
@@ -52,7 +52,7 @@
 
         <!-- Dropdown del perfil -->
         <ul class="dropdown-menu dropdown-menu-end shadow-sm">
-          <li><a class="dropdown-item" href="#" (click)="logout()">Salir</a></li>
+          <li><a class="dropdown-item" (click)="logout()">Salir</a></li>
         </ul>
       </div>
     </div>

@@ -12,7 +12,7 @@
                 <!-- Nombres -->
                 <mat-form-field appearance="outline" class="w-100 mb-4">
                   <mat-label>Nombres</mat-label>
-                  <input matInput placeholder="Ingresa tus nombres" formControlName="nombres">
+                  <input matInput placeholder="Ingresa tus nombres" formControlName="nombres" required>
                   <mat-error *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formRegister, 'nombres')">
                     {{ errorMessage }}
                   </mat-error>
@@ -23,7 +23,7 @@
                 <!-- Apellidos -->
                 <mat-form-field appearance="outline" class="w-100 mb-4">
                   <mat-label>Apellidos</mat-label>
-                  <input matInput placeholder="Ingresa tus apellidos" formControlName="apellidos">
+                  <input matInput placeholder="Ingresa tus apellidos" formControlName="apellidos" required>
                   <mat-error *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formRegister, 'apellidos')">
                     {{ errorMessage }}
                   </mat-error>
@@ -36,7 +36,7 @@
                 <!-- Correo -->
                 <mat-form-field appearance="outline" class="w-100 mb-4">
                   <mat-label>Correo Electrónico</mat-label>
-                  <input matInput placeholder="Ingresa tu correo electrónico" type="email" formControlName="correoUsuario">
+                  <input matInput placeholder="Ingresa tu correo electrónico" type="email" formControlName="correoUsuario" required>
                   <mat-error *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formRegister, 'correoUsuario')">
                     {{ errorMessage }}
                   </mat-error>
@@ -47,8 +47,8 @@
                 <!-- Contraseña -->
                 <mat-form-field appearance="outline" class="w-100 mb-4">
                   <mat-label>Contraseña</mat-label>
-                  <input matInput placeholder="Ingresa una contraseña" [type]="hide ? 'password' : 'text'" formControlName="contrasenaUsuario">
-                  <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                  <input matInput placeholder="Ingresa una contraseña" [type]="hide ? 'password' : 'text'" formControlName="contrasenaUsuario" required>
+                  <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Mostrar/ocultar contraseña'">
                     <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
                   </button>
                   <mat-error *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formRegister, 'contrasenaUsuario')">
@@ -63,8 +63,8 @@
                 <!-- Repetir Contraseña -->
                 <mat-form-field appearance="outline" class="w-100 mb-4">
                   <mat-label>Repetir Contraseña</mat-label>
-                  <input matInput placeholder="Repite la contraseña" [type]="hide ? 'password' : 'text'" formControlName="repeatContrasenaUsuario">
-                  <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                  <input matInput placeholder="Repite la contraseña" [type]="hide ? 'password' : 'text'" formControlName="repeatContrasenaUsuario" required>
+                  <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Mostrar/ocultar contraseña'">
                     <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
                   </button>
                   <mat-error *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formRegister, 'repeatContrasenaUsuario')">
@@ -77,7 +77,7 @@
                 <!-- Selección de Tipo Usuario -->
                 <mat-form-field appearance="outline" class="w-100 mb-4">
                   <mat-label>Tipo Usuario</mat-label>
-                  <mat-select formControlName="tipoUsuario">
+                  <mat-select formControlName="tipoUsuario" required>
                     <mat-option *ngFor="let tipoUsuario of allTiposUsuario" [value]="tipoUsuario.id + '-' + tipoUsuario.nombreTipoUsuario">
                       {{ tipoUsuario.nombreTipoUsuario }}
                     </mat-option>
@@ -105,7 +105,7 @@
 
             <div class="row mt-4">
               <div class="col-md-12 text-center">
-                <!-- Botones de Acción juntos con margen entre ellos -->
+                <!-- Botones de Acción -->
                 <button mat-raised-button color="primary" type="submit" style="margin-right: 8px;">Registrar</button>
                 <button mat-button color="warn" type="reset" style="margin-left: 8px;" (click)="onLogin()">Cancelar</button>
               </div>

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header.component';
 import { AuthService } from '@sharedModule/service/auth.service';
 import { SharedModule } from '@sharedModule/shared.module';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -12,7 +13,8 @@ import { SharedModule } from '@sharedModule/shared.module';
   ],
   imports: [
     SharedModule,
-    CommonModule
+    CommonModule,
+    RouterModule
   ],
   providers: [AuthService],
   exports: [HeaderComponent]

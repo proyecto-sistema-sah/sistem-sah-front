@@ -1,0 +1,65 @@
+<div class="container mt-4">
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="max-height: 70vh;">
+      <!-- Indicators -->
+      <div class="carousel-indicators">
+        <button
+          *ngFor="let image of images; let i = index"
+          type="button"
+          data-bs-target="#carouselExampleIndicators"
+          [attr.data-bs-slide-to]="i"
+          [class.active]="i === 0"
+          [attr.aria-current]="i === 0 ? 'true' : 'false'"
+          [attr.aria-label]="'Slide ' + (i + 1)"
+        ></button>
+      </div>
+  
+      <!-- Carousel items -->
+      <div class="carousel-inner shadow rounded" style="max-height: 70vh; overflow: hidden;">
+        <div *ngFor="let image of images; let i = index" class="carousel-item" [class.active]="i === 0">
+          <img
+            [src]="image"
+            class="d-block w-100 rounded"
+            alt="Image {{ i + 1 }}"
+            style="height: 100%; object-fit: cover;"
+          />
+        </div>
+      </div>
+  
+      <!-- Controls with Angular Material icons -->
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="prev"
+      >
+        <mat-icon class="text-primary">arrow_back</mat-icon>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="next"
+      >
+        <mat-icon class="text-primary">arrow_forward</mat-icon>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+  
+  <!-- Text and button section below the carousel -->
+  <div class="container mt-5">
+    <div class="text-center p-4 bg-light rounded shadow-lg">
+      <h3 class="mb-3 fw-bold text-primary">Sistema de Automatización Hotelera</h3>
+      <p class="lead text-muted">Disfruta del mejor servicio al mejor precio en cada estadía</p>
+      <div class="d-flex justify-content-center gap-3 mt-4">
+        <button mat-raised-button color="primary" class="px-5 py-2" style="font-size: 1rem;">
+          Selecciona Fecha
+        </button>
+        <button mat-raised-button color="accent" class="px-5 py-2" disabled style="font-size: 1rem;">
+          Reservar
+        </button>
+      </div>
+    </div>
+  </div>
+  
