@@ -1,7 +1,7 @@
 module.exports = {
     "/api/v1/usuario/*": {
         "target": "https://sistema-sah-usuarios-e2efdyb8c6fva2ax.mexicocentral-01.azurewebsites.net/api/v1/usuario/",
-        "secure": true,
+        "secure": false,
         "changeOrigin": true, // Cambia el origen de la solicitud
         "logLevel": "debug",
         "pathRewrite": {
@@ -10,7 +10,7 @@ module.exports = {
     },
     "/api/v1/tipo-usuario/*": {
         "target": "https://sistema-sah-usuarios-e2efdyb8c6fva2ax.mexicocentral-01.azurewebsites.net/api/v1/tipo-usuario/",
-        "secure": true,
+        "secure": false,
         "changeOrigin": true, // Cambia el origen de la solicitud
         "logLevel": "debug",
         "pathRewrite": {
@@ -19,7 +19,7 @@ module.exports = {
     },
     "/api/v1/tipo-cuarto/*": {
       "target": "https://sistema-sah-reserva-ajhre0aeayephnhe.mexicocentral-01.azurewebsites.net/api/v1/tipo-cuarto/",
-      "secure": true,
+      "secure": false,
       "changeOrigin": true, // Cambia el origen de la solicitud
       "logLevel": "debug",
       "pathRewrite": {
