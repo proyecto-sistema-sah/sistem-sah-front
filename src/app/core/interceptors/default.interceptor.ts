@@ -5,13 +5,16 @@ import { catchError, finalize, map, timeout } from 'rxjs/operators';
 import { HttpError } from '../models/http-error';
 import { environment } from '@env/environment';
 import { ISafeAny } from '@sharedModule/models/ISafeAny';
+import { UtilitiesService } from '@sharedModule/service/utilities.service';
 
 const APP_XHR_TIMEOUT = 120000;
 
 @Injectable()
 export class DefaultInterceptor implements HttpInterceptor {
 
-  intercept(req: HttpRequest<ISafeAny>, next: HttpHandler): Observable<HttpEvent<ISafeAny>> {
+  constructor(private utilitiesService:UtilitiesService){}
+
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(this.performRequest(req)).pipe(
       timeout(APP_XHR_TIMEOUT),
       map(res => this.handleSuccessfulResponse(res)),
@@ -25,11 +28,14 @@ export class DefaultInterceptor implements HttpInterceptor {
   } {
     const res: { [name: string]: string } = {};
     if (headers?.has('Authorization')) {
-      // const token = sessionStorage.getItem('userToken');
-      // if (token) {
-      //   res['Authorization'] = 'Bearer '+token;
-      // }
+      
+      const token = sessionStorage.getItem('userToken');
+      
+      if (token) {
+        res['Authorization'] = 'Bearer '+token;
+      } 
     }
+    
     return res;
   }
 
@@ -37,7 +43,7 @@ export class DefaultInterceptor implements HttpInterceptor {
     let headers: HttpHeaders = req.headers;
     headers = headers.set('Authorization', '');
 
-    // console.log("req...", req);
+    //console.log("req...", req);
     // Prefijo de servidor unificado
     let url = req.url;
     if (!url.startsWith('https://') && !url.startsWith('http://')) {
@@ -49,34 +55,33 @@ export class DefaultInterceptor implements HttpInterceptor {
   }
 
   private handleSuccessfulResponse(event: ISafeAny): HttpResponse<ISafeAny> {
-    console.log('response at interceptor', event);
+   // console.log('response at interceptor', event);
 
     if (event.body?.data?.token) {
       sessionStorage.setItem('userToken', event.body.data.token);
-      sessionStorage.setItem('cliente', JSON.stringify(event.body.data.cliente));
-      console.log("token...", event.body.data.token);
+     // console.log("token...", event.body.data.token);
     }
 
     if (event instanceof HttpResponse) {
       event = event.clone({ body: event.body.response });
     }
-    // console.log("exit...", event);
+   // console.log("exit...", event);
     
     return event;
   }
 
   private handleErrorResponse(errorResponse: ISafeAny): Observable<HttpEvent<ISafeAny>> {
-    // console.log('error at interceptor', errorResponse);
+//    console.log('error at interceptor', errorResponse);
 
     if (errorResponse instanceof TimeoutError) {
       return throwError(() => 'Timeout Exception');
     }
-    console.log('BASE_FRONT', errorResponse);
+//    console.log('BASE_FRONT', errorResponse);
     switch (errorResponse.status) {
-      case 401: // Unauthorized
+      case 401: 
         console.log('¡Sesssion expired!, Redirect to Login');
         sessionStorage.clear();
-        // this.utilitiesService.showWarningMessage('¡Sesssion expired!');
+        this.utilitiesService.showWarningMessage('¡Sesssion expired!');
         break;
       case 404:
       case 500:
@@ -97,6 +102,6 @@ export class DefaultInterceptor implements HttpInterceptor {
   }
 
   private handleRequestCompleted(): void {
-    // console.log(`Request finished`);
+    console.log(`Request finished`);
   }
 }

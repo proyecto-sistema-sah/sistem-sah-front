@@ -5,7 +5,7 @@ import { environment } from '@env/environment';
 
 const urls = [
   {
-    url: new RegExp(`${environment.baseUrlAPI}${environment.api.getExample}`, 'i'),
+    url: new RegExp(`${environment.api.baseUrlAPI}${environment.api.getExample}`, 'i'),
     mockPath: '/assets/mocks/get-params.json',
   },
 ];

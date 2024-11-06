@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IResponse } from '../models/IResponse';
-import { ILogin } from '../models/ILogin';
+import { IResponse } from '../models/Response';
+import { ILogin } from '../models/Login';
 import { environment } from '../../../environment/environment';
 
 
@@ -13,8 +13,14 @@ export class AuthService {
 
 
     public loginUser(newClient: ILogin): Observable<IResponse> {
-        console.log(newClient)
-        return this.httpClient.post<IResponse>(environment.api.getAuthLogin, newClient);
+        return this.httpClient.post<IResponse>(`${environment.api.baseUrlAPI}${environment.api.getAuthLogin}`, newClient);
+    }
+
+    public logoutUser(): Observable<IResponse> {
+        const headers = new HttpHeaders({
+            'Authorization': ''
+        })
+        return this.httpClient.post<IResponse>(`${environment.api.baseUrlAPI}${environment.api.getLogouthUsuario}`,{}, {headers});
     }
 
 }

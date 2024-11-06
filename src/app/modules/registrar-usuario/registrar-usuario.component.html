@@ -1,0 +1,118 @@
+<div class="container h-100 d-flex justify-content-center align-items-center">
+  <div class="row justify-content-center w-100">
+    <div class="col-md-8">
+      <mat-card class="p-4 shadow">
+        <mat-card-header>
+          <mat-card-title class="mb-4 text-center">Registro de Usuario</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <form [formGroup]="formRegister" (ngSubmit)="createUsuario()">
+            <div class="row">
+              <div class="col-md-6">
+                <!-- Nombres -->
+                <mat-form-field appearance="outline" class="w-100 mb-4">
+                  <mat-label>Nombres</mat-label>
+                  <input matInput placeholder="Ingresa tus nombres" formControlName="nombres" required>
+                  <mat-error *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formRegister, 'nombres')">
+                    {{ errorMessage }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-6">
+                <!-- Apellidos -->
+                <mat-form-field appearance="outline" class="w-100 mb-4">
+                  <mat-label>Apellidos</mat-label>
+                  <input matInput placeholder="Ingresa tus apellidos" formControlName="apellidos" required>
+                  <mat-error *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formRegister, 'apellidos')">
+                    {{ errorMessage }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <!-- Correo -->
+                <mat-form-field appearance="outline" class="w-100 mb-4">
+                  <mat-label>Correo Electrónico</mat-label>
+                  <input matInput placeholder="Ingresa tu correo electrónico" type="email" formControlName="correoUsuario" required>
+                  <mat-error *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formRegister, 'correoUsuario')">
+                    {{ errorMessage }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-6">
+                <!-- Contraseña -->
+                <mat-form-field appearance="outline" class="w-100 mb-4">
+                  <mat-label>Contraseña</mat-label>
+                  <input matInput placeholder="Ingresa una contraseña" [type]="hide ? 'password' : 'text'" formControlName="contrasenaUsuario" required>
+                  <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Mostrar/ocultar contraseña'">
+                    <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+                  </button>
+                  <mat-error *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formRegister, 'contrasenaUsuario')">
+                    {{ errorMessage }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <!-- Repetir Contraseña -->
+                <mat-form-field appearance="outline" class="w-100 mb-4">
+                  <mat-label>Repetir Contraseña</mat-label>
+                  <input matInput placeholder="Repite la contraseña" [type]="hide ? 'password' : 'text'" formControlName="repeatContrasenaUsuario" required>
+                  <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Mostrar/ocultar contraseña'">
+                    <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+                  </button>
+                  <mat-error *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formRegister, 'repeatContrasenaUsuario')">
+                    {{ errorMessage }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-6">
+                <!-- Selección de Tipo Usuario -->
+                <mat-form-field appearance="outline" class="w-100 mb-4">
+                  <mat-label>Tipo Usuario</mat-label>
+                  <mat-select formControlName="tipoUsuario" required>
+                    <mat-option *ngFor="let tipoUsuario of allTiposUsuario" [value]="tipoUsuario.id + '-' + tipoUsuario.nombreTipoUsuario">
+                      {{ tipoUsuario.nombreTipoUsuario }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formRegister, 'tipoUsuario')">
+                    {{ errorMessage }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <!-- Subir Imagen de Perfil -->
+                <div class="form-group mb-4">
+                  <label for="formFile" class="form-label">Subir Imagen de Perfil</label>
+                  <input class="form-control" type="file" accept="image/*" (change)="onFileSelected($event)">
+                  <small class="form-text text-muted">Formato permitido: JPG, PNG. Tamaño máximo: 2MB.</small>
+                  <mat-error *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formRegister, 'imagen')">
+                    {{ errorMessage }}
+                  </mat-error>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mt-4">
+              <div class="col-md-12 text-center">
+                <!-- Botones de Acción -->
+                <button mat-raised-button color="primary" type="submit" style="margin-right: 8px;">Registrar</button>
+                <button mat-button color="warn" type="reset" style="margin-left: 8px;" (click)="onLogin()">Cancelar</button>
+              </div>
+            </div>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

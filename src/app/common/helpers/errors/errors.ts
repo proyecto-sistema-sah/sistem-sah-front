@@ -27,6 +27,8 @@ export const ERROR_MESSAGES = {
   hasCapitalCase: 'Este campo debe contener mayúsculas',
   hasSmallCase: 'Este campo debe contener minúsculas',
   hasSpecialCharacters: 'Este campo debe contener carácteres especiales',
+  size: 'El archivo es mayor que 2 mb',
+  lowPassword: 'La contraseña es muy debil'
 };
 
 import { AbstractControl, FormGroup } from '@angular/forms';
@@ -35,12 +37,15 @@ import { ISafeAny } from '@sharedModule/models/ISafeAny';
 // Ajustamos la firma de la función para que reciba el formulario y el nombre del control
 export function getErrorMessages(form: FormGroup, controlName: string): string[] {
   const control: AbstractControl | null = form.get(controlName);
+  console.log(control);
 
   if (control && control.invalid && control.touched) {
     const errors: string[] = [];
-
+    
+    
     // Iteramos sobre las claves de los errores del control
     for (const errorKey in control.errors) {
+      
       if (Object.prototype.hasOwnProperty.call(control.errors, errorKey)) {
         // Accedemos al mensaje de error correspondiente a la clave actual
         const errorMessageTemplate = ERROR_MESSAGES[errorKey as keyof typeof ERROR_MESSAGES];

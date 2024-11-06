@@ -1,12 +1,12 @@
 {
   "name": "sistema-sah-front",
   "version": "0.0.0",
- "scripts": {
-  "ng": "ng",
-  "start:dev": "ng serve --configuration development --host 0.0.0.0 --port 4200",
-  "start:prod": "ng serve --configuration production --host 0.0.0.0 --port 4200",
-  "build": "ng build",
-  "test": "ng test"
+  "scripts": {
+    "ng": "ng",
+    "start:dev": "ng serve --configuration development --host 0.0.0.0 --port 4200",
+    "start:prod": "ng serve --configuration production --host 0.0.0.0 --port 4200",
+    "build": "ng build",
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {
@@ -20,8 +20,10 @@
     "@angular/platform-browser": "^18.2.0",
     "@angular/platform-browser-dynamic": "^18.2.0",
     "@angular/router": "^18.2.0",
+    "@azure/storage-blob": "^12.25.0",
     "@sweetalert2/ngx-sweetalert2": "^12.4.0",
     "bootstrap": "^5.3.3",
+    "jwt-decode": "^4.0.0",
     "ngx-spinner": "^17.0.0",
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.14.1",

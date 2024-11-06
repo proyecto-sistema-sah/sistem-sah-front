@@ -66,5 +66,5 @@ jobs:
         uses: azure/webapps-deploy@v2
         if: success()
         with:
-          app-name: "sistema-sah-front"
+          app-name: "sistema-sah-front-mr"
           images: "brahiancg/sistema-sah-front:latest"

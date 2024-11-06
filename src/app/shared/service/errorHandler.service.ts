@@ -33,14 +33,16 @@ export class ErrorHandlerService {
     hasCapitalCase: 'Este campo debe contener mayúsculas',
     hasSmallCase: 'Este campo debe contener minúsculas',
     hasSpecialCharacters: 'Este campo debe contener carácteres especiales',
-    notSame: 'Las contraseñas no coinciden'
+    notSame: 'Las contraseñas no coinciden',
+    fileSizeTooLarge: 'El archivo es mayor que 2 mb',
+    lowPassword: 'La contraseña es muy debil'
   };
 
   constructor() {}
 
   getErrorMessages(form: FormGroup, controlName: string): string[] {
     const control: AbstractControl | null = form.get(controlName);
-
+      
     if (control && control.invalid && control.touched) {
       const errors: string[] = [];
       for (const errorKey in control.errors) {
@@ -50,6 +52,7 @@ export class ErrorHandlerService {
             // Obtener el valor del validador para el mensaje de error
             const validatorValue = control.getError(errorKey);
             const errorMessage = this.interpolateErrorMessage(errorMessageTemplate, { [errorKey]: validatorValue });
+            
             errors.push(errorMessage);
           }
         }

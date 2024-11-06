@@ -1,4 +1,4 @@
-import { AbstractControl } from "@angular/forms";
+import { AbstractControl, ValidationErrors } from "@angular/forms";
 
 export function emailValidator({ value }: AbstractControl) {
     const emailUnicode =
@@ -8,6 +8,21 @@ export function emailValidator({ value }: AbstractControl) {
     return !emailUnicode.test(value) ? { email: true } : null;
   }
 
-export function strongPassword({value} : AbstractControl){
-  return !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value) ? { lowPassword: true } : null;
-}
+  export function strongPassword({ value }: AbstractControl) {
+    const strongPasswordUnicode = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s])[A-Za-z\d@$!%*?&\W]{8,}$/i;
+    return !strongPasswordUnicode.test(value) ? { lowPassword: true } : null;
+  }
+  
+
+  export function sizeFileSelect(control: AbstractControl): ValidationErrors | null {
+    const file = control.value as File;
+    
+    if (file) {
+      const maxSizeInBytes = 2; // 2MB
+      const mbImage = file.size / (1024*1024)
+      if (mbImage > maxSizeInBytes) {
+        return { fileSizeTooLarge: true };
+      }
+    }
+    return null; // No hay error si el archivo es válido o si no hay archivo
+  }
