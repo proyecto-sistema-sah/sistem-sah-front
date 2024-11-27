@@ -24,6 +24,7 @@ export class UtilitiesService {
     const swalConfig: ISafeAny = {
       html: messageError,
       icon: 'error',
+      backdrop: false, // Quita el fondo opaco
       showCancelButton: textoBotonCancelar && true,
       confirmButtonText: textoBotonConfirmar ? textoBotonConfirmar : 'Cerrar',
       cancelButtonText: textoBotonCancelar,
@@ -57,6 +58,7 @@ export class UtilitiesService {
     const swalConfig: ISafeAny = {
       html: messageSuccess,
       icon: 'success',
+      backdrop: false, // Quita el fondo opaco
       showCancelButton: textoBotonCancelar && true,
       confirmButtonText: textoBotonConfirmar ? textoBotonConfirmar : 'Cerrar',
       cancelButtonText: textoBotonCancelar,
@@ -90,6 +92,7 @@ export class UtilitiesService {
     const swalConfig: ISafeAny = {
       html: messageInfo,
       icon: 'info',
+      backdrop: false, // Quita el fondo opaco
       showCancelButton: textoBotonCancelar && true,
       confirmButtonText: textoBotonConfirmar ? textoBotonConfirmar : 'Cerrar',
       cancelButtonText: textoBotonCancelar,
@@ -123,6 +126,7 @@ export class UtilitiesService {
     const swalConfig: ISafeAny = {
       html: messageInfo,
       icon: 'warning',
+      backdrop: false, // Quita el fondo opaco
       showCancelButton: textoBotonCancelar && true,
       confirmButtonText: textoBotonConfirmar ? textoBotonConfirmar : 'Cerrar',
       cancelButtonText: textoBotonCancelar,

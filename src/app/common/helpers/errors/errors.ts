@@ -1,5 +1,11 @@
+// Mensaje de error por defecto para validaciones genéricas
 export const DEFAULT_ERROR_MESSAGE = 'El valor de este campo no es válido';
 
+/**
+ * Mapeo de mensajes de error para diferentes tipos de validaciones.
+ * Cada clave corresponde a un nombre de error que puede generarse en un formulario reactivo.
+ * Los valores son plantillas que pueden incluir placeholders para datos dinámicos.
+ */
 export const ERROR_MESSAGES = {
   required: 'Este campo es requerido',
   minlength: 'Este campo debe tener mínimo { minlength.requiredLength } caracteres',
@@ -7,8 +13,7 @@ export const ERROR_MESSAGES = {
   pattern: 'El valor de este campo no es válido',
   min: 'El valor de este campo debe ser mayor o igual a { min.min }',
   max: 'El valor de este campo debe ser menor o igual a { max.max }',
-  telBetweenDigits:
-    'El número de telefono debe tener entre { telBetweenDigits.min } y { telBetweenDigits.max } dígitos',
+  telBetweenDigits: 'El número de teléfono debe tener entre { telBetweenDigits.min } y { telBetweenDigits.max } dígitos',
   maxExpenses: 'El valor de este campo debe ser menor o igual a { max.max }',
   phoneDigits: 'Tu número de teléfono debe tener { phoneDigits.digits } dígitos',
   isNaN: 'El valor de este campo debe ser numérico',
@@ -21,36 +26,40 @@ export const ERROR_MESSAGES = {
   betweenAge: 'Debes tener entre { betweenAge.min } y { betweenAge.max } años',
   validAddress: 'Debes ingresar una dirección válida',
   noPasswordMatch: 'Las contraseñas no coinciden',
-  alphanumeric: 'No se permiten carácteres especiales, sólo el guión (-)',
+  alphanumeric: 'No se permiten caracteres especiales, sólo el guión (-)',
   onlyNumbers: 'Solo se permiten valores numéricos en este campo',
   onlyLetters: 'Solo se permiten letras en este campo',
   hasCapitalCase: 'Este campo debe contener mayúsculas',
   hasSmallCase: 'Este campo debe contener minúsculas',
-  hasSpecialCharacters: 'Este campo debe contener carácteres especiales',
+  hasSpecialCharacters: 'Este campo debe contener caracteres especiales',
   size: 'El archivo es mayor que 2 mb',
-  lowPassword: 'La contraseña es muy debil'
+  lowPassword: 'La contraseña es muy débil',
 };
 
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { ISafeAny } from '@sharedModule/models/ISafeAny';
 
-// Ajustamos la firma de la función para que reciba el formulario y el nombre del control
+/**
+ * Obtiene los mensajes de error para un control específico dentro de un formulario reactivo.
+ *
+ * @param form El formulario reactivo que contiene el control.
+ * @param controlName El nombre del control en el formulario.
+ * @returns Un array de mensajes de error generados para el control.
+ */
 export function getErrorMessages(form: FormGroup, controlName: string): string[] {
   const control: AbstractControl | null = form.get(controlName);
   console.log(control);
 
   if (control && control.invalid && control.touched) {
     const errors: string[] = [];
-    
-    
-    // Iteramos sobre las claves de los errores del control
+
+    // Itera sobre las claves de los errores asociados al control
     for (const errorKey in control.errors) {
-      
       if (Object.prototype.hasOwnProperty.call(control.errors, errorKey)) {
-        // Accedemos al mensaje de error correspondiente a la clave actual
+        // Obtiene la plantilla del mensaje de error correspondiente
         const errorMessageTemplate = ERROR_MESSAGES[errorKey as keyof typeof ERROR_MESSAGES];
         if (errorMessageTemplate) {
-          // Interpolamos el mensaje de error y lo añadimos al array de errores
+          // Interpola los datos dinámicos en el mensaje de error
           errors.push(interpolateErrorMessage(errorMessageTemplate, control.errors[errorKey]));
         }
       }
@@ -62,6 +71,13 @@ export function getErrorMessages(form: FormGroup, controlName: string): string[]
   return [];
 }
 
+/**
+ * Interpola los placeholders en una plantilla de mensaje de error con los valores correspondientes.
+ *
+ * @param errorMessageTemplate La plantilla del mensaje de error, que puede contener placeholders en el formato `{ clave }`.
+ * @param errorData Un objeto que contiene los valores para reemplazar los placeholders.
+ * @returns El mensaje de error con los valores interpolados.
+ */
 function interpolateErrorMessage(errorMessageTemplate: string, errorData: ISafeAny): string {
   return errorMessageTemplate.replace(/{\s*(\w+)\s*}/g, (match, capture) => {
     return errorData[capture] || match;

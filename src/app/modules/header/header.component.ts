@@ -7,86 +7,109 @@ import { BlobStorageService } from '@sharedModule/service/blobStorage.service';
 import { SubjectService } from '@sharedModule/service/subjectService.service';
 import { TipoCuartoService } from '@sharedModule/service/tipoCuarto.service';
 import { UtilitiesService } from '@sharedModule/service/utilities.service';
-import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { catchError, finalize, of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrls: ['./header.component.css'] // Corregido typo en 'styleUrl'
 })
-export class HeaderComponent implements OnInit{
+export class HeaderComponent implements OnInit {
+  // Inputs para datos del usuario
+  @Input() public url: string = '';
+  @Input() public nombreCompleto: string = '';
 
-  @Input()
-  public url:string = '';
+  // URL del logo
+  public urlLogo: string = '';
 
-  @Input()
-  public nombreCompleto:string = '';
+  // Estado del menú desplegable
+  public isDropdownOpen: boolean = false;
 
-  public urlLogo = '';
-  isDropdownOpen = false; // Estado del menú desplegable
+  // Lista de tipos de cuarto
+  public listTipoCuarto: TipoCuarto[] = [];
 
-  public listTipoCuarto:TipoCuarto[] = []
-
-  constructor(private router:Router,
+  constructor(
+    private router: Router,
     private blobStorage: BlobStorageService,
     private authService: AuthService,
-    private subject:SubjectService,
+    private subject: SubjectService,
     private utilitiesService: UtilitiesService,
     private spinner: NgxSpinnerService,
-    private tipoCuartoService:TipoCuartoService
-  ){}
+    private tipoCuartoService: TipoCuartoService
+  ) {}
 
   ngOnInit(): void {
-    this.urlLogo = this.blobStorage.getBlobUrl('logo.png')
-    this.dataDefault()
+    // Configurar el logo y cargar los datos iniciales
+    this.urlLogo = this.blobStorage.getBlobUrl('logo.png');
+    this.loadData();
   }
 
-  cambiarTipoCuarto(path:string, idTipoCuarto:number){
-    this.subject.setValue(String(idTipoCuarto))
+  /**
+   * Cambia la vista al tipo de cuarto seleccionado y actualiza el estado.
+   * 
+   * @param path Ruta a navegar.
+   * @param idTipoCuarto Identificador del tipo de cuarto.
+   */
+  cambiarTipoCuarto(path: string, idTipoCuarto: number): void {
+    this.subject.setValue(String(idTipoCuarto));
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate([path]);
     });
   }
 
-  dataDefault(){
-    this.tipoCuartoService.getAllTipoCuarto().pipe(
-      tap((data:IResponse) => {
-        this.listTipoCuarto = data.data
-      }),
-      catchError((err) => {
-        console.error("Error: ", err);
-        this.spinner.hide()
-        this.utilitiesService.showErrorMessage(err.message)
-        return of(null)
-      }),
-      finalize(() => this.spinner.hide())
-    ).subscribe()
+  /**
+   * Carga los tipos de cuarto disponibles desde el servicio.
+   */
+  private loadData(): void {
+    this.spinner.show();
+    this.tipoCuartoService.getAllTipoCuarto()
+      .pipe(
+        tap((data: IResponse) => {
+          this.listTipoCuarto = data.data;
+        }),
+        catchError((err) => {
+          console.error('Error:', err);
+          this.utilitiesService.showErrorMessage(err.message);
+          return of(null);
+        }),
+        finalize(() => this.spinner.hide())
+      )
+      .subscribe();
   }
 
-  logout() {
-    this.spinner.show()
-    this.authService.logoutUser().pipe(
-      tap((data) => {}),
-      catchError((err) => {
-        console.error("Error: ", err);
-        this.spinner.hide()
-        this.utilitiesService.showErrorMessage(err.message)
-        return of(null)
-      }),
-      finalize(() => {
-       sessionStorage.clear()
-        this.spinner.hide().then(() => {
-          this.router.navigate(['/login']); 
+  /**
+   * Cierra sesión del usuario y redirige al login.
+   */
+  logout(): void {
+    this.spinner.show();
+    this.authService.logoutUser()
+      .pipe(
+        tap(() => {}),
+        catchError((err) => {
+          console.error('Error:', err);
+          this.utilitiesService.showErrorMessage(err.message);
+          return of(null);
+        }),
+        finalize(() => {
+          sessionStorage.clear();
+          this.spinner.hide().then(() => this.router.navigate(['/login']));
         })
-      })
-    ).subscribe()
+      )
+      .subscribe();
   }
-  openDropdown() {
+
+  /**
+   * Abre el menú desplegable.
+   */
+  openDropdown(): void {
     this.isDropdownOpen = true;
   }
 
-  closeDropdown() {
+  /**
+   * Cierra el menú desplegable.
+   */
+  closeDropdown(): void {
     this.isDropdownOpen = false;
   }
 }

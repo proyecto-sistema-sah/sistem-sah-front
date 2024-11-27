@@ -1,11 +1,11 @@
 .container {
   max-width: 900px;
-  margin: 0 auto;
+  margin: 0 auto; /* Centrado horizontal */
 }
 
 .scrollable-container {
   max-height: 500px;
-  overflow-y: auto;
+  overflow-y: auto; /* Activar scroll */
   padding-right: 8px;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -28,7 +28,7 @@
   max-width: 200px;
   height: auto;
   border-radius: 8px;
-  object-fit: cover;
+  object-fit: cover; /* Mantener proporción de imagen */
 }
 
 .room-info {

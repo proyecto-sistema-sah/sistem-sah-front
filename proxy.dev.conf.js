@@ -30,6 +30,14 @@ module.exports = {
       "pathRewrite": {
         "^/api/v1/reserva/": ""
       }
+    },
+    "/api/v1/facturacion/*": {
+      "target": "http://localhost:8002/api/v1/facturacion/",
+      "secure": false,
+      "logLevel": "debug",
+      "pathRewrite": {
+        "^/api/v1/facturacion/": ""
+      }
     },          
     "/api/v1/cuartos/*": {
       "target": "http://localhost:8005/api/v1/cuartos/",

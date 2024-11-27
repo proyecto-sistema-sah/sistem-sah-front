@@ -8,6 +8,8 @@ export const api = {
     getAllAlimentos: '/alimentos/consultar',
     getAllServicios: '/servicios/consultar',
     postCuartos: '/cuartos/consultar',
-    postCrearReserva: '/reserva/crear'
+    postCrearReserva: '/reserva/crear',
+    getReservasUsuario: '/reserva/all-usuario',
+    getConsultarFacturacionesUsuario: '/facturacion/all-facturaciones'
 
 }

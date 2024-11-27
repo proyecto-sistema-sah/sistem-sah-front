@@ -1,4 +1,4 @@
-import { AfterContentInit, AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { emailValidator, sizeFileSelect, strongPassword } from '@common/helpers/validators/formats.validators';
@@ -16,151 +16,155 @@ import { catchError, finalize, of, tap } from 'rxjs';
 @Component({
   selector: 'app-registrar-usuario',
   templateUrl: './registrar-usuario.component.html',
-  styleUrl: './registrar-usuario.component.css'
+  styleUrl: './registrar-usuario.component.css',
 })
-export class RegistrarUsuarioComponent implements OnInit{
-  selectedImageUrl: string | null = null; // URL de la imagen seleccionada para previsualización
-  files: string[] = []; // Lista de archivos con URLs desde el blob storage
-  allTiposUsuario:ITipoUsuario[] = [];
-  public formRegister!:FormGroup;
-  public hide = true;
-  imagePreview: string | ArrayBuffer | null = null;
-  private nombre:string = '';
+export class RegistrarUsuarioComponent implements OnInit {
+  selectedImageUrl: string | null = null; // Vista previa de la imagen seleccionada
+  files: string[] = []; // Lista de URLs de archivos en Blob Storage
+  allTiposUsuario: ITipoUsuario[] = []; // Lista de tipos de usuario
+  public formRegister!: FormGroup; // Formulario reactivo
+  public hide = true; // Mostrar/ocultar contraseña
+  imagePreview: string | ArrayBuffer | null = null; // Almacena la imagen para previsualización
+  private nombre: string = ''; // Nombre del archivo subido al Blob Storage
 
-  constructor(private blobStorageService: BlobStorageService,
+  constructor(
+    private blobStorageService: BlobStorageService,
     public readonly errorHandlerService: ErrorHandlerService,
     private spinner: NgxSpinnerService,
     private formBuilder: FormBuilder,
     private utilitiesService: UtilitiesService,
     private usuarioService: UsuarioService,
-    private tipoUsuarioService:TipoUsuarioService,
-    private router:Router
+    private tipoUsuarioService: TipoUsuarioService,
+    private router: Router
   ) {}
- 
+
   ngOnInit(): void {
-    this.buildFormRegister()
-    this.getDataDefault()
+    this.buildFormRegister(); // Construir el formulario
+    this.getDataDefault(); // Cargar datos iniciales
   }
 
-  onLogin(){
-    this.router.navigate(['/login'])
+  // Redirige a la página de inicio de sesión
+  onLogin(): void {
+    this.router.navigate(['/login']);
   }
 
+  // Construye el formulario reactivo con validaciones
   buildFormRegister(): void {
     this.formRegister = this.formBuilder.group({
-      nombres: new FormControl<String>('',[
-        Validators.required,
-      ]),
-      apellidos: new FormControl<String>('',[
-        Validators.required,
-      ]),
+      nombres: new FormControl<string>('', [Validators.required]),
+      apellidos: new FormControl<string>('', [Validators.required]),
       correoUsuario: new FormControl<string>('', [
-        Validators.required, 
+        Validators.required,
         Validators.email,
-        emailValidator
-      ]
-      ),
-      contrasenaUsuario: new FormControl('', [
-        Validators.required,
-        strongPassword
+        emailValidator,
       ]),
-      repeatContrasenaUsuario: new FormControl('', [
-        Validators.required,
-        strongPassword
-      ]),
-      tipoUsuario: new FormControl(0,[
-        Validators.required
-      ]),
-      imagen: new FormControl<File | null> (null,[
-        Validators.required,
-        sizeFileSelect
-      ])
+      contrasenaUsuario: new FormControl('', [Validators.required, strongPassword]),
+      repeatContrasenaUsuario: new FormControl('', [Validators.required, strongPassword]),
+      tipoUsuario: new FormControl(0, [Validators.required]),
+      imagen: new FormControl<File | null>(null, [Validators.required, sizeFileSelect]),
     });
   }
 
-  getDataDefault(){
+  // Obtiene los tipos de usuario del servicio
+  getDataDefault(): void {
     this.spinner.show();
-    this.tipoUsuarioService.getAllTipoUsuario().pipe(
-      tap((data:IResponse) => {
-        this.allTiposUsuario = data.data
-      }),
-      catchError((err) => {
-        console.error("Error: ", err);
-        this.utilitiesService.showErrorMessage(err.message)
-        return of(null)
-      }),
-      finalize(() => {
-        this.spinner.hide()
-      })
-    ).subscribe();
+    this.tipoUsuarioService
+      .getAllTipoUsuario()
+      .pipe(
+        tap((data: IResponse) => {
+          this.allTiposUsuario = data.data;
+        }),
+        catchError((err) => {
+          console.error('Error:', err);
+          this.utilitiesService.showErrorMessage(err.message);
+          return of(null);
+        }),
+        finalize(() => {
+          this.spinner.hide();
+        })
+      )
+      .subscribe();
   }
 
-  // Manejar la selección de archivo
+  // Maneja la selección de archivo para subir
   onFileSelected(event: Event): void {
     const file = (event.target as HTMLInputElement).files?.[0];
-    if(file){
-      this.formRegister.patchValue({imagen:file});
+    if (file) {
+      this.formRegister.patchValue({ imagen: file });
       this.formRegister.get('imagen')?.markAsTouched();
       this.formRegister.get('imagen')?.updateValueAndValidity();
+
+      // Generar vista previa de la imagen
+      const reader = new FileReader();
+      reader.onload = () => (this.imagePreview = reader.result);
+      reader.readAsDataURL(file);
     }
   }
 
-  createUsuario(){
-    this.spinner.show()
-    const file = this.formRegister.get('imagen')?.value
-    let usuario:Usuario = {}
+  // Método para crear el usuario
+  createUsuario(): void {
+    this.spinner.show();
+    const file = this.formRegister.get('imagen')?.value;
     if (file) {
-      this.blobStorageService.uploadFile(file).then(response => {
-        this.nombre = response;
-        const datas:string[] = this.formRegister.get('tipoUsuario')?.value.split('-')
-        const tipoUsuario:ITipoUsuario = {
-          id: Number(datas[0]),
-          nombreTipoUsuario: datas[1]
-        }
-        usuario = {
-          nombresUsuario: this.formRegister.get('nombres')?.value,
-          apellidosUsuario: this.formRegister.get('apellidos')?.value,
-          correoUsuario: this.formRegister.get('correoUsuario')?.value,
-          contrasena: this.formRegister.get('contrasenaUsuario')?.value,
-          codigoImagenUsuario: response,
-          tipoUsuarioDtoFk:tipoUsuario
-        }
-      }).catch(error => {
-        console.error("Hubo un error ", error)
-        this.utilitiesService.showErrorMessage(error.message)
-        this.spinner.hide()
-        return of(null)
-      }).finally(() => {
-        let mensaje = ""
-        this.usuarioService.crearUsuario(usuario).pipe(
-          tap((data:IResponse) => {
-            console.log(data)
-            mensaje = data.message
-          }),
-          catchError((err) => {
-            console.error("Error: ", err);
-            this.utilitiesService.showErrorMessage(err.message)
-            this.spinner.hide()
-            return of(null)
-          }),
-          finalize(() => {
-            this.spinner.hide().then(() => {
-              console.log(mensaje)
-              this.utilitiesService.showSucessMessage(mensaje, 'Crear Usuario', 'Aceptar').then(() => {
-                this.spinner.hide()
+      this.blobStorageService
+        .uploadFile(file)
+        .then((response) => {
+          this.nombre = response; // Guardar nombre de archivo subido
+          const tipoUsuarioData = this.formRegister.get('tipoUsuario')?.value.split('-');
+          const tipoUsuario: ITipoUsuario = {
+            id: Number(tipoUsuarioData[0]),
+            nombreTipoUsuario: tipoUsuarioData[1],
+          };
+
+          const usuario: Usuario = {
+            nombresUsuario: this.formRegister.get('nombres')?.value,
+            apellidosUsuario: this.formRegister.get('apellidos')?.value,
+            correoUsuario: this.formRegister.get('correoUsuario')?.value,
+            contrasena: this.formRegister.get('contrasenaUsuario')?.value,
+            codigoImagenUsuario: response,
+            tipoUsuarioDtoFk: tipoUsuario,
+          };
+
+          this.registerUser(usuario);
+        })
+        .catch((error) => {
+          console.error('Error al subir archivo:', error);
+          this.utilitiesService.showErrorMessage(error.message);
+          this.spinner.hide();
+          return of(null);
+        });
+    }
+  }
+
+  // Registra al usuario en el backend
+  private registerUser(usuario: Usuario): void {
+    let mensaje = '';
+    this.usuarioService
+      .crearUsuario(usuario)
+      .pipe(
+        tap((data: IResponse) => {
+          mensaje = data.message;
+        }),
+        catchError((err) => {
+          console.error('Error al crear usuario:', err);
+          this.utilitiesService.showErrorMessage(err.message);
+          return of(null);
+        }),
+        finalize(() => {
+          this.spinner.hide().then(() => {
+            this.utilitiesService
+              .showSucessMessage(mensaje, 'Usuario Creado', 'Aceptar')
+              .then(() => {
                 this.router.navigate(['/login']);
               });
-            });
-          })
-        ).subscribe();
-      })
-    }
+          });
+        })
+      )
+      .subscribe();
   }
-  
 
-  // Listar archivos en el blob storage
+  // Lista los archivos en Blob Storage (opcional)
   async listFiles(): Promise<void> {
     this.files = await this.blobStorageService.listBlobs();
   }
-
 }

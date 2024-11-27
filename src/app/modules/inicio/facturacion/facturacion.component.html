@@ -1,0 +1,44 @@
+<div class="container mt-4">
+  <div class="card shadow p-3 mb-5 bg-white rounded">
+    <div class="card-body">
+      <h2 class="card-title text-center">Facturaciones</h2>
+      <div class="scroll-container">
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+          <div class="col" *ngFor="let facturacion of facturaciones">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title">Código: {{ facturacion.codigoFacturacion }}</h5>
+                <p class="card-text">
+                  Fecha de Creación: {{ facturacion.fechaCreacionFacturacion | date: 'short' }}
+                </p>
+                <p class="card-text">
+                  Estado: 
+                  <span
+                    class="badge"
+                    [ngClass]="{
+                      'bg-success': facturacion.estadoFacturacion === 'PAGADO',
+                      'bg-warning': facturacion.estadoFacturacion === 'PENDIENTE',
+                      'bg-danger': facturacion.estadoFacturacion === 'CANCELADO'
+                    }"
+                  >
+                    {{ facturacion.estadoFacturacion }}
+                  </span>
+                </p>
+                <p class="card-text">Reserva: {{ facturacion.codigoReservaDtoFk.codigoReserva }}</p>
+              </div>
+              <div class="card-footer text-center">
+                <button
+                  mat-raised-button
+                  color="primary"
+                  (click)="descargarPdf(facturacion.urlPdf, facturacion.codigoFacturacion)"
+                >
+                  Descargar PDF
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

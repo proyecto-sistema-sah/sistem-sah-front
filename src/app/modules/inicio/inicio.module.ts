@@ -13,9 +13,13 @@ import { CuartosComponent } from './cuartos/cuartos.component';
 import { PrincipalComponent } from './principal/principal.component';
 import { GastronomiaComponent } from './gastronomia/gastronomia.component';
 import { ServicioComponent } from './servicio/servicio.component';
+import { ComprasComponent } from './compras/compras.component';
+import { FacturacionComponent } from './facturacion/facturacion.component';
 
-
-
+/**
+ * Módulo principal para la funcionalidad de "Inicio".
+ * Contiene los componentes y rutas relacionados con la navegación principal de la aplicación.
+ */
 @NgModule({
   imports: [
     CommonModule,
@@ -24,11 +28,17 @@ import { ServicioComponent } from './servicio/servicio.component';
     ReactiveFormsModule,
     HeaderModule,
     FormsModule,
-    RouterModule.forChild(INICIO_ROUTES),
+    RouterModule.forChild(INICIO_ROUTES), // Lazy loading de rutas
   ],
   declarations: [
-    InicioComponent,CuartosComponent, PrincipalComponent, GastronomiaComponent, ServicioComponent
- ],
-  providers: [ ErrorHandlerService, UtilitiesService]
+    InicioComponent,
+    CuartosComponent,
+    FacturacionComponent,
+    PrincipalComponent,
+    GastronomiaComponent,
+    ComprasComponent,
+    ServicioComponent,
+  ],
+  providers: [ErrorHandlerService, UtilitiesService],
 })
-export class InicioModule { }
+export class InicioModule {}

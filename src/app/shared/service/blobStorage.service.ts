@@ -18,7 +18,6 @@ export class BlobStorageService {
 
   async uploadFile(file: File): Promise<string> {
     console.log("Se va a subir");
-    console.log(file)
     const nombre = this.generateRandomCode(10)
     const containerClient = this.blobServiceClient.getContainerClient(this.containerName);
     const blockBlobClient = containerClient.getBlockBlobClient(nombre);

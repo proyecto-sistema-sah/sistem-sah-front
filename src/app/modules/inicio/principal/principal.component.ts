@@ -1,15 +1,23 @@
 import { Component } from '@angular/core';
 
-
+/**
+ * Componente principal de la página de inicio.
+ * Contiene un carrusel de imágenes y una sección introductoria con texto y botones.
+ */
 @Component({
   selector: 'app-principal',
   templateUrl: './principal.component.html',
-  styleUrl: './principal.component.css'
+  styleUrls: ['./principal.component.css']
 })
 export class PrincipalComponent {
+  /**
+   * Lista de URLs de las imágenes del carrusel.
+   * Cada imagen representa una sección destacada del sistema.
+   */
   images: string[] = [
-    'https://i.blogs.es/0ca9a6/aa/1366_2000.jpeg',
-    'https://png.pngtree.com/background/20230524/original/pngtree-sad-pictures-for-desktop-hd-backgrounds-picture-image_2705986.jpg',
-    'https://media.es.wired.com/photos/650b2a2e72d73ca3bd5ef0cc/16:9/w_2560%2Cc_limit/Business-OpenAI-Dall-E-3-heart.jpg'
+    'https://imagenesmf.blob.core.windows.net/imagenes/paisaje.jpg',
+    'https://imagenesmf.blob.core.windows.net/imagenes/piscinas.jpg',
+    'https://imagenesmf.blob.core.windows.net/imagenes/restaurantes.jpg',
+    'https://imagenesmf.blob.core.windows.net/imagenes/hoteles.jpg'
   ];
 }

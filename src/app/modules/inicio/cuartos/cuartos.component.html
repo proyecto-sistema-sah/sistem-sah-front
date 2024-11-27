@@ -1,19 +1,22 @@
 <div class="container mt-4">
   <div class="row">
-    <!-- Título -->
     <div class="col-12 mb-4">
       <h2 class="text-center">Reservas de Cuartos</h2>
     </div>
 
-    <!-- Filtros -->
     <div class="col-12 mb-4">
       <div class="filter-section mt-3">
         <div class="row">
-          <!-- Filtro de rango de precios -->
           <div class="col-md-6">
             <label for="priceRange" class="form-label">Rango de precios</label>
-            <mat-slider id="priceRange" thumbLabel [min]="minPrice" [max]="maxPrice" [step]="50">
-              <input matSliderThumb [(ngModel)]="selectedPrice" (input)="applyFilters()"/>
+            <mat-slider
+              id="priceRange"
+              thumbLabel
+              [min]="minPrice"
+              [max]="maxPrice"
+              [step]="50"
+            >
+              <input matSliderThumb [(ngModel)]="selectedPrice" (input)="filterRooms()" />
             </mat-slider>
             <div class="d-flex justify-content-between mt-1">
               <span>{{ minPrice | currency }}</span>
@@ -21,56 +24,37 @@
             </div>
           </div>
 
-          <!-- Selección de rango de fechas -->
           <div class="col-md-6">
             <label for="startDate" class="form-label">Rango de fechas</label>
             <div class="d-flex gap-3">
-              <!-- Fecha inicial -->
               <mat-form-field appearance="fill" class="w-50">
                 <mat-label>Desde</mat-label>
-                <input
-                  matInput
-                  [matDatepicker]="startPicker"
-                  [min]="minDate"
-                  [(ngModel)]="startDate"
-                />
+                <input matInput [matDatepicker]="startPicker" [min]="minDate" [(ngModel)]="startDate" />
                 <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
                 <mat-datepicker #startPicker></mat-datepicker>
               </mat-form-field>
 
-              <!-- Fecha final -->
               <mat-form-field appearance="fill" class="w-50">
                 <mat-label>Hasta</mat-label>
-                <input
-                  matInput
-                  [matDatepicker]="endPicker"
-                  [min]="startDate || minDate"
-                  [(ngModel)]="endDate"
-                />
+                <input matInput [matDatepicker]="endPicker" [min]="startDate || minDate" [(ngModel)]="endDate" />
                 <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
                 <mat-datepicker #endPicker></mat-datepicker>
               </mat-form-field>
             </div>
           </div>
         </div>
-        <!-- Botón para buscar -->
         <div class="row mt-3">
           <div class="col-12 text-center">
-            <button mat-raised-button color="primary" (click)="searchRooms()">
-              Buscar Cuartos
-            </button>
+            <button mat-raised-button color="primary" (click)="loadAvailableRooms()">Buscar Cuartos</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Contenedor con scroll -->
     <div class="col-12">
       <div class="scrollable-container">
-        <!-- Listado de habitaciones -->
         <div *ngFor="let cuarto of paginatedCuartos" class="col-12 mb-4">
           <div class="room-card d-flex flex-column flex-lg-row align-items-start">
-            <!-- Imagen -->
             <div class="room-image">
               <img
                 [src]="cuarto.codigoImagenCuarto"
@@ -78,22 +62,16 @@
                 class="img-fluid rounded"
               />
             </div>
-
-            <!-- Información de la habitación -->
             <div class="room-info ms-lg-4 mt-3 mt-lg-0">
               <h3 class="room-title">{{ cuarto.tipoCuartoDtoFk.nombreTipoCuarto }}</h3>
               <p class="room-details">
                 {{ cuarto.numeroCuarto }} &bull; {{ cuarto.detalleCuarto }}
               </p>
               <ul class="room-features">
-                <li *ngIf="cuarto.estadoCuartoDtoFk.nombreEstadoCuarto === 'LIBRE'">
-                  Conexión wifi gratuita
-                </li>
+                <li *ngIf="cuarto.estadoCuartoDtoFk.nombreEstadoCuarto === 'LIBRE'">Conexión wifi gratuita</li>
                 <li>Incluye parqueadero y acceso a zonas húmedas</li>
               </ul>
-              <p class="room-price">
-                {{ cuarto.valorNocheCuarto | currency }} por noche
-              </p>
+              <p class="room-price">{{ cuarto.valorNocheCuarto | currency }} por noche</p>
               <p class="room-disclaimer">Tarifa con desayuno y seguro hotelero.</p>
               <button
                 mat-raised-button
@@ -111,12 +89,11 @@
     </div>
   </div>
 
-  <!-- Paginador -->
   <mat-paginator
     [pageSize]="pageSize"
     [pageSizeOptions]="[2, 4, 6]"
     [length]="filteredCuartos.length"
-    (page)="updatePaginatedCuartos($event)"
+    (page)="paginateRooms($event)"
   >
   </mat-paginator>
 </div>

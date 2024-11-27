@@ -1,0 +1,25 @@
+.container {
+  max-width: 1200px; /* Máxima anchura del contenedor */
+}
+
+.card {
+  border-radius: 8px; /* Esquinas redondeadas */
+}
+
+.card-header {
+  font-size: 1.5rem; /* Tamaño de fuente más grande */
+  font-weight: bold;
+}
+
+.table {
+  width: 100%; /* Ajuste completo al contenedor */
+}
+
+.mat-header-cell, .mat-cell {
+  text-align: center; /* Centrado del texto */
+  vertical-align: middle; /* Alineación vertical */
+}
+
+.mat-paginator {
+  margin-top: 1rem; /* Espaciado superior */
+}

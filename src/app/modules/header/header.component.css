@@ -1,6 +1,6 @@
 .navbar {
   background-color: #f8f9fa; /* Fondo claro */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera */
 }
 
 .navbar-brand img {
@@ -17,13 +17,13 @@
 
 .nav-link:hover,
 .nav-link.active {
-  color: #007bff;
+  color: #007bff; /* Color al interactuar */
 }
 
 .dropdown-menu {
   display: none; /* Ocultar por defecto */
   position: absolute;
-  top: 100%; /* Mostrar debajo del botón */
+  top: 100%; /* Posicionado debajo */
   left: 0;
   z-index: 1000;
   min-width: 12rem;
@@ -37,7 +37,7 @@
 }
 
 .dropdown-menu.show {
-  display: block; /* Mostrar cuando se activa */
+  display: block; /* Mostrar cuando esté activo */
 }
 
 .dropdown-item {
@@ -51,10 +51,13 @@
   color: #007bff;
 }
 
-.dropdown-item:active {
-  background-color: #e2e6ea;
-}
-
 .rounded-circle {
   border: 2px solid #f8f9fa; /* Bordes */
+}
+
+.text-truncate {
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

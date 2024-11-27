@@ -1,60 +1,58 @@
 .container {
-    max-width: 1200px;
-  }
-  
-  /* Título principal */
-  .display-4 {
-    font-weight: bold;
-    color: #2c3e50;
-  }
-  
-  .lead {
-    color: #7f8c8d;
-  }
-  
-  /* Sección de introducción */
-  img {
-    border-radius: 12px;
-    max-height: 300px;
-    object-fit: cover;
-  }
-  
-  button {
-    width: fit-content;
-  }
-  
-  /* Tarjetas de servicio */
-  .service-card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    transition: transform 0.3s, box-shadow 0.3s;
-    overflow: hidden;
-    background: linear-gradient(to bottom, #ffffff, #f9f9f9);
-  }
-  
-  .service-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-  }
-  
-  mat-card-image {
-    height: 200px;
-    object-fit: cover;
-  }
-  
-  mat-card-title {
-    font-size: 1.25rem;
-    font-weight: bold;
-    color: #2c3e50;
-  }
-  
-  mat-card-subtitle {
-    font-size: 0.9rem;
-    color: #7f8c8d;
-  }
-  
-  /* Botón */
-  button[mat-raised-button] {
-    margin-top: 20px;
-  }
-  
+  max-width: 1200px;
+}
+
+/* Título principal */
+.display-4 {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.lead {
+  color: #7f8c8d;
+}
+
+/* Sección de introducción */
+img {
+  border-radius: 12px;
+  max-height: 300px;
+  object-fit: cover;
+}
+
+button {
+  width: fit-content;
+}
+
+/* Tarjetas de servicio */
+.service-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  overflow: hidden;
+  background: linear-gradient(to bottom, #ffffff, #f9f9f9);
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+mat-card-image {
+  height: 200px;
+  object-fit: cover;
+}
+
+mat-card-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+mat-card-subtitle {
+  font-size: 0.9rem;
+  color: #7f8c8d;
+}
+
+button[mat-raised-button] {
+  margin-top: 20px;
+}

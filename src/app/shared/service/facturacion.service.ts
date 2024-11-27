@@ -6,19 +6,14 @@ import { IResponse } from "@sharedModule/models/Response";
 import { Observable } from "rxjs";
 
 @Injectable({providedIn: 'root'})
-export class ReservaService {
+export class FacturacionService {
     
     constructor(private httpClient: HttpClient) { }
 
-    public postCrearReserva(reservaCuarto:ReservaCuarto): Observable<IResponse> {
-        return this.httpClient.post<IResponse>(`${environment.api.baseUrlAPI}${environment.api.postCrearReserva}`, reservaCuarto);
-    }
-
-    public getReservasUsuario(codigoUsuario:string): Observable<IResponse> {
+    public getConsultarFacturacionesUsuario(codigoUsuario:string): Observable<IResponse> {
         let params = new HttpParams()
         .set('codigoUsuario', codigoUsuario)
-        return this.httpClient.get<IResponse>(`${environment.api.baseUrlAPI}${environment.api.getReservasUsuario}`, {params});
+        return this.httpClient.get<IResponse>(`${environment.api.baseUrlAPI}${environment.api.getConsultarFacturacionesUsuario}`, {params});
     }
-
 
 }

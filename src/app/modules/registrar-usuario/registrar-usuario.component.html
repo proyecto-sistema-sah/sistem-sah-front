@@ -12,7 +12,7 @@
               <div class="col-md-6">
                 <mat-form-field appearance="outline" class="w-100 mb-4">
                   <mat-label>Nombres</mat-label>
-                  <input matInput placeholder="Ingresa tus nombres" formControlName="nombres" required>
+                  <input matInput placeholder="Ingresa tus nombres" formControlName="nombres" required />
                   <mat-error *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formRegister, 'nombres')">
                     {{ errorMessage }}
                   </mat-error>
@@ -22,7 +22,7 @@
               <div class="col-md-6">
                 <mat-form-field appearance="outline" class="w-100 mb-4">
                   <mat-label>Apellidos</mat-label>
-                  <input matInput placeholder="Ingresa tus apellidos" formControlName="apellidos" required>
+                  <input matInput placeholder="Ingresa tus apellidos" formControlName="apellidos" required />
                   <mat-error *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formRegister, 'apellidos')">
                     {{ errorMessage }}
                   </mat-error>
@@ -42,8 +42,10 @@
                     formControlName="correoUsuario"
                     autocomplete="email"
                     required
+                  />
+                  <mat-error
+                    *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formRegister, 'correoUsuario')"
                   >
-                  <mat-error *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formRegister, 'correoUsuario')">
                     {{ errorMessage }}
                   </mat-error>
                 </mat-form-field>
@@ -59,7 +61,7 @@
                     formControlName="contrasenaUsuario"
                     autocomplete="new-password"
                     required
-                  >
+                  />
                   <button
                     mat-icon-button
                     matSuffix
@@ -68,7 +70,9 @@
                   >
                     <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
                   </button>
-                  <mat-error *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formRegister, 'contrasenaUsuario')">
+                  <mat-error
+                    *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formRegister, 'contrasenaUsuario')"
+                  >
                     {{ errorMessage }}
                   </mat-error>
                 </mat-form-field>
@@ -87,7 +91,7 @@
                     formControlName="repeatContrasenaUsuario"
                     autocomplete="new-password"
                     required
-                  >
+                  />
                   <button
                     mat-icon-button
                     matSuffix
@@ -96,7 +100,9 @@
                   >
                     <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
                   </button>
-                  <mat-error *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formRegister, 'repeatContrasenaUsuario')">
+                  <mat-error
+                    *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formRegister, 'repeatContrasenaUsuario')"
+                  >
                     {{ errorMessage }}
                   </mat-error>
                 </mat-form-field>
@@ -117,9 +123,9 @@
               </div>
             </div>
 
+            <!-- Subir Imagen de Perfil -->
             <div class="row">
               <div class="col-md-12">
-                <!-- Subir Imagen de Perfil -->
                 <div class="form-group mb-4">
                   <label for="formFile" class="form-label">Subir Imagen de Perfil</label>
                   <input
@@ -128,19 +134,32 @@
                     type="file"
                     accept="image/*"
                     (change)="onFileSelected($event)"
-                  >
+                  />
                   <small class="form-text text-muted">Formato permitido: JPG, PNG. Tamaño máximo: 2MB.</small>
-                  <mat-error *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formRegister, 'imagen')">
+                  <mat-error
+                    *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formRegister, 'imagen')"
+                  >
                     {{ errorMessage }}
                   </mat-error>
+                  <!-- Vista previa de imagen -->
+                  <div class="mt-3 text-center" *ngIf="imagePreview">
+                    <img
+                      [src]="imagePreview"
+                      alt="Vista previa de imagen seleccionada"
+                      class="img-thumbnail shadow"
+                      style="max-width: 200px; max-height: 200px;"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
 
+            <!-- Botones -->
             <div class="row mt-4">
-              <!-- Botones de Acción -->
               <div class="col-md-12 text-center">
-                <button mat-raised-button color="primary" type="submit" class="me-2" [disabled]="formRegister.invalid">Registrar</button>
+                <button mat-raised-button color="primary" type="submit" class="me-2" [disabled]="formRegister.invalid">
+                  Registrar
+                </button>
                 <button mat-button color="warn" type="reset" class="ms-2" (click)="onLogin()">Cancelar</button>
               </div>
             </div>

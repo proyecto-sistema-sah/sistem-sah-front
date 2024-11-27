@@ -1,0 +1,17 @@
+.scroll-container {
+  max-height: 400px; /* Ajusta según tus necesidades */
+  overflow-y: auto;
+}
+
+.card {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-footer button {
+  width: 100%;
+}

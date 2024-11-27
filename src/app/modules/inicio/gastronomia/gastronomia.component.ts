@@ -1,39 +1,63 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IAlimentos } from '@sharedModule/models/IAlimentos';
 import { AlimentoService } from '@sharedModule/service/alimento.service';
 import { BlobStorageService } from '@sharedModule/service/blobStorage.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-gastronomia',
   templateUrl: './gastronomia.component.html',
-  styleUrl: './gastronomia.component.css'
+  styleUrls: ['./gastronomia.component.css']
 })
-export class GastronomiaComponent {
-  allAlimentos: IAlimentos[] = []; // Lista completa de alimentos
-  featuredAlimentos: IAlimentos[] = []; // Alimentos destacados
-  showAllAlimentos = false; // Estado para mostrar todos los alimentos
+export class GastronomiaComponent implements OnInit {
+  /**
+   * Lista completa de alimentos.
+   */
+  allAlimentos: IAlimentos[] = [];
 
-  constructor(private alimentoService: AlimentoService, private blobService:BlobStorageService) {}
+  /**
+   * Alimentos destacados a mostrar inicialmente.
+   */
+  featuredAlimentos: IAlimentos[] = [];
+
+  /**
+   * Estado que controla si se muestran todos los alimentos.
+   */
+  showAllAlimentos = false;
+
+  constructor(
+    private alimentoService: AlimentoService,
+    private blobService: BlobStorageService,
+    private spinner: NgxSpinnerService
+  ) {}
 
   ngOnInit(): void {
     this.loadFeaturedAlimentos();
   }
 
-  // Cargar alimentos destacados
+  /**
+   * Carga los alimentos destacados desde el servicio.
+   */
   loadFeaturedAlimentos(): void {
+    this.spinner.show();
     this.alimentoService.getAllAlimentos().subscribe({
       next: (response) => {
         this.allAlimentos = response.data as IAlimentos[];
-        for(const alimento of this.allAlimentos){
-          alimento.codigoImagen = this.blobService.getBlobUrl(alimento.codigoImagen)
-        }
-        this.featuredAlimentos = this.allAlimentos.slice(0, 3); // Mostrar solo los primeros 3
+        this.allAlimentos.forEach((alimento) => {
+          alimento.codigoImagen = this.blobService.getBlobUrl(alimento.codigoImagen);
+        });
+        this.featuredAlimentos = this.allAlimentos.slice(0, 3); // Mostrar los primeros 3 alimentos
       },
-      error: (err) => console.error('Error al cargar los alimentos:', err),
+      error: (err) => {
+        console.error('Error al cargar los alimentos:', err);
+      },
+      complete: () => this.spinner.hide()
     });
   }
 
-  // Mostrar todos los alimentos
+  /**
+   * Activa la visualización de todos los alimentos.
+   */
   loadAllAlimentos(): void {
     this.showAllAlimentos = true;
   }
