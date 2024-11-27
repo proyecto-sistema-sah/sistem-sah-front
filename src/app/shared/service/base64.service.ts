@@ -36,7 +36,10 @@ export class Base64Service {
     // Convierte la cadena Base64 a una cadena JSON
     const jsonString = Buffer.from(base64String, 'base64').toString('utf-8');
     // Parsea la cadena JSON a un objeto
-    const obj = JSON.parse(jsonString);
+    let obj ='';
+    if(jsonString){
+       obj = JSON.parse(jsonString);
+    }
     return obj;
   }
 }

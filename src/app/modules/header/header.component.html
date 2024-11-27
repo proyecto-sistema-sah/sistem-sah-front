@@ -1,59 +1,89 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
   <div class="container-fluid">
-    <!-- Imagen del logo en forma de círculo -->
-    <a class="navbar-brand d-flex align-items-center">
+    <!-- Logo e Imagen del Logo -->
+    <a class="navbar-brand d-flex align-items-center" [routerLink]="'/inicio'">
       <img [src]="urlLogo" alt="Logo" class="img-fluid rounded-circle" style="width: 50px; height: 50px;">
     </a>
 
-    <!-- Botón de menú responsive -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <!-- Botón Responsive del Menú -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <!-- Menú de navegación y contenido -->
+    <!-- Contenido del Menú -->
     <div class="collapse navbar-collapse" id="navbarNav">
-      <!-- Menú de navegación -->
+      <!-- Menú de Navegación -->
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" [routerLink]="'/inicio/'">Inicio</a>
+          <a class="nav-link active" aria-current="page" [routerLink]="'/inicio'">Inicio</a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" [routerLink]="'/inicio/cuartos'">
+
+        <!-- Menú desplegable para Cuartos -->
+        <li
+          class="nav-item dropdown"
+          (mouseenter)="openDropdown()"
+          (mouseleave)="closeDropdown()"
+        >
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            (click)="cambiarTipoCuarto('/inicio/cuartos/',0)"
+          >
             Cuartos
           </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <ul
+            class="dropdown-menu"
+            [class.show]="isDropdownOpen"
+            aria-labelledby="navbarDropdown"
+          >
             <li *ngFor="let data of listTipoCuarto">
-              <a class="dropdown-item">{{ data.nombreTipoCuarto | modifyString }}</a>
+              <a
+                class="dropdown-item"
+                (click)="cambiarTipoCuarto('/inicio/cuartos/' + data.id, data.id)"
+              >
+                {{ data.nombreTipoCuarto }}
+              </a>
             </li>
           </ul>
         </li>
+
         <li class="nav-item">
-          <a class="nav-link">Gastronomía</a>
+          <a class="nav-link" [routerLink]="'/inicio/gastronomia'">Gastronomía</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link">Servicios</a>
+          <a class="nav-link" [routerLink]="'/inicio/servicio'">Servicios</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link">Compras</a>
+          <a class="nav-link" [routerLink]="'/inicio/compras'">Compras</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link">Facturación</a>
+          <a class="nav-link" [routerLink]="'/inicio/facturacion'">Facturación</a>
         </li>
       </ul>
 
-      <!-- Contenedor para nombre y foto de perfil con dropdown -->
-      <div class="dropdown">
-        <div class="d-flex align-items-center dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;">
-          <!-- Nombre del usuario -->
-          <span class="mb-0 me-2 text-truncate" style="max-width: 150px; font-weight: 500;">{{ nombreCompleto }}</span>
-          <!-- Imagen de perfil -->
+      <!-- Contenedor del Usuario -->
+      <div class="d-flex align-items-center">
+        <span class="me-2 text-truncate fw-semibold" style="max-width: 150px;">{{ nombreCompleto }}</span>
+        <button mat-button [matMenuTriggerFor]="menu" class="d-flex align-items-center">
           <img [src]="url" alt="Profile Picture" class="rounded-circle shadow-sm" style="width: 45px; height: 45px;">
-        </div>
-
-        <!-- Dropdown del perfil -->
-        <ul class="dropdown-menu dropdown-menu-end shadow-sm">
-          <li><a class="dropdown-item" (click)="logout()">Salir</a></li>
-        </ul>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            <span>Salir</span>
+          </button>
+        </mat-menu>
       </div>
     </div>
   </div>

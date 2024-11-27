@@ -127,20 +127,30 @@ export class RegistrarUsuarioComponent implements OnInit{
         }
       }).catch(error => {
         console.error("Hubo un error ", error)
+        this.utilitiesService.showErrorMessage(error.message)
+        this.spinner.hide()
+        return of(null)
       }).finally(() => {
-        console.log(usuario);
-        
+        let mensaje = ""
         this.usuarioService.crearUsuario(usuario).pipe(
           tap((data:IResponse) => {
-            console.log(data);
+            console.log(data)
+            mensaje = data.message
           }),
           catchError((err) => {
             console.error("Error: ", err);
             this.utilitiesService.showErrorMessage(err.message)
+            this.spinner.hide()
             return of(null)
           }),
           finalize(() => {
-            this.spinner.hide()
+            this.spinner.hide().then(() => {
+              console.log(mensaje)
+              this.utilitiesService.showSucessMessage(mensaje, 'Crear Usuario', 'Aceptar').then(() => {
+                this.spinner.hide()
+                this.router.navigate(['/login']);
+              });
+            });
           })
         ).subscribe();
       })

@@ -4,6 +4,7 @@ import { TipoCuarto } from '@sharedModule/models/ITipoCuarto';
 import { IResponse } from '@sharedModule/models/Response';
 import { AuthService } from '@sharedModule/service/auth.service';
 import { BlobStorageService } from '@sharedModule/service/blobStorage.service';
+import { SubjectService } from '@sharedModule/service/subjectService.service';
 import { TipoCuartoService } from '@sharedModule/service/tipoCuarto.service';
 import { UtilitiesService } from '@sharedModule/service/utilities.service';
 import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
@@ -23,12 +24,14 @@ export class HeaderComponent implements OnInit{
   public nombreCompleto:string = '';
 
   public urlLogo = '';
+  isDropdownOpen = false; // Estado del menú desplegable
 
   public listTipoCuarto:TipoCuarto[] = []
 
   constructor(private router:Router,
     private blobStorage: BlobStorageService,
     private authService: AuthService,
+    private subject:SubjectService,
     private utilitiesService: UtilitiesService,
     private spinner: NgxSpinnerService,
     private tipoCuartoService:TipoCuartoService
@@ -37,6 +40,13 @@ export class HeaderComponent implements OnInit{
   ngOnInit(): void {
     this.urlLogo = this.blobStorage.getBlobUrl('logo.png')
     this.dataDefault()
+  }
+
+  cambiarTipoCuarto(path:string, idTipoCuarto:number){
+    this.subject.setValue(String(idTipoCuarto))
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([path]);
+    });
   }
 
   dataDefault(){
@@ -72,5 +82,11 @@ export class HeaderComponent implements OnInit{
       })
     ).subscribe()
   }
-  
+  openDropdown() {
+    this.isDropdownOpen = true;
+  }
+
+  closeDropdown() {
+    this.isDropdownOpen = false;
+  }
 }

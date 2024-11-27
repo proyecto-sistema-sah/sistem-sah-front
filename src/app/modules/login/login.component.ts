@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit{
           let cliente:JwtData = jwtDecode(data.data['token']);
           const obj64 = this.base64Service.objectoToBase64(cliente)
           this.subjectService.setValueBase64(obj64);
-          mensaje = data.mensaje
+          mensaje = data.message
       }),
       catchError((err) => {
         console.error("Error: ", err);

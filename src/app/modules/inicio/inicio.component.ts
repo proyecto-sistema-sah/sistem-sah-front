@@ -33,6 +33,7 @@ export class InicioComponent implements OnInit{
     this.subjectService.getValueBase64().pipe(
       tap((data) => {
         const response:JwtData  = this.base64.base64ToObject(data)
+        console.log(response)
         this.urlImg = this.blobStorage.getBlobUrl(response.foto)
         this.nombreCompleto = response.nombreCompleto
       }),

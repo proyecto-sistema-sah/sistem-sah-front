@@ -22,5 +22,37 @@ module.exports = {
       "pathRewrite": {
         "^/api/v1/tipo-cuarto/": ""
       }
-  }        
+    },
+    "/api/v1/reserva/*": {
+      "target": "http://localhost:8002/api/v1/reserva/",
+      "secure": false,
+      "logLevel": "debug",
+      "pathRewrite": {
+        "^/api/v1/reserva/": ""
+      }
+    },          
+    "/api/v1/cuartos/*": {
+      "target": "http://localhost:8005/api/v1/cuartos/",
+      "secure": false,
+      "logLevel": "debug",
+      "pathRewrite": {
+        "^/api/v1/cuartos/": ""
+      }
+    },         
+    "/api/v1/servicios/*": {
+      "target": "http://localhost:8005/api/v1/servicios/",
+      "secure": false,
+      "logLevel": "debug",
+      "pathRewrite": {
+        "^/api/v1/servicios/": ""
+      }
+    },         
+    "/api/v1/alimentos/*": {
+      "target": "http://localhost:8005/api/v1/alimentos/",
+      "secure": false,
+      "logLevel": "debug",
+      "pathRewrite": {
+        "^/api/v1/alimentos/": ""
+      }
+    }
 }

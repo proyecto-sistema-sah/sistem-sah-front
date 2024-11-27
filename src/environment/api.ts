@@ -4,5 +4,10 @@ export const api = {
     getAllTipoUsuario: '/tipo-usuario/all',
     createUsuario: '/usuario/crear',
     getLogouthUsuario: '/usuario/logout',
-    getAllTipoCuarto: '/tipo-cuarto/buscar-todos'
+    getAllTipoCuarto: '/tipo-cuarto/buscar-todos',
+    getAllAlimentos: '/alimentos/consultar',
+    getAllServicios: '/servicios/consultar',
+    postCuartos: '/cuartos/consultar',
+    postCrearReserva: '/reserva/crear'
+
 }

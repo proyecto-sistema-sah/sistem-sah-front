@@ -2,106 +2,102 @@ import { Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Observable, throwError, TimeoutError } from 'rxjs';
 import { catchError, finalize, map, timeout } from 'rxjs/operators';
-import { HttpError } from '../models/http-error';
 import { environment } from '@env/environment';
 import { ISafeAny } from '@sharedModule/models/ISafeAny';
 import { UtilitiesService } from '@sharedModule/service/utilities.service';
+import { HttpError } from '@core/models/http-error';
 
 const APP_XHR_TIMEOUT = 120000;
 
 @Injectable()
 export class DefaultInterceptor implements HttpInterceptor {
 
-  constructor(private utilitiesService:UtilitiesService){}
+  constructor(private utilitiesService: UtilitiesService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(this.performRequest(req)).pipe(
       timeout(APP_XHR_TIMEOUT),
       map(res => this.handleSuccessfulResponse(res)),
       catchError(err => this.handleErrorResponse(err)),
-      finalize(this.handleRequestCompleted.bind(this))
+      finalize(() => this.handleRequestCompleted())
     );
   }
 
-  private getAdditionalHeaders(headers?: HttpHeaders): {
-    [name: string]: string;
-  } {
-    const res: { [name: string]: string } = {};
-    if (headers?.has('Authorization')) {
-      
-      const token = sessionStorage.getItem('userToken');
-      
-      if (token) {
-        res['Authorization'] = 'Bearer '+token;
-      } 
-    }
-    
-    return res;
+  private performRequest(req: HttpRequest<ISafeAny>): HttpRequest<ISafeAny> {
+    const headers = this.getUpdatedHeaders(req.headers);
+    const url = this.getFullUrl(req.url);
+
+    return req.clone({ url, setHeaders: headers });
   }
 
-  private performRequest(req: HttpRequest<ISafeAny>): HttpRequest<ISafeAny> {
-    let headers: HttpHeaders = req.headers;
-    headers = headers.set('Authorization', '');
+  private getUpdatedHeaders(headers: HttpHeaders): { [name: string]: string } {
+    const token = sessionStorage.getItem('userToken');
+    const updatedHeaders: { [name: string]: string } = {};
 
-    //console.log("req...", req);
-    // Prefijo de servidor unificado
-    let url = req.url;
-    if (!url.startsWith('https://') && !url.startsWith('http://')) {
-      const { baseUrl } = environment.api;
-      url = baseUrl + (baseUrl.endsWith('/') && url.startsWith('/') ? url.substring(1) : url);
+    if (token) {
+      updatedHeaders['Authorization'] = `Bearer ${token}`;
     }
 
-    return req.clone({ url, setHeaders: this.getAdditionalHeaders(headers) });
+    return updatedHeaders;
+  }
+
+  private getFullUrl(url: string): string {
+    if (!url.startsWith('https://') && !url.startsWith('http://')) {
+      const { baseUrl } = environment.api;
+      return `${baseUrl}${url.startsWith('/') ? url.substring(1) : url}`;
+    }
+    return url;
   }
 
   private handleSuccessfulResponse(event: ISafeAny): HttpResponse<ISafeAny> {
-   // console.log('response at interceptor', event);
-
-    if (event.body?.data?.token) {
+    if (event instanceof HttpResponse && event.body?.data?.token) {
       sessionStorage.setItem('userToken', event.body.data.token);
-     // console.log("token...", event.body.data.token);
     }
 
     if (event instanceof HttpResponse) {
-      event = event.clone({ body: event.body.response });
+      return event.clone({ body: event.body.response });
     }
-   // console.log("exit...", event);
-    
+
     return event;
   }
 
   private handleErrorResponse(errorResponse: ISafeAny): Observable<HttpEvent<ISafeAny>> {
-//    console.log('error at interceptor', errorResponse);
-
     if (errorResponse instanceof TimeoutError) {
-      return throwError(() => 'Timeout Exception');
+      return throwError(() => new Error('Timeout Exception'));
     }
-//    console.log('BASE_FRONT', errorResponse);
+  
     switch (errorResponse.status) {
-      case 401: 
-        console.log('¡Sesssion expired!, Redirect to Login');
-        sessionStorage.clear();
-        this.utilitiesService.showWarningMessage('¡Sesssion expired!');
-        break;
+      case 401:
+        this.handleSessionExpired();
+        return throwError(() => this.getCustomError(errorResponse));
       case 404:
       case 500:
-        return throwError(() => errorResponse);
-      case 503: // Internal Server Error
-        break;
-      default: // Other Error
+        return throwError(() => {
+          this.getCustomError(errorResponse)
+        });
+      default:
+        return throwError(() => this.getCustomError(errorResponse));
     }
+  }
 
+  private handleSessionExpired(): void {
+    sessionStorage.clear();
+  }
+
+  private getCustomError(errorResponse: ISafeAny): HttpError {
     let customError = new HttpError();
     try {
-      customError = HttpError.initWithCode(errorResponse.error.errors[0].code);
+      console.log(errorResponse)
+      // Verificar si errorResponse y su estructura existen
+      const error:Response = errorResponse?.error;
+      customError = HttpError.initWithCode(String(error.status));
     } catch (e) {
-      console.log(e);
+      console.error('Error parsing custom error:', e);
     }
-
-    return throwError(() => customError);
+    return customError;
   }
 
   private handleRequestCompleted(): void {
-    console.log(`Request finished`);
+    console.log('Request finished');
   }
 }

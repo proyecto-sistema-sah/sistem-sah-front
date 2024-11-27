@@ -1,6 +1,6 @@
 export class JwtData {
     public foto:string = ''
     public nombreCompleto:string = ''
-    public codigoCompleto:string = ''
+    public codigoUsuario:string = ''
     public rol:string = ''
 }

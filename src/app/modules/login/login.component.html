@@ -1,45 +1,69 @@
 <div class="container h-100 d-flex justify-content-center align-items-center">
   <div class="row justify-content-center w-100">
     <div class="col-md-6 col-lg-4">
-      <mat-card class="p-4 shadow">
+      <mat-card class="p-4 shadow-lg">
         <mat-card-header>
-          <mat-card-title class="mb-4 text-center">Iniciar Sesión</mat-card-title>
+          <mat-card-title class="text-center fs-4 fw-bold mb-3">Iniciar Sesión</mat-card-title>
         </mat-card-header>
         <mat-card-content>
           <form [formGroup]="formLogin" (ngSubmit)="loginUser(formLogin)">
             <!-- Campo de Correo Electrónico -->
-            <div class="mb-4">
-              <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Correo Electrónico</mat-label>
-                <input matInput placeholder="Ingresa tu correo" formControlName="correoUsuario" type="email" aria-label="Correo Electrónico">
-                <mat-error *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formLogin, 'correoUsuario')">
-                  {{ errorMessage }}
-                </mat-error>
-              </mat-form-field>
-            </div>
+            <mat-form-field appearance="outline" class="w-100 mb-4">
+              <mat-label>Correo Electrónico</mat-label>
+              <input
+                matInput
+                placeholder="Ingresa tu correo"
+                formControlName="correoUsuario"
+                type="email"
+                aria-label="Correo Electrónico"
+                autocomplete="email"
+              />
+              <mat-error *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formLogin, 'correoUsuario')">
+                {{ errorMessage }}
+              </mat-error>
+            </mat-form-field>
 
             <!-- Campo de Contraseña -->
-            <div class="mb-4">
-              <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Contraseña</mat-label>
-                <input matInput placeholder="Ingresa tu contraseña" formControlName="contrasenaUsuario" [type]="hide ? 'password' : 'text'" aria-label="Contraseña">
-                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="hide ? 'Mostrar contraseña' : 'Ocultar contraseña'" [attr.aria-pressed]="!hide">
-                  <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
-                </button>
-                <mat-error *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formLogin, 'contrasenaUsuario')">
-                  {{ errorMessage }}
-                </mat-error>
-              </mat-form-field>
-            </div>
+            <mat-form-field appearance="outline" class="w-100 mb-4">
+              <mat-label>Contraseña</mat-label>
+              <input
+                matInput
+                placeholder="Ingresa tu contraseña"
+                formControlName="contrasenaUsuario"
+                [type]="hide ? 'password' : 'text'"
+                aria-label="Contraseña"
+                autocomplete="current-password"
+              />
+              <button
+                mat-icon-button
+                matSuffix
+                (click)="hide = !hide"
+                [attr.aria-label]="hide ? 'Mostrar contraseña' : 'Ocultar contraseña'"
+                [attr.aria-pressed]="!hide"
+              >
+                <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+              </button>
+              <mat-error *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formLogin, 'contrasenaUsuario')">
+                {{ errorMessage }}
+              </mat-error>
+            </mat-form-field>
 
             <!-- Botón de Iniciar Sesión -->
-            <button type="submit" mat-raised-button color="primary" class="w-100 mt-3">Iniciar Sesión</button>
+            <button
+              type="submit"
+              mat-raised-button
+              color="primary"
+              class="w-100 mt-2 fw-semibold"
+              [disabled]="formLogin.invalid"
+            >
+              Iniciar Sesión
+            </button>
           </form>
 
           <!-- Enlace para redirigir a la página de registro -->
           <div class="text-center mt-4">
             <span>¿No tienes una cuenta?</span>
-            <a (click)="onRegisterUser()" class="text-primary">Regístrate aquí</a>
+            <a (click)="onRegisterUser()" class="text-primary text-decoration-underline">Regístrate aquí</a>
           </div>
         </mat-card-content>
       </mat-card>

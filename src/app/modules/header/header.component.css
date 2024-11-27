@@ -1,0 +1,60 @@
+.navbar {
+  background-color: #f8f9fa; /* Fondo claro */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+.navbar-brand img {
+  width: 50px;
+  height: 50px;
+}
+
+.nav-link {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #2c3e50;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #007bff;
+}
+
+.dropdown-menu {
+  display: none; /* Ocultar por defecto */
+  position: absolute;
+  top: 100%; /* Mostrar debajo del botón */
+  left: 0;
+  z-index: 1000;
+  min-width: 12rem;
+  padding: 0.5rem 0;
+  margin: 0;
+  font-size: 1rem;
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-menu.show {
+  display: block; /* Mostrar cuando se activa */
+}
+
+.dropdown-item {
+  padding: 0.5rem 1rem;
+  color: #2c3e50;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+  color: #007bff;
+}
+
+.dropdown-item:active {
+  background-color: #e2e6ea;
+}
+
+.rounded-circle {
+  border: 2px solid #f8f9fa; /* Bordes */
+}
