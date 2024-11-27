@@ -1,7 +1,8 @@
 module.exports = {
   "/api/v1/usuario/*": {
       "target": "https://sistema-sah-usuarios-e2efdyb8c6fva2ax.mexicocentral-01.azurewebsites.net/api/v1/usuario/",
-      "secure": true,
+      "secure": false,
+      "changeOrigin": true,
       "logLevel": "debug",
       "pathRewrite": {
         "^/api/v1/usuario/": ""
@@ -9,7 +10,8 @@ module.exports = {
   },
   "/api/v1/tipo-usuario/*": {
       "target": "https://sistema-sah-usuarios-e2efdyb8c6fva2ax.mexicocentral-01.azurewebsites.net/api/v1/tipo-usuario/",
-      "secure": true,
+      "secure": false,
+      "changeOrigin": true,
       "logLevel": "debug",
       "pathRewrite": {
         "^/api/v1/tipo-usuario/": ""
@@ -17,7 +19,8 @@ module.exports = {
   },
   "/api/v1/tipo-cuarto/*": {
     "target": "https://sistema-sah-reservas-ms-cngzf4d0aacsbehr.mexicocentral-01.azurewebsites.net/api/v1/tipo-cuarto/",
-    "secure": true,
+    "secure": false,
+    "changeOrigin": true,
     "logLevel": "debug",
     "pathRewrite": {
       "^/api/v1/tipo-cuarto/": ""
@@ -25,7 +28,8 @@ module.exports = {
   },
   "/api/v1/reserva/*": {
     "target": "https://sistema-sah-reservas-ms-cngzf4d0aacsbehr.mexicocentral-01.azurewebsites.net/api/v1/reserva/",
-    "secure": true,
+    "secure": false,
+    "changeOrigin": true,
     "logLevel": "debug",
     "pathRewrite": {
       "^/api/v1/reserva/": ""
@@ -33,7 +37,8 @@ module.exports = {
   },
   "/api/v1/facturacion/*": {
     "target": "https://sistema-sah-reservas-ms-cngzf4d0aacsbehr.mexicocentral-01.azurewebsites.net/api/v1/facturacion/",
-    "secure": true,
+    "secure": false,
+    "changeOrigin": true,
     "logLevel": "debug",
     "pathRewrite": {
       "^/api/v1/facturacion/": ""
@@ -41,7 +46,8 @@ module.exports = {
   },          
   "/api/v1/cuartos/*": {
     "target": "https://sistema-sah-servicios-g7hxe3dwbzhkdnfp.mexicocentral-01.azurewebsites.net/api/v1/cuartos/",
-    "secure": true,
+    "secure": false,
+    "changeOrigin": true,   
     "logLevel": "debug",
     "pathRewrite": {
       "^/api/v1/cuartos/": ""
@@ -49,7 +55,8 @@ module.exports = {
   },         
   "/api/v1/servicios/*": {
     "target": "https://sistema-sah-servicios-g7hxe3dwbzhkdnfp.mexicocentral-01.azurewebsites.net/api/v1/servicios/",
-    "secure": true,
+    "secure": false,
+    "changeOrigin": true,    
     "logLevel": "debug",
     "pathRewrite": {
       "^/api/v1/servicios/": ""
@@ -57,7 +64,8 @@ module.exports = {
   },         
   "/api/v1/alimentos/*": {
     "target": "https://sistema-sah-servicios-g7hxe3dwbzhkdnfp.mexicocentral-01.azurewebsites.net/api/v1/alimentos/",
-    "secure": true,
+    "secure": false,
+    "changeOrigin": true,    
     "logLevel": "debug",
     "pathRewrite": {
       "^/api/v1/alimentos/": ""
