@@ -11,7 +11,7 @@ export const environment = {
     repoImg: {
       urlBase: 'https://imagenesmf.blob.core.windows.net?',
       name: 'imagenes',
-      sasToken: 'sp=racwdl&st=2024-09-27T20:50:57Z&se=2025-12-12T04:50:57Z&sip=201.190.119.66&sv=2022-11-02&sr=c&sig=CzrRkCOCRU6G2ZLEz3Ev0kwUxx137H4MWOr1JX7K5zU%3D'
+      sasToken: 'sp=racwdl&st=2024-11-27T23:52:52Z&se=2024-12-27T07:52:52Z&sip=190.165.119.246&sv=2022-11-02&sr=c&sig=74Bkwf9Mnq4RiVsO%2BfiuUzBfUxItB%2BOxcr8rlwmfrmQ%3D'
     },
     file:{
       charactersValidation: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
