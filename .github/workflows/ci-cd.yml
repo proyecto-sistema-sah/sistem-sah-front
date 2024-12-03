@@ -42,12 +42,12 @@ jobs:
       # Construir la imagen de Docker
       - name: Build Docker image
         if: success()
-        run: docker build -t brahiancg/sistema-sah-front:latest .
+        run: docker build -t mariafernanda2798/sistema-sah-front:latest .
 
       # Subir la imagen a Docker Hub
       - name: Push Docker image
         if: success()
-        run: docker push brahiancg/sistema-sah-front:latest
+        run: docker push mariafernanda2798/sistema-sah-front:latest
 
   deploy:
     if: success()
@@ -67,4 +67,4 @@ jobs:
         if: success()
         with:
           app-name: "sistema-sah-front-mr"
-          images: "brahiancg/sistema-sah-front:latest"
+          images: "mariafernanda2798/sistema-sah-front:latest"
