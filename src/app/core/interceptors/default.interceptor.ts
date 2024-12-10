@@ -112,6 +112,7 @@ export class DefaultInterceptor implements HttpInterceptor {
       case 401:
         this.handleSessionExpired();
         return throwError(() => this.getCustomError(errorResponse));
+      case 400:
       case 404:
       case 500:
         return throwError(() => this.getCustomError(errorResponse));
@@ -135,9 +136,9 @@ export class DefaultInterceptor implements HttpInterceptor {
   private getCustomError(errorResponse: ISafeAny): HttpError {
     let customError = new HttpError();
     try {
-      console.error(errorResponse);
+      console.error('Error interceptor -> ' + errorResponse);
       const error = errorResponse?.error;
-      customError = HttpError.initWithCode(String(error?.status || 'UNKNOWN'));
+      customError = HttpError.initWithCode(String(error?.status || 'UNKNOWN'), String(error?.message || 'UNKNOWN'));
     } catch (e) {
       console.error('Error parsing custom error:', e);
     }

@@ -52,6 +52,19 @@ export class CuartosComponent {
     const token = sessionStorage.getItem('userToken');
     if (!token) return;
 
+    let valido = true
+    // Convertimos las fechas a solo la parte de día para evitar problemas con horas
+    const start = new Date(this.startDate!);
+    const end = new Date(this.endDate!);
+
+    // Comparamos los días (el end debe ser al menos un día mayor que start)
+    if (start >= end) {
+      this.utilitiesService.showErrorMessage(
+        "La fecha de fin debe ser al menos un día posterior a la fecha de inicio."
+      );
+      return;
+    }
+
     const usuarioData: JwtData = jwtDecode(token);
     const reservaData: ReservaCuarto = {
       codigoCuarto,
@@ -65,11 +78,12 @@ export class CuartosComponent {
     this.spinner.show();
     this.reservaService.postCrearReserva(reservaData).pipe(
       tap(() => {
-        this.utilitiesService.showSucessMessage('Reserva creada exitosamente.')
+        this.utilitiesService.showSucessMessage('Reserva creada exitosamente.');
+        this.loadAvailableRooms(); // Refrescar la lista de cuartos disponibles
       }),
       catchError((error) => {
         console.error('Error al crear la reserva:', error);
-        this.utilitiesService.showSucessMessage('Error al crear la reserva:')
+        this.utilitiesService.showErrorMessage('Error al crear la reserva.');
         return of(null);
       }),
       finalize(() => this.spinner.hide())
@@ -80,28 +94,28 @@ export class CuartosComponent {
     this.spinner.show();
     const subjectValue = this.subject.getValue();
     const idTipoCuarto = subjectValue ? Number(subjectValue) : 0;
-
-    const request: CuartosDisponibles = {
-      idTipoCuarto,
-      fechaInicioReserva: this.startDate,
-      fechaFinReserva: this.endDate,
-    };
-
-    this.cuartoService.getAllCuartos(request).pipe(
-      tap((response: IResponse) => {
-        this.cuartos = response.data as Cuarto[];
-        this.cuartos.forEach((cuarto) => {
-          cuarto.codigoImagenCuarto = this.blobStorage.getBlobUrl(cuarto.codigoImagenCuarto);
-        });
-        this.setPriceRange();
-        this.filterRooms();
-      }),
-      catchError((error) => {
-        console.error('Error al cargar cuartos:', error);
-        return of(null);
-      }),
-      finalize(() => this.spinner.hide())
-    ).subscribe();
+    
+      const request: CuartosDisponibles = {
+        idTipoCuarto,
+        fechaInicioReserva: this.startDate,
+        fechaFinReserva: this.endDate,
+      };
+  
+      this.cuartoService.getAllCuartos(request).pipe(
+        tap((response: IResponse) => {
+          this.cuartos = response.data as Cuarto[];
+          this.cuartos.forEach((cuarto) => {
+            cuarto.codigoImagenCuarto = this.blobStorage.getBlobUrl(cuarto.codigoImagenCuarto);
+          });
+          this.setPriceRange();
+          this.filterRooms();
+        }),
+        catchError((error) => {
+          console.error('Error al cargar cuartos:', error);
+          return of(null);
+        }),
+        finalize(() => this.spinner.hide())
+      ).subscribe();
   }
 
   setPriceRange(): void {

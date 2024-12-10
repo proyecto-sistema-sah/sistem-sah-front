@@ -9,6 +9,7 @@ export const CODE_NOT_VALID = 'CODE_NOT_VALID';
 export const BAD_CREDENTIAL = 'BAD_CREDENTIAL';
 export const USER_ALREADY_EXIST = 'USER_ALREADY_EXIST';
 export const UNAUTHORIZED = 'UNAUTHORIZED';
+export const BAD_REQUEST = 'BAD_REQUEST'
 
 /**
  * Colección de errores de la aplicación.
@@ -19,6 +20,11 @@ export const APP_ERRORS = [
     code: ERROR_VALIDATE_EMAIL_PROVIDER,
     title: 'Error de Validación del Proveedor de Email',
     message: 'El email proporcionado no existe. Por favor, verifique.',
+  },
+  {
+    code: BAD_REQUEST,
+    title: 'Error en la data',
+    message: '',
   },
   {
     code: UNAUTHORIZED,

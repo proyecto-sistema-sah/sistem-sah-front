@@ -139,6 +139,7 @@ export class RegistrarUsuarioComponent implements OnInit {
   // Registra al usuario en el backend
   private registerUser(usuario: Usuario): void {
     let mensaje = '';
+    let valido = true;
     this.usuarioService
       .crearUsuario(usuario)
       .pipe(
@@ -148,15 +149,18 @@ export class RegistrarUsuarioComponent implements OnInit {
         catchError((err) => {
           console.error('Error al crear usuario:', err);
           this.utilitiesService.showErrorMessage(err.message);
+          valido = false
           return of(null);
         }),
         finalize(() => {
           this.spinner.hide().then(() => {
-            this.utilitiesService
+            if(valido){
+              this.utilitiesService
               .showSucessMessage(mensaje, 'Usuario Creado', 'Aceptar')
               .then(() => {
                 this.router.navigate(['/login']);
               });
+            }
           });
         })
       )

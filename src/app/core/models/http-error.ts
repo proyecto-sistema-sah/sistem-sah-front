@@ -74,7 +74,7 @@ export class HttpError {
    * @param code Código del error, o `null` si no está disponible.
    * @returns Una instancia de `HttpError`.
    */
-  public static initWithCode(code: string | null): HttpError {
+  public static initWithCode(code: string | null, errorMessage:string): HttpError {
     const httpError = new HttpError();
 
     // Asigna el código del error, o una cadena vacía si el código es `null`.
@@ -84,7 +84,7 @@ export class HttpError {
     const appError = APP_ERRORS.find((item) => item.code === code);
     if (appError) {
       httpError.title = appError.title; // Asigna el título si se encuentra.
-      httpError.message = appError.message; // Asigna el mensaje si se encuentra.
+      httpError.message = errorMessage; // Asigna el mensaje si se encuentra.
     }
 
     return httpError;

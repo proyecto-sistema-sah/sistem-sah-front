@@ -9,6 +9,7 @@ export const api = {
     getAllServicios: '/servicios/consultar',
     postCuartos: '/cuartos/consultar',
     postCrearReserva: '/reserva/crear',
+    postCambiarEstado: '/reserva/cambiar-estado',
     getReservasUsuario: '/reserva/all-usuario',
     getConsultarFacturacionesUsuario: '/facturacion/all-facturaciones'
 
