@@ -10,8 +10,8 @@
         [attr.data-bs-slide-to]="i"
         [class.active]="i === 0"
         [attr.aria-current]="i === 0 ? 'true' : 'false'"
-        [attr.aria-label]="'Slide ' + (i + 1)"
-      ></button>
+        [attr.aria-label]="getSlideLabel(i)"
+              ></button>
     </div>
 
     <!-- Elementos del carrusel -->
@@ -20,7 +20,7 @@
         <img
           [src]="image"
           class="d-block w-100 rounded"
-          alt="Imagen {{ i + 1 }}"
+          [alt]="getSlideLabel(i)"
           style="height: 100%; object-fit: cover;"
         />
       </div>
@@ -34,7 +34,7 @@
       data-bs-slide="prev"
     >
       <mat-icon class="text-primary">arrow_back</mat-icon>
-      <span class="visually-hidden">Anterior</span>
+      <span class="visually-hidden">{{ 'CARRUSEL.BOTONES.ANTERIOR' | translate }}</span>
     </button>
     <button
       class="carousel-control-next"
@@ -43,7 +43,7 @@
       data-bs-slide="next"
     >
       <mat-icon class="text-primary">arrow_forward</mat-icon>
-      <span class="visually-hidden">Siguiente</span>
+      <span class="visually-hidden">{{ 'CARRUSEL.BOTONES.SIGUIENTE' | translate }}</span>
     </button>
   </div>
 </div>
@@ -51,7 +51,11 @@
 <!-- Sección de texto y botones -->
 <div class="container mt-5">
   <div class="text-center p-4 bg-light rounded shadow-lg">
-    <h3 class="mb-3 fw-bold text-primary">Sistema de Automatización Hotelera</h3>
-    <p class="lead text-muted">Disfruta del mejor servicio al mejor precio en cada estadía</p>
+    <h3 class="mb-3 fw-bold text-primary">
+      {{ 'SECCION.TITULO' | translate }}
+    </h3>
+    <p class="lead text-muted">
+      {{ 'SECCION.DESCRIPCION' | translate }}
+    </p>
   </div>
 </div>

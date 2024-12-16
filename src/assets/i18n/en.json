@@ -1,0 +1,259 @@
+{
+  "LOGIN": {
+    "INICIO": "Login",
+    "CORREO": "Email",
+    "CONTRASENA": "Password",
+    "PLACEHOLDER": {
+      "CORREO": "Enter your email",
+      "CONTRASENA": "Enter your password"
+    },
+    "BOTON": {
+      "INICIAR": "Login"
+    },
+    "REGISTRO": {
+      "PREGUNTA": "Don't have an account?",
+      "ENLACE": "Register here"
+    },
+    "MOSTRAR": "Show password",
+    "OCULTAR": "Hide password"
+  },
+  
+  "NAVBAR": {
+    "LOGO_ALT": "Logo",
+    "HOME": "Home",
+    "ROOMS": "Rooms",
+    "GASTRONOMY": "Gastronomy",
+    "SERVICES": "Services",
+    "SHOPPING": "Shopping",
+    "BILLING": "Billing",
+    "USER_MENU": {
+      "LOGOUT": "Logout",
+      "PROFILE_PICTURE_ALT": "Profile Picture"
+    },
+    "ROOM_TYPES": {
+      "ALL": "All Rooms"
+    }
+  },
+  "REGISTER": {
+    "TITLE": "User Registration",
+    "FORM": {
+      "NOMBRES": "First Name",
+      "APELLIDOS": "Last Name",
+      "CORREO": "Email",
+      "CONTRASENA": "Password",
+      "REPETIR_CONTRASENA": "Repeat Password",
+      "TIPO_USUARIO": "User Type",
+      "PLACEHOLDERS": {
+        "NOMBRES": "Enter your first name",
+        "APELLIDOS": "Enter your last name",
+        "CORREO": "Enter your email",
+        "CONTRASENA": "Enter a password",
+        "REPETIR_CONTRASENA": "Repeat the password"
+      },
+      "SUBIR_IMAGEN": "Upload Profile Picture",
+      "FORMATO_IMAGEN": "Allowed format: JPG, PNG. Max size: 2MB.",
+      "VISTA_PREVIA": "Preview of selected image"
+    },
+    "BUTTONS": {
+      "REGISTRAR": "Register",
+      "CANCELAR": "Cancel"
+    }
+  },
+  "SERVICIOS": {
+    "TITULO_PRINCIPAL": "Welcome to Our Services",
+    "INTRODUCCION": "Exclusive experiences designed for your comfort and satisfaction. Discover what we have to offer.",
+    "EXPERIENCIAS": {
+      "TITULO": "Unique Experiences",
+      "DESCRIPCION": "At our hotel, we pride ourselves on offering world-class services designed to meet all your needs. Whether it's relaxing in our spa, enjoying our gastronomy, or exploring our facilities, we have everything you need for an unforgettable stay.",
+      "BOTON": "Learn more about us"
+    },
+    "DESTACADOS": {
+      "TITULO": "Featured Services"
+    },
+    "TODOS": {
+      "BOTON": "View all services",
+      "TITULO": "All Our Services",
+      "VALOR": "Value"
+    }
+  },
+  "CARRUSEL": {
+    "SLIDE": "Image",
+    "BOTONES": {
+      "ANTERIOR": "Previous",
+      "SIGUIENTE": "Next"
+    }
+  },
+  "SECCION": {
+    "TITULO": "Hotel Automation System",
+    "DESCRIPCION": "Enjoy the best service at the best price during your stay"
+  },
+  "GASTRONOMIA": {
+    "TITULO_PRINCIPAL": "Our Gastronomy",
+    "INTRODUCCION": "Discover the flavors we've prepared especially for you.",
+    "SABORES_UNICOS": {
+      "TITULO": "Unique Flavors",
+      "DESCRIPCION": "Our gastronomic selection is designed to delight your palate with fresh ingredients and exquisite recipes. From traditional dishes to international options, our cuisine is an unforgettable culinary experience.",
+      "BOTON": "Explore our options"
+    },
+    "DESTACADOS": {
+      "TITULO": "Featured Dishes",
+      "TIEMPO_PREPARACION": "Preparation time"
+    },
+    "TODOS": {
+      "BOTON": "View all dishes",
+      "TITULO": "All Our Dishes"
+    }
+  },
+  "FACTURACIONES": {
+    "TITULO_PRINCIPAL": "Invoices",
+    "CAMPOS": {
+      "CODIGO": "Code",
+      "FECHA_CREACION": "Creation Date",
+      "ESTADO": "Status",
+      "RESERVA": "Reservation"
+    },
+    "ESTADOS": {
+      "PAGADO": "Paid",
+      "PENDIENTE": "Pending",
+      "CANCELADO": "Cancelled"
+    },
+    "BOTON_DESCARGAR": "Download PDF"
+  },
+  "RESERVAS": {
+    "TITULO_PRINCIPAL": "Room Reservations",
+    "FILTROS": {
+      "RANGO_PRECIOS": "Price Range",
+      "RANGO_FECHAS": "Date Range",
+      "DESDE": "From",
+      "HASTA": "To",
+      "BOTON_BUSCAR": "Search Rooms"
+    },
+    "CARTAS": {
+      "TARIFA": "Rate includes breakfast and hotel insurance.",
+      "POR_NOCHE": "per night",
+      "LIBRE": "Free WiFi connection",
+      "INCLUYE": "Includes parking and access to wet areas",
+      "BOTON_RESERVAR": "Reserve Now"
+    }
+  },
+  "RESERVAS_LISTADO": {
+    "TITULO": "Reservation List",
+    "COLUMNAS": {
+      "CODIGO": "Reservation Code",
+      "FECHA_INICIO": "Start Date",
+      "FECHA_FIN": "End Date",
+      "VALOR_TOTAL": "Total Value",
+      "ESTADO": "Status",
+      "ACCIONES": "Actions"
+    },
+    "ACCIONES": {
+      "CANCELAR": "Cancel",
+      "CONFIRMAR": "Confirm"
+    }
+  },
+  "ERRORS": {
+    "DEFAULT": "The value of this field is not valid",
+    "REQUIRED": "This field is required",
+    "MINLENGTH": "This field must have at least {minlength.requiredLength} characters",
+    "MAXLENGTH": "This field must have at most {maxlength.requiredLength} characters",
+    "PATTERN": "The value of this field is not valid",
+    "MIN": "The value of this field must be greater than or equal to {min.min}",
+    "MAX": "The value of this field must be less than or equal to {max.max}",
+    "TEL_BETWEEN_DIGITS": "The phone number must have between {telBetweenDigits.min} and {telBetweenDigits.max} digits",
+    "PHONE_DIGITS": "Your phone number must have {phoneDigits.digits} digits",
+    "IS_NAN": "The value of this field must be numeric",
+    "FULL_NAME": "You must enter a valid name",
+    "MIN_CURRENCY": "The value of this field must be greater than $ {minCurrency.min}",
+    "MAX_CURRENCY": "The value of this field must be less than $ {maxCurrency.max}",
+    "MAX_ADVANCE": "The value cannot exceed your advance availability ($ {maxAdvance.max})",
+    "IS_MULTIPLE": "The value is not a multiple of $ {isMultiple.multiple}",
+    "EMAIL": "The value must be a valid email",
+    "BETWEEN_AGE": "You must be between {betweenAge.min} and {betweenAge.max} years old",
+    "VALID_ADDRESS": "You must enter a valid address",
+    "NO_PASSWORD_MATCH": "Passwords do not match",
+    "ALPHANUMERIC": "No special characters are allowed, only the hyphen (-)",
+    "ONLY_NUMBERS": "Only numeric values are allowed in this field",
+    "ONLY_LETTERS": "Only letters are allowed in this field",
+    "HAS_CAPITAL_CASE": "This field must contain uppercase letters",
+    "HAS_SMALL_CASE": "This field must contain lowercase letters",
+    "HAS_SPECIAL_CHARACTERS": "This field must contain special characters",
+    "SIZE": "The file is larger than 2 MB",
+    "LOWPASSWORD":"The password is too weak",
+    "LOW_PASSWORD": "The password is too weak",
+    "NOT_SAME": "Passwords do not match",
+    "DATE_OUT_OF_RANGE": "The date is not in the allowed range",
+    "FIELD_REQUIRED": "This field is mandatory",
+    "INVALID_FORMAT": "The field format is invalid",
+    "INVALID_EMAIL": "Please enter a valid email",
+    "ONLY_ALPHANUMERIC": "Only alphanumeric characters are allowed in this field",
+    "INVALID_NUMBER": "The entered value is not a valid number"
+  },
+  "ALIMENTOS": {
+    "TIRAMISÚ": {
+      "NOMBRE": "Tiramisu",
+      "DETALLE": "Delicious Italian dessert with coffee and mascarpone."
+    },
+    "BRUSCHETTA": {
+      "NOMBRE": "Bruschetta",
+      "DETALLE": "Slices of bread with tomato, basil, and olive oil."
+    },
+    "RAVIOLIS": {
+      "NOMBRE": "Ravioli",
+      "DETALLE": "Pasta stuffed with cheese and spinach in tomato sauce."
+    },
+    "LIMONADA": {
+      "NOMBRE": "Lemonade",
+      "DETALLE": "Refreshing drink made from freshly squeezed lemon."
+    }
+  },
+  "TIPOS_USUARIO": {
+    "ADMINISTRADOR": "Administrator",
+    "USUARIO": "User"
+  },
+  "TIPOS_SERVICIO": {
+    "Spa": "Spa",
+    "Room Service": "Room Service",
+    "Transporte": "Transport",
+    "Tours guiados": "Guided Tours"
+  },
+  "SERVICIOS_NOMBRES": {
+    "Masaje relajante": "Relaxing Massage",
+    "Entrega de desayuno": "Breakfast Delivery",
+    "Servicio de taxi": "Taxi Service",
+    "Tour a la ciudad": "City Tour"
+  },
+  "SERVICIOS_DETALLES": {
+    "Relaja tus músculos con nuestro masaje de 1 hora.": "Relax your muscles with our 1-hour massage.",
+    "Desayuno completo entregado a tu habitación.": "Full breakfast delivered to your room.",
+    "Transporte seguro hacia tu destino.": "Safe transport to your destination.",
+    "Explora los lugares más emblemáticos con un guía experto.": "Explore the most iconic places with an expert guide."
+  },
+  "TIPOS_CUARTO": {
+    "Habitación estándar": "Standard Room",
+    "Suite": "Suite",
+    "Habitación familiar": "Family Room",
+    "Suite presidencial": "Presidential Suite"
+  },
+  "TIPOS_ALIMENTO": {
+    "Postres": "Desserts",
+    "Entradas": "Appetizers",
+    "Platos fuertes": "Main courses",
+    "Bebidas": "Drinks"
+  },
+  "ESTADOS_RESERVA": {
+    "COMPLETADO": "Completed",
+    "CANCELADO": "Cancelled",
+    "PENDIENTE": "Pending"
+  },
+  "DETALLE_CUARTO": {
+    "Habitación familiar con dos camas dobles.": "Family room with two double beds.",
+    "Habitación estándar con cama doble y baño privado.": "Standard room with a double bed and private bathroom.",
+    "Suite con vista al mar y jacuzzi.": "Suite with ocean view and jacuzzi.",
+    "Suite presidencial con sala de estar y cocina.": "Presidential suite with living room and kitchen."
+  },
+  "ESTADOS_FACTURACION": {
+    "PAGADO": "Paid",
+    "CANCELADO": "Cancelled",
+    "PENDIENTE": "Pending"
+  }
+}

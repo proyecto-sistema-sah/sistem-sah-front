@@ -1,15 +1,17 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { TranslateService } from '@ngx-translate/core';
 import { cambiarEstadoReserva } from '@sharedModule/models/CambiarEstadoReserva';
 import { JwtData } from '@sharedModule/models/JwtData';
 import { ReservaCuarto } from '@sharedModule/models/ReservaCuarto';
 import { IResponse } from '@sharedModule/models/Response';
 import { ReservaService } from '@sharedModule/service/reserva.service';
+import { TranslationService } from '@sharedModule/service/TranslationService.service';
 import { UtilitiesService } from '@sharedModule/service/utilities.service';
 import { jwtDecode } from 'jwt-decode';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { catchError, finalize, of, tap } from 'rxjs';
+import { catchError, finalize, of, Subscription, tap } from 'rxjs';
 
 @Component({
   selector: 'app-compras',
@@ -26,6 +28,7 @@ export class ComprasComponent implements OnInit {
     'estadoReservaDtoFk',
     'acciones'
   ];
+  private languageSubscription!: Subscription;
 
   // Fuente de datos para la tabla
   dataSource = new MatTableDataSource<ReservaCuarto>([]);
@@ -35,13 +38,21 @@ export class ComprasComponent implements OnInit {
   constructor(
     private reservaService: ReservaService,
     private spinner: NgxSpinnerService,
-    private utilidades: UtilitiesService
-  ) {}
+    private utilidades: UtilitiesService,
+                          private translation:TranslationService,
+                          private translate: TranslateService,
+                          private cdRef: ChangeDetectorRef // Para detectar cambios manualmente
+  ) {
+  }
 
   /**
    * Método de inicialización del componente.
    */
   ngOnInit(): void {
+    this.languageSubscription = this.translation.language$.subscribe(() => {
+      this.updateTranslations(); // Actualizar textos dinámicamente
+    });
+    this.updateTranslations(); // Actualizar textos dinámicamente
     this.fetchReservas();
   }
 
@@ -109,5 +120,16 @@ export class ComprasComponent implements OnInit {
         this.spinner.hide();
       })
     ).subscribe();
+  }
+  private updateTranslations(): void {
+    this.translate.use(this.translation.getCurrentLanguage())
+    this.cdRef.detectChanges(); // Forzar la detección de cambios
+  }
+
+  ngOnDestroy(): void {
+    // Cancelar suscripciones al destruir el componente
+    if (this.languageSubscription) {
+      this.languageSubscription.unsubscribe();
+    }
   }
 }

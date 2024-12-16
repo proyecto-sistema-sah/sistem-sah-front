@@ -15,6 +15,7 @@ import { GastronomiaComponent } from './gastronomia/gastronomia.component';
 import { ServicioComponent } from './servicio/servicio.component';
 import { ComprasComponent } from './compras/compras.component';
 import { FacturacionComponent } from './facturacion/facturacion.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 /**
  * Módulo principal para la funcionalidad de "Inicio".
@@ -27,6 +28,7 @@ import { FacturacionComponent } from './facturacion/facturacion.component';
     HttpClientModule,
     ReactiveFormsModule,
     HeaderModule,
+    TranslateModule,
     FormsModule,
     RouterModule.forChild(INICIO_ROUTES), // Lazy loading de rutas
   ],

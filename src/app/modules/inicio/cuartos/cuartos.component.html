@@ -1,14 +1,16 @@
 <div class="container mt-4">
   <div class="row">
     <div class="col-12 mb-4">
-      <h2 class="text-center">Reservas de Cuartos</h2>
+      <h2 class="text-center">{{ 'RESERVAS.TITULO_PRINCIPAL' | translate }}</h2>
     </div>
 
     <div class="col-12 mb-4">
       <div class="filter-section mt-3">
         <div class="row">
           <div class="col-md-6">
-            <label for="priceRange" class="form-label">Rango de precios</label>
+            <label for="priceRange" class="form-label">
+              {{ 'RESERVAS.FILTROS.RANGO_PRECIOS' | translate }}
+            </label>
             <mat-slider
               id="priceRange"
               thumbLabel
@@ -25,17 +27,19 @@
           </div>
 
           <div class="col-md-6">
-            <label for="startDate" class="form-label">Rango de fechas</label>
+            <label for="startDate" class="form-label">
+              {{ 'RESERVAS.FILTROS.RANGO_FECHAS' | translate }}
+            </label>
             <div class="d-flex gap-3">
               <mat-form-field appearance="fill" class="w-50">
-                <mat-label>Desde</mat-label>
+                <mat-label>{{ 'RESERVAS.FILTROS.DESDE' | translate }}</mat-label>
                 <input matInput [matDatepicker]="startPicker" [min]="minDate" [(ngModel)]="startDate" />
                 <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
                 <mat-datepicker #startPicker></mat-datepicker>
               </mat-form-field>
 
               <mat-form-field appearance="fill" class="w-50">
-                <mat-label>Hasta</mat-label>
+                <mat-label>{{ 'RESERVAS.FILTROS.HASTA' | translate }}</mat-label>
                 <input matInput [matDatepicker]="endPicker" [min]="startDate || minDate" [(ngModel)]="endDate" />
                 <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
                 <mat-datepicker #endPicker></mat-datepicker>
@@ -45,7 +49,9 @@
         </div>
         <div class="row mt-3">
           <div class="col-12 text-center">
-            <button mat-raised-button color="primary" (click)="loadAvailableRooms()">Buscar Cuartos</button>
+            <button mat-raised-button color="primary" (click)="loadAvailableRooms()">
+              {{ 'RESERVAS.FILTROS.BOTON_BUSCAR' | translate }}
+            </button>
           </div>
         </div>
       </div>
@@ -58,21 +64,33 @@
             <div class="room-image">
               <img
                 [src]="cuarto.codigoImagenCuarto"
-                alt="{{ cuarto.detalleCuarto }}"
+                [alt]="'DETALLE_CUARTO.' + cuarto.detalleCuarto | translate"
                 class="img-fluid rounded"
               />
             </div>
             <div class="room-info ms-lg-4 mt-3 mt-lg-0">
-              <h3 class="room-title">{{ cuarto.tipoCuartoDtoFk.nombreTipoCuarto }}</h3>
+              <h3 class="room-title">
+                {{ 'TIPOS_CUARTO.' + cuarto.tipoCuartoDtoFk.nombreTipoCuarto | translate }}
+              </h3>
               <p class="room-details">
-                {{ cuarto.numeroCuarto }} &bull; {{ cuarto.detalleCuarto }}
+                {{ cuarto.numeroCuarto }} &bull;
+                {{ 'DETALLE_CUARTO.' + cuarto.detalleCuarto | translate }}
               </p>
               <ul class="room-features">
-                <li *ngIf="cuarto.estadoCuartoDtoFk.nombreEstadoCuarto === 'LIBRE'">Conexión wifi gratuita</li>
-                <li>Incluye parqueadero y acceso a zonas húmedas</li>
+                <li *ngIf="cuarto.estadoCuartoDtoFk.nombreEstadoCuarto === 'LIBRE'">
+                  {{ 'RESERVAS.CARTAS.LIBRE' | translate }}
+                </li>
+                <li>
+                  {{ 'RESERVAS.CARTAS.INCLUYE' | translate }}
+                </li>
               </ul>
-              <p class="room-price">{{ cuarto.valorNocheCuarto | currency }} por noche</p>
-              <p class="room-disclaimer">Tarifa con desayuno y seguro hotelero.</p>
+              <p class="room-price">
+                {{ cuarto.valorNocheCuarto | currency }}
+                {{ 'RESERVAS.CARTAS.POR_NOCHE' | translate }}
+              </p>
+              <p class="room-disclaimer">
+                {{ 'RESERVAS.CARTAS.TARIFA' | translate }}
+              </p>
               <button
                 mat-raised-button
                 color="primary"
@@ -80,7 +98,7 @@
                 (click)="guardarReserva(cuarto.codigoCuarto)"
                 [disabled]="cuarto.estadoCuartoDtoFk.nombreEstadoCuarto !== 'LIBRE'"
               >
-                Reservar Ahora
+                {{ 'RESERVAS.CARTAS.BOTON_RESERVAR' | translate }}
               </button>
             </div>
           </div>

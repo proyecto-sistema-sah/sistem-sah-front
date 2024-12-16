@@ -1,17 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { emailValidator, sizeFileSelect, strongPassword } from '@common/helpers/validators/formats.validators';
+import { TranslateService } from '@ngx-translate/core';
 import { ITipoUsuario } from '@sharedModule/models/ITipoUsuario';
 import { IResponse } from '@sharedModule/models/Response';
 import { Usuario } from '@sharedModule/models/Usuario';
 import { BlobStorageService } from '@sharedModule/service/blobStorage.service';
 import { ErrorHandlerService } from '@sharedModule/service/errorHandler.service';
 import { TipoUsuarioService } from '@sharedModule/service/tipoUsuario.service';
+import { TranslationService } from '@sharedModule/service/TranslationService.service';
 import { UsuarioService } from '@sharedModule/service/usuario.service';
 import { UtilitiesService } from '@sharedModule/service/utilities.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { catchError, finalize, of, tap } from 'rxjs';
+import { catchError, finalize, of, Subscription, tap } from 'rxjs';
 
 @Component({
   selector: 'app-registrar-usuario',
@@ -26,6 +28,7 @@ export class RegistrarUsuarioComponent implements OnInit {
   public hide = true; // Mostrar/ocultar contraseña
   imagePreview: string | ArrayBuffer | null = null; // Almacena la imagen para previsualización
   private nombre: string = ''; // Nombre del archivo subido al Blob Storage
+  private languageSubscription!: Subscription;
 
   constructor(
     private blobStorageService: BlobStorageService,
@@ -35,11 +38,19 @@ export class RegistrarUsuarioComponent implements OnInit {
     private utilitiesService: UtilitiesService,
     private usuarioService: UsuarioService,
     private tipoUsuarioService: TipoUsuarioService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private translation:TranslationService,
+    private translate: TranslateService,
+    private cdRef: ChangeDetectorRef // Para detectar cambios manualmente
+    ) {
+    }
 
   ngOnInit(): void {
     this.buildFormRegister(); // Construir el formulario
+    this.languageSubscription = this.translation.language$.subscribe(() => {
+      this.updateTranslations(); // Actualizar textos dinámicamente
+    });
+    this.updateTranslations(); // Actualizar textos dinámicamente
     this.getDataDefault(); // Cargar datos iniciales
   }
 
@@ -171,4 +182,17 @@ export class RegistrarUsuarioComponent implements OnInit {
   async listFiles(): Promise<void> {
     this.files = await this.blobStorageService.listBlobs();
   }
+
+  private updateTranslations(): void {
+    this.translate.use(this.translation.getCurrentLanguage())
+    this.cdRef.detectChanges(); // Forzar la detección de cambios
+  }
+
+  ngOnDestroy(): void {
+    // Cancelar suscripciones al destruir el componente
+    if (this.languageSubscription) {
+      this.languageSubscription.unsubscribe();
+    }
+  }
+
 }

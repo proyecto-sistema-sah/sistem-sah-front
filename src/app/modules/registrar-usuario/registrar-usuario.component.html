@@ -3,7 +3,7 @@
     <div class="col-md-8">
       <mat-card class="p-4 shadow-lg rounded">
         <mat-card-header>
-          <mat-card-title class="text-center fs-4 fw-bold mb-3">Registro de Usuario</mat-card-title>
+          <mat-card-title class="text-center fs-4 fw-bold mb-3">{{ 'REGISTER.TITLE' | translate }}</mat-card-title>
         </mat-card-header>
         <mat-card-content>
           <form [formGroup]="formRegister" (ngSubmit)="createUsuario()">
@@ -11,8 +11,8 @@
               <!-- Nombres -->
               <div class="col-md-6">
                 <mat-form-field appearance="outline" class="w-100 mb-4">
-                  <mat-label>Nombres</mat-label>
-                  <input matInput placeholder="Ingresa tus nombres" formControlName="nombres" required />
+                  <mat-label>{{ 'REGISTER.FORM.NOMBRES' | translate }}</mat-label>
+                  <input matInput [placeholder]="'REGISTER.FORM.PLACEHOLDERS.NOMBRES' | translate" formControlName="nombres" required />
                   <mat-error *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formRegister, 'nombres')">
                     {{ errorMessage }}
                   </mat-error>
@@ -21,8 +21,8 @@
               <!-- Apellidos -->
               <div class="col-md-6">
                 <mat-form-field appearance="outline" class="w-100 mb-4">
-                  <mat-label>Apellidos</mat-label>
-                  <input matInput placeholder="Ingresa tus apellidos" formControlName="apellidos" required />
+                  <mat-label>{{ 'REGISTER.FORM.APELLIDOS' | translate }}</mat-label>
+                  <input matInput [placeholder]="'REGISTER.FORM.PLACEHOLDERS.APELLIDOS' | translate" formControlName="apellidos" required />
                   <mat-error *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formRegister, 'apellidos')">
                     {{ errorMessage }}
                   </mat-error>
@@ -34,18 +34,16 @@
               <!-- Correo Electrónico -->
               <div class="col-md-6">
                 <mat-form-field appearance="outline" class="w-100 mb-4">
-                  <mat-label>Correo Electrónico</mat-label>
+                  <mat-label>{{ 'REGISTER.FORM.CORREO' | translate }}</mat-label>
                   <input
                     matInput
-                    placeholder="Ingresa tu correo electrónico"
+                    [placeholder]="'REGISTER.FORM.PLACEHOLDERS.CORREO' | translate"
                     type="email"
                     formControlName="correoUsuario"
                     autocomplete="email"
                     required
                   />
-                  <mat-error
-                    *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formRegister, 'correoUsuario')"
-                  >
+                  <mat-error *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formRegister, 'correoUsuario')">
                     {{ errorMessage }}
                   </mat-error>
                 </mat-form-field>
@@ -53,10 +51,10 @@
               <!-- Contraseña -->
               <div class="col-md-6">
                 <mat-form-field appearance="outline" class="w-100 mb-4">
-                  <mat-label>Contraseña</mat-label>
+                  <mat-label>{{ 'REGISTER.FORM.CONTRASENA' | translate }}</mat-label>
                   <input
                     matInput
-                    placeholder="Ingresa una contraseña"
+                    [placeholder]="'REGISTER.FORM.PLACEHOLDERS.CONTRASENA' | translate"
                     [type]="hide ? 'password' : 'text'"
                     formControlName="contrasenaUsuario"
                     autocomplete="new-password"
@@ -67,13 +65,11 @@
                     matSuffix
                     type="button"
                     (click)="hide = !hide"
-                    [attr.aria-label]="hide ? 'Mostrar contraseña' : 'Ocultar contraseña'"
+                    [attr.aria-label]="hide ? ('LOGIN.MOSTRAR' | translate) : ('LOGIN.OCULTAR' | translate)"
                   >
                     <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
                   </button>
-                  <mat-error
-                    *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formRegister, 'contrasenaUsuario')"
-                  >
+                  <mat-error *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formRegister, 'contrasenaUsuario')">
                     {{ errorMessage }}
                   </mat-error>
                 </mat-form-field>
@@ -84,10 +80,10 @@
               <!-- Repetir Contraseña -->
               <div class="col-md-6">
                 <mat-form-field appearance="outline" class="w-100 mb-4">
-                  <mat-label>Repetir Contraseña</mat-label>
+                  <mat-label>{{ 'REGISTER.FORM.REPETIR_CONTRASENA' | translate }}</mat-label>
                   <input
                     matInput
-                    placeholder="Repite la contraseña"
+                    [placeholder]="'REGISTER.FORM.PLACEHOLDERS.REPETIR_CONTRASENA' | translate"
                     [type]="hide ? 'password' : 'text'"
                     formControlName="repeatContrasenaUsuario"
                     autocomplete="new-password"
@@ -98,13 +94,11 @@
                     matSuffix
                     type="button"
                     (click)="hide = !hide"
-                    [attr.aria-label]="hide ? 'Mostrar contraseña' : 'Ocultar contraseña'"
+                    [attr.aria-label]="hide ? ('LOGIN.MOSTRAR' | translate) : ('LOGIN.OCULTAR' | translate)"
                   >
                     <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
                   </button>
-                  <mat-error
-                    *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formRegister, 'repeatContrasenaUsuario')"
-                  >
+                  <mat-error *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formRegister, 'repeatContrasenaUsuario')">
                     {{ errorMessage }}
                   </mat-error>
                 </mat-form-field>
@@ -112,10 +106,10 @@
               <!-- Selección de Tipo Usuario -->
               <div class="col-md-6">
                 <mat-form-field appearance="outline" class="w-100 mb-4">
-                  <mat-label>Tipo Usuario</mat-label>
+                  <mat-label>{{ 'REGISTER.FORM.TIPO_USUARIO' | translate }}</mat-label>
                   <mat-select formControlName="tipoUsuario" required>
                     <mat-option *ngFor="let tipoUsuario of allTiposUsuario" [value]="tipoUsuario.id + '-' + tipoUsuario.nombreTipoUsuario">
-                      {{ tipoUsuario.nombreTipoUsuario }}
+                      {{ 'TIPOS_USUARIO.' + tipoUsuario.nombreTipoUsuario!.toUpperCase() | translate }}
                     </mat-option>
                   </mat-select>
                   <mat-error *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formRegister, 'tipoUsuario')">
@@ -129,7 +123,7 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group mb-4">
-                  <label for="formFile" class="form-label">Subir Imagen de Perfil</label>
+                  <label for="formFile" class="form-label">{{ 'REGISTER.FORM.SUBIR_IMAGEN' | translate }}</label>
                   <input
                     id="formFile"
                     class="form-control"
@@ -137,17 +131,15 @@
                     accept="image/*"
                     (change)="onFileSelected($event)"
                   />
-                  <small class="form-text text-muted">Formato permitido: JPG, PNG. Tamaño máximo: 2MB.</small>
-                  <mat-error
-                    *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formRegister, 'imagen')"
-                  >
+                  <small class="form-text text-muted">{{ 'REGISTER.FORM.FORMATO_IMAGEN' | translate }}</small>
+                  <mat-error *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formRegister, 'imagen')">
                     {{ errorMessage }}
                   </mat-error>
                   <!-- Vista previa de imagen -->
                   <div class="mt-3 text-center" *ngIf="imagePreview">
                     <img
                       [src]="imagePreview"
-                      alt="Vista previa de imagen seleccionada"
+                      alt="{{ 'REGISTER.FORM.VISTA_PREVIA' | translate }}"
                       class="img-thumbnail shadow"
                       style="max-width: 200px; max-height: 200px;"
                     />
@@ -160,9 +152,11 @@
             <div class="row mt-4">
               <div class="col-md-12 text-center">
                 <button mat-raised-button color="primary" type="submit" class="me-2" [disabled]="formRegister.invalid">
-                  Registrar
+                  {{ 'REGISTER.BUTTONS.REGISTRAR' | translate }}
                 </button>
-                <button mat-button color="warn" type="reset" class="ms-2" (click)="onLogin()">Cancelar</button>
+                <button mat-button color="warn" type="reset" class="ms-2" (click)="onLogin()">
+                  {{ 'REGISTER.BUTTONS.CANCELAR' | translate }}
+                </button>
               </div>
             </div>
           </form>

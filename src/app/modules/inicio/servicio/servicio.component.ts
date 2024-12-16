@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { IServicio } from '@sharedModule/models/IServicio';
 import { BlobStorageService } from '@sharedModule/service/blobStorage.service';
 import { ServiceSerive } from '@sharedModule/service/service.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { TranslationService } from '@sharedModule/service/TranslationService.service';
+import { Subscription } from 'rxjs';
 
 /**
  * Componente para mostrar los servicios del hotel.
@@ -19,18 +22,27 @@ export class ServicioComponent {
   featuredServices: IServicio[] = [];
   /** Indica si se deben mostrar todos los servicios */
   showAllServices = false;
+  private languageSubscription!: Subscription;
 
   constructor(
     private serviceService: ServiceSerive,
     private blobService: BlobStorageService,
-    private spinner: NgxSpinnerService
-  ) {}
+    private spinner: NgxSpinnerService,
+          private translation:TranslationService,
+          private translate: TranslateService,
+          private cdRef: ChangeDetectorRef // Para detectar cambios manualmente
+  ) {
+  }
 
   /**
    * Método de inicialización del componente.
    * Carga los servicios destacados al iniciar.
    */
   ngOnInit(): void {
+    this.languageSubscription = this.translation.language$.subscribe(() => {
+      this.updateTranslations(); // Actualizar textos dinámicamente
+    });
+    this.updateTranslations(); // Actualizar textos dinámicamente
     this.loadFeaturedServices();
   }
 
@@ -59,4 +71,17 @@ export class ServicioComponent {
   loadAllServices(): void {
     this.showAllServices = true;
   }
+
+  private updateTranslations(): void {
+    this.translate.use(this.translation.getCurrentLanguage())
+    this.cdRef.detectChanges(); // Forzar la detección de cambios
+  }
+
+  ngOnDestroy(): void {
+    // Cancelar suscripciones al destruir el componente
+    if (this.languageSubscription) {
+      this.languageSubscription.unsubscribe();
+    }
+  }
+
 }

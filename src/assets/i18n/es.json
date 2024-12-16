@@ -1,0 +1,258 @@
+{
+  "LOGIN": {
+    "INICIO": "Iniciar Sesión",
+    "CORREO": "Correo Electrónico",
+    "CONTRASENA": "Contraseña",
+    "PLACEHOLDER": {
+      "CORREO": "Ingresa tu correo",
+      "CONTRASENA": "Ingresa tu contraseña"
+    },
+    "BOTON": {
+      "INICIAR": "Iniciar Sesión"
+    },
+    "REGISTRO": {
+      "PREGUNTA": "¿No tienes una cuenta?",
+      "ENLACE": "Regístrate aquí"
+    },
+    "MOSTRAR": "Mostrar contraseña",
+    "OCULTAR": "Ocultar contraseña"
+  },
+  "NAVBAR": {
+    "LOGO_ALT": "Logo",
+    "HOME": "Inicio",
+    "ROOMS": "Cuartos",
+    "GASTRONOMY": "Gastronomía",
+    "SERVICES": "Servicios",
+    "SHOPPING": "Compras",
+    "BILLING": "Facturación",
+    "USER_MENU": {
+      "LOGOUT": "Salir",
+      "PROFILE_PICTURE_ALT": "Foto de Perfil"
+    },
+    "ROOM_TYPES": {
+      "ALL": "Todos los Cuartos"
+    }
+  },
+  "REGISTER": {
+    "TITLE": "Registro de Usuario",
+    "FORM": {
+      "NOMBRES": "Nombres",
+      "APELLIDOS": "Apellidos",
+      "CORREO": "Correo Electrónico",
+      "CONTRASENA": "Contraseña",
+      "REPETIR_CONTRASENA": "Repetir Contraseña",
+      "TIPO_USUARIO": "Tipo Usuario",
+      "PLACEHOLDERS": {
+        "NOMBRES": "Ingresa tus nombres",
+        "APELLIDOS": "Ingresa tus apellidos",
+        "CORREO": "Ingresa tu correo electrónico",
+        "CONTRASENA": "Ingresa una contraseña",
+        "REPETIR_CONTRASENA": "Repite la contraseña"
+      },
+      "SUBIR_IMAGEN": "Subir Imagen de Perfil",
+      "FORMATO_IMAGEN": "Formato permitido: JPG, PNG. Tamaño máximo: 2MB.",
+      "VISTA_PREVIA": "Vista previa de imagen seleccionada"
+    },
+    "BUTTONS": {
+      "REGISTRAR": "Registrar",
+      "CANCELAR": "Cancelar"
+    }
+  },
+  "SERVICIOS": {
+    "TITULO_PRINCIPAL": "Bienvenido a Nuestros Servicios",
+    "INTRODUCCION": "Experiencias exclusivas diseñadas para tu confort y satisfacción. Descubre lo que tenemos para ofrecerte.",
+    "EXPERIENCIAS": {
+      "TITULO": "Experiencias Únicas",
+      "DESCRIPCION": "En nuestro hotel, nos enorgullecemos de ofrecer servicios de clase mundial, diseñados para satisfacer todas tus necesidades. Ya sea relajarte en nuestro spa, disfrutar de nuestra gastronomía o explorar nuestras instalaciones, tenemos todo lo que necesitas para una estancia inolvidable.",
+      "BOTON": "Conoce más sobre nosotros"
+    },
+    "DESTACADOS": {
+      "TITULO": "Servicios Destacados"
+    },
+    "TODOS": {
+      "BOTON": "Ver todos los servicios",
+      "TITULO": "Todos Nuestros Servicios",
+      "VALOR": "Valor"
+    }
+  },
+  "CARRUSEL": {
+    "SLIDE": "Imagen",
+    "BOTONES": {
+      "ANTERIOR": "Anterior",
+      "SIGUIENTE": "Siguiente"
+    }
+  },
+  "SECCION": {
+    "TITULO": "Sistema de Automatización Hotelera",
+    "DESCRIPCION": "Disfruta del mejor servicio al mejor precio en cada estadía"
+  },
+  "GASTRONOMIA": {
+    "TITULO_PRINCIPAL": "Nuestra Gastronomía",
+    "INTRODUCCION": "Descubre los sabores que hemos preparado especialmente para ti.",
+    "SABORES_UNICOS": {
+      "TITULO": "Sabores Únicos",
+      "DESCRIPCION": "Nuestra selección gastronómica está diseñada para deleitar tu paladar con ingredientes frescos y recetas exquisitas. Desde platos tradicionales hasta opciones internacionales, nuestra cocina es una experiencia culinaria inolvidable.",
+      "BOTON": "Explora nuestras opciones"
+    },
+    "DESTACADOS": {
+      "TITULO": "Platos Destacados",
+      "TIEMPO_PREPARACION": "Tiempo de preparación"
+    },
+    "TODOS": {
+      "BOTON": "Ver todos los alimentos",
+      "TITULO": "Todos Nuestros Platos"
+    }
+  },
+  "FACTURACIONES": {
+    "TITULO_PRINCIPAL": "Facturaciones",
+    "CAMPOS": {
+      "CODIGO": "Código",
+      "FECHA_CREACION": "Fecha de Creación",
+      "ESTADO": "Estado",
+      "RESERVA": "Reserva"
+    },
+    "ESTADOS": {
+      "PAGADO": "Pagado",
+      "PENDIENTE": "Pendiente",
+      "CANCELADO": "Cancelado"
+    },
+    "BOTON_DESCARGAR": "Descargar PDF"
+  },
+  "RESERVAS": {
+    "TITULO_PRINCIPAL": "Reservas de Cuartos",
+    "FILTROS": {
+      "RANGO_PRECIOS": "Rango de precios",
+      "RANGO_FECHAS": "Rango de fechas",
+      "DESDE": "Desde",
+      "HASTA": "Hasta",
+      "BOTON_BUSCAR": "Buscar Cuartos"
+    },
+    "CARTAS": {
+      "TARIFA": "Tarifa con desayuno y seguro hotelero.",
+      "POR_NOCHE": "por noche",
+      "LIBRE": "Conexión wifi gratuita",
+      "INCLUYE": "Incluye parqueadero y acceso a zonas húmedas",
+      "BOTON_RESERVAR": "Reservar Ahora"
+    }
+  },
+  "RESERVAS_LISTADO": {
+    "TITULO": "Listado de Reservas",
+    "COLUMNAS": {
+      "CODIGO": "Código Reserva",
+      "FECHA_INICIO": "Fecha Inicio",
+      "FECHA_FIN": "Fecha Fin",
+      "VALOR_TOTAL": "Valor Total",
+      "ESTADO": "Estado",
+      "ACCIONES": "Acciones"
+    },
+    "ACCIONES": {
+      "CANCELAR": "Cancelar",
+      "CONFIRMAR": "Confirmar"
+    }
+  },
+  "ERRORS": {
+    "DEFAULT": "El valor de este campo no es válido",
+    "REQUIRED": "Este campo es requerido",
+    "MINLENGTH": "Este campo debe tener mínimo {minlength.requiredLength} caracteres",
+    "MAXLENGTH": "Este campo debe tener máximo {maxlength.requiredLength} caracteres",
+    "PATTERN": "El valor de este campo no es válido",
+    "MIN": "El valor de este campo debe ser mayor o igual a {min.min}",
+    "MAX": "El valor de este campo debe ser menor o igual a {max.max}",
+    "TEL_BETWEEN_DIGITS": "El número de teléfono debe tener entre {telBetweenDigits.min} y {telBetweenDigits.max} dígitos",
+    "PHONE_DIGITS": "Tu número de teléfono debe tener {phoneDigits.digits} dígitos",
+    "IS_NAN": "El valor de este campo debe ser numérico",
+    "FULL_NAME": "Debes ingresar un nombre válido",
+    "MIN_CURRENCY": "El valor de este campo debe ser mayor a $ {minCurrency.min}",
+    "MAX_CURRENCY": "El valor de este campo debe ser menor a $ {maxCurrency.max}",
+    "MAX_ADVANCE": "El valor no puede exceder tu disponible para avances ($ {maxAdvance.max})",
+    "IS_MULTIPLE": "El valor no es múltiplo de $ {isMultiple.multiple}",
+    "EMAIL": "El valor debe ser un email válido",
+    "BETWEEN_AGE": "Debes tener entre {betweenAge.min} y {betweenAge.max} años",
+    "VALID_ADDRESS": "Debes ingresar una dirección válida",
+    "NO_PASSWORD_MATCH": "Las contraseñas no coinciden",
+    "ALPHANUMERIC": "No se permiten caracteres especiales, sólo el guión (-)",
+    "ONLY_NUMBERS": "Solo se permiten valores numéricos en este campo",
+    "ONLY_LETTERS": "Solo se permiten letras en este campo",
+    "HAS_CAPITAL_CASE": "Este campo debe contener mayúsculas",
+    "HAS_SMALL_CASE": "Este campo debe contener minúsculas",
+    "HAS_SPECIAL_CHARACTERS": "Este campo debe contener caracteres especiales",
+    "SIZE": "El archivo es mayor que 2 mb",
+    "LOWPASSWORD":"La contraseña es muy débil",
+    "LOW_PASSWORD": "La contraseña es muy débil",
+    "NOT_SAME": "Las contraseñas no coinciden",
+    "DATE_OUT_OF_RANGE": "La fecha no está en el rango permitido",
+    "FIELD_REQUIRED": "Este campo es obligatorio",
+    "INVALID_FORMAT": "El formato del campo es inválido",
+    "INVALID_EMAIL": "Por favor ingresa un email válido",
+    "ONLY_ALPHANUMERIC": "Solo se permiten caracteres alfanuméricos en este campo",
+    "INVALID_NUMBER": "El valor ingresado no es un número válido"
+  },
+  "ALIMENTOS": {
+    "TIRAMISÚ": {
+      "NOMBRE": "Tiramisú",
+      "DETALLE": "Delicioso postre italiano con café y mascarpone."
+    },
+    "BRUSCHETTA": {
+      "NOMBRE": "Bruschetta",
+      "DETALLE": "Rebanadas de pan con tomate, albahaca y aceite de oliva."
+    },
+    "RAVIOLIS": {
+      "NOMBRE": "Raviolis",
+      "DETALLE": "Pasta rellena con queso y espinacas en salsa de tomate."
+    },
+    "LIMONADA": {
+      "NOMBRE": "Limonada",
+      "DETALLE": "Refrescante bebida de limón recién exprimido."
+    }
+  },
+  "TIPOS_USUARIO": {
+    "ADMINISTRADOR": "Administrador",
+    "USUARIO": "Usuario"
+  },
+  "TIPOS_SERVICIO": {
+    "Spa": "Spa",
+    "Room Service": "Servicio a la habitación",
+    "Transporte": "Transporte",
+    "Tours guiados": "Tours guiados"
+  },
+  "SERVICIOS_NOMBRES": {
+    "Masaje relajante": "Masaje relajante",
+    "Entrega de desayuno": "Entrega de desayuno",
+    "Servicio de taxi": "Servicio de taxi",
+    "Tour a la ciudad": "Tour a la ciudad"
+  },
+  "SERVICIOS_DETALLES": {
+    "Relaja tus músculos con nuestro masaje de 1 hora.": "Relaja tus músculos con nuestro masaje de 1 hora.",
+    "Desayuno completo entregado a tu habitación.": "Desayuno completo entregado a tu habitación.",
+    "Transporte seguro hacia tu destino.": "Transporte seguro hacia tu destino.",
+    "Explora los lugares más emblemáticos con un guía experto.": "Explora los lugares más emblemáticos con un guía experto."
+  },
+  "TIPOS_CUARTO": {
+    "Habitación estándar": "Habitación estándar",
+    "Suite": "Suite",
+    "Habitación familiar": "Habitación familiar",
+    "Suite presidencial": "Suite presidencial"
+  },
+  "TIPOS_ALIMENTO": {
+    "Postres": "Postres",
+    "Entradas": "Entradas",
+    "Platos fuertes": "Platos fuertes",
+    "Bebidas": "Bebidas"
+  },
+  "ESTADOS_RESERVA": {
+  "COMPLETADO": "Completado",
+  "CANCELADO": "Cancelado",
+  "PENDIENTE": "Pendiente"
+  },
+  "DETALLE_CUARTO": {
+    "Habitación familiar con dos camas dobles.": "Habitación familiar con dos camas dobles.",
+    "Habitación estándar con cama doble y baño privado.": "Habitación estándar con cama doble y baño privado.",
+    "Suite con vista al mar y jacuzzi.": "Suite con vista al mar y jacuzzi.",
+    "Suite presidencial con sala de estar y cocina.": "Suite presidencial con sala de estar y cocina."
+  },
+  "ESTADOS_FACTURACION": {
+    "PAGADO": "Pagado",
+    "CANCELADO": "Cancelado",
+    "PENDIENTE": "Pendiente"
+  }
+}

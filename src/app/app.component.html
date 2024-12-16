@@ -1,3 +1,11 @@
+<div class="language-selector text-end p-2">
+  <label for="language-select" class="form-label me-2">Idioma:</label>
+  <select id="language-select" class="form-select d-inline w-auto" (change)="onChangeLanguage($event)">
+    <option value="es" [selected]="currentLang === 'es'">Español</option>
+    <option value="en" [selected]="currentLang === 'en'">English</option>
+  </select>
+</div>
+
 <ngx-spinner 
   bdColor="rgba(0,0,0,0.8)" 
   size="medium" 
@@ -5,4 +13,5 @@
   type="square-jelly-box" 
   [fullScreen]="true" >
 </ngx-spinner>
+
 <router-outlet></router-outlet>

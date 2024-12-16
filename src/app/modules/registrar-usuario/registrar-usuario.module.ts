@@ -6,6 +6,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { HttpClient, HttpClientModule, provideHttpClient } from '@angular/common/http';
 import { RegistrarUsuarioComponent } from './registrar-usuario.component';
 import { REGISTRAR_USUARIO_ROUTES } from './registrar-usuario.routes';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 
@@ -19,6 +20,8 @@ import { REGISTRAR_USUARIO_ROUTES } from './registrar-usuario.routes';
     HttpClientModule,
     ReactiveFormsModule,
     RouterModule.forChild(REGISTRAR_USUARIO_ROUTES),
+    HttpClientModule,
+    TranslateModule
   ],
   providers: [provideHttpClient()]
 })

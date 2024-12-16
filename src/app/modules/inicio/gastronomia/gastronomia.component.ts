@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { IAlimentos } from '@sharedModule/models/IAlimentos';
 import { AlimentoService } from '@sharedModule/service/alimento.service';
 import { BlobStorageService } from '@sharedModule/service/blobStorage.service';
+import { TranslationService } from '@sharedModule/service/TranslationService.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-gastronomia',
@@ -24,14 +27,23 @@ export class GastronomiaComponent implements OnInit {
    * Estado que controla si se muestran todos los alimentos.
    */
   showAllAlimentos = false;
+  private languageSubscription!: Subscription;
 
   constructor(
     private alimentoService: AlimentoService,
     private blobService: BlobStorageService,
-    private spinner: NgxSpinnerService
-  ) {}
+    private spinner: NgxSpinnerService,
+              private translation:TranslationService,
+              private translate: TranslateService,
+              private cdRef: ChangeDetectorRef // Para detectar cambios manualmente
+  ) {
+  }
 
   ngOnInit(): void {
+    this.languageSubscription = this.translation.language$.subscribe(() => {
+      this.updateTranslations(); // Actualizar textos dinámicamente
+    });
+    this.updateTranslations(); // Actualizar textos dinámicamente
     this.loadFeaturedAlimentos();
   }
 
@@ -60,5 +72,16 @@ export class GastronomiaComponent implements OnInit {
    */
   loadAllAlimentos(): void {
     this.showAllAlimentos = true;
+  }
+  private updateTranslations(): void {
+    this.translate.use(this.translation.getCurrentLanguage())
+    this.cdRef.detectChanges(); // Forzar la detección de cambios
+  }
+
+  ngOnDestroy(): void {
+    // Cancelar suscripciones al destruir el componente
+    if (this.languageSubscription) {
+      this.languageSubscription.unsubscribe();
+    }
   }
 }

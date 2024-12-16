@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { UtilitiesService } from '@sharedModule/service/utilities.service';
 import { AuthService } from '@sharedModule/service/auth.service';
 import { ErrorHandlerService } from '@sharedModule/service/errorHandler.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 /**
  * Módulo que contiene la funcionalidad de inicio de sesión.
@@ -18,9 +19,10 @@ import { ErrorHandlerService } from '@sharedModule/service/errorHandler.service'
   imports: [
     CommonModule,
     SharedModule,
-    HttpClientModule,
     ReactiveFormsModule,
-    RouterModule.forChild(LOGIN_ROUTES)
+    RouterModule.forChild(LOGIN_ROUTES),
+    HttpClientModule,
+    TranslateModule
   ],
   providers: [AuthService, ErrorHandlerService, UtilitiesService]
 })

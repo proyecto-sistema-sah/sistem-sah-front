@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { emailValidator } from '../../common/helpers/validators/formats.validators';
 import { ErrorHandlerService } from '../../shared/service/errorHandler.service';
 import { ILogin } from '../../shared/models/Login';
 import { AuthService } from '../../shared/service/auth.service';
-import { catchError, finalize, of, tap } from 'rxjs';
+import { catchError, finalize, of, Subscription, tap } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { UtilitiesService } from '@sharedModule/service/utilities.service';
 import { SubjectService } from '@sharedModule/service/subjectService.service';
@@ -12,6 +12,8 @@ import { Base64Service } from '@sharedModule/service/base64.service';
 import { JwtData } from '@sharedModule/models/JwtData';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
+import { TranslationService } from '@sharedModule/service/TranslationService.service';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Componente que maneja el inicio de sesión.
@@ -26,7 +28,9 @@ export class LoginComponent implements OnInit {
   public hide = true;
   /** Formulario de inicio de sesión */
   public formLogin!: FormGroup;
-
+  loginTitle: string = '';
+  private languageSubscription!: Subscription;
+  
   constructor(
     private formBuilder: FormBuilder,
     public readonly errorHandlerService: ErrorHandlerService,
@@ -35,8 +39,12 @@ export class LoginComponent implements OnInit {
     private subjectService: SubjectService,
     private utilitiesService: UtilitiesService,
     private spinner: NgxSpinnerService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private translation:TranslationService,
+    private translate: TranslateService,
+    private cdRef: ChangeDetectorRef // Para detectar cambios manualmente
+  ) {
+  }
 
   /**
    * Navega a la página de registro.
@@ -50,6 +58,16 @@ export class LoginComponent implements OnInit {
    */
   ngOnInit(): void {
     this.buildFormLogin();
+    // Suscribirse al cambio de idioma
+    this.languageSubscription = this.translation.language$.subscribe({
+      next:(value) =>{
+        this.updateTranslations(); // Actualizar textos dinámicamente
+      },
+      complete: () => {
+        this.spinner.hide()
+      }
+    });
+
   }
 
   /**
@@ -115,5 +133,17 @@ export class LoginComponent implements OnInit {
         })
       )
       .subscribe();
+  }
+
+  private updateTranslations(): void {
+    this.translate.use(this.translation.getCurrentLanguage())
+    this.cdRef.detectChanges(); // Forzar la detección de cambios
+  }
+
+  ngOnDestroy(): void {
+    // Cancelar suscripciones al destruir el componente
+    if (this.languageSubscription) {
+      this.languageSubscription.unsubscribe();
+    }
   }
 }

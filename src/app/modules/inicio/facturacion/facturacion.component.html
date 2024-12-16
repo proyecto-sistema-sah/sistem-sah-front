@@ -1,18 +1,21 @@
 <div class="container mt-4">
   <div class="card shadow p-3 mb-5 bg-white rounded">
     <div class="card-body">
-      <h2 class="card-title text-center">Facturaciones</h2>
+      <h2 class="card-title text-center">{{ 'FACTURACIONES.TITULO_PRINCIPAL' | translate }}</h2>
       <div class="scroll-container">
         <div class="row row-cols-1 row-cols-md-2 g-4">
           <div class="col" *ngFor="let facturacion of facturaciones">
             <div class="card h-100">
               <div class="card-body">
-                <h5 class="card-title">Código: {{ facturacion.codigoFacturacion }}</h5>
+                <h5 class="card-title">
+                  {{ 'FACTURACIONES.CAMPOS.CODIGO' | translate }}: {{ facturacion.codigoFacturacion }}
+                </h5>
                 <p class="card-text">
-                  Fecha de Creación: {{ facturacion.fechaCreacionFacturacion | date: 'short' }}
+                  {{ 'FACTURACIONES.CAMPOS.FECHA_CREACION' | translate }}: 
+                  {{ facturacion.fechaCreacionFacturacion | date: 'short' }}
                 </p>
                 <p class="card-text">
-                  Estado: 
+                  {{ 'FACTURACIONES.CAMPOS.ESTADO' | translate }}: 
                   <span
                     class="badge"
                     [ngClass]="{
@@ -21,10 +24,13 @@
                       'bg-danger': facturacion.estadoFacturacion === 'CANCELADO'
                     }"
                   >
-                    {{ facturacion.estadoFacturacion }}
+                    {{ 'ESTADOS_FACTURACION.' + facturacion.estadoFacturacion | translate }}
                   </span>
                 </p>
-                <p class="card-text">Reserva: {{ facturacion.codigoReservaDtoFk.codigoReserva }}</p>
+                <p class="card-text">
+                  {{ 'FACTURACIONES.CAMPOS.RESERVA' | translate }}: 
+                  {{ facturacion.codigoReservaDtoFk.codigoReserva }}
+                </p>
               </div>
               <div class="card-footer text-center">
                 <button
@@ -32,7 +38,7 @@
                   color="primary"
                   (click)="descargarPdf(facturacion.urlPdf, facturacion.codigoFacturacion)"
                 >
-                  Descargar PDF
+                  {{ 'FACTURACIONES.BOTON_DESCARGAR' | translate }}
                 </button>
               </div>
             </div>

@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { TipoCuarto } from '@sharedModule/models/ITipoCuarto';
 import { IResponse } from '@sharedModule/models/Response';
 import { AuthService } from '@sharedModule/service/auth.service';
@@ -8,7 +9,8 @@ import { SubjectService } from '@sharedModule/service/subjectService.service';
 import { TipoCuartoService } from '@sharedModule/service/tipoCuarto.service';
 import { UtilitiesService } from '@sharedModule/service/utilities.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { catchError, finalize, of, tap } from 'rxjs';
+import { catchError, finalize, of, Subscription, tap } from 'rxjs';
+import { TranslationService } from '@sharedModule/service/TranslationService.service';
 
 @Component({
   selector: 'app-header',
@@ -28,6 +30,7 @@ export class HeaderComponent implements OnInit {
 
   // Lista de tipos de cuarto
   public listTipoCuarto: TipoCuarto[] = [];
+  private languageSubscription!: Subscription;
 
   constructor(
     private router: Router,
@@ -36,12 +39,20 @@ export class HeaderComponent implements OnInit {
     private subject: SubjectService,
     private utilitiesService: UtilitiesService,
     private spinner: NgxSpinnerService,
-    private tipoCuartoService: TipoCuartoService
-  ) {}
+    private tipoCuartoService: TipoCuartoService,
+    private translation:TranslationService,
+    private translate: TranslateService,
+    private cdRef: ChangeDetectorRef // Para detectar cambios manualmente
+  ) {
+  }
 
   ngOnInit(): void {
     // Configurar el logo y cargar los datos iniciales
     this.urlLogo = this.blobStorage.getBlobUrl('logo.png');
+    this.languageSubscription = this.translation.language$.subscribe(() => {
+      this.updateTranslations(); // Actualizar textos dinámicamente
+    });
+    this.updateTranslations(); // Actualizar textos dinámicamente
     this.loadData();
   }
 
@@ -112,4 +123,16 @@ export class HeaderComponent implements OnInit {
   closeDropdown(): void {
     this.isDropdownOpen = false;
   }
+  private updateTranslations(): void {
+    this.translate.use(this.translation.getCurrentLanguage())
+    this.cdRef.detectChanges(); // Forzar la detección de cambios
+  }
+
+  ngOnDestroy(): void {
+    // Cancelar suscripciones al destruir el componente
+    if (this.languageSubscription) {
+      this.languageSubscription.unsubscribe();
+    }
+  }
+
 }

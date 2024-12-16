@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <!-- Logo e Imagen del Logo -->
     <a class="navbar-brand d-flex align-items-center" [routerLink]="'/inicio'">
-      <img [src]="urlLogo" alt="Logo" class="img-fluid rounded-circle" style="width: 50px; height: 50px;">
+      <img [src]="urlLogo" alt="{{ 'NAVBAR.LOGO_ALT' | translate }}" class="img-fluid rounded-circle" style="width: 50px; height: 50px;">
     </a>
 
     <!-- Botón Responsive del Menú -->
@@ -13,75 +13,83 @@
       data-bs-target="#navbarNav"
       aria-controls="navbarNav"
       aria-expanded="false"
-      aria-label="Toggle navigation"
+      [attr.aria-label]="'NAVBAR.HOME' | translate"
     >
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <!-- Contenido del Menú -->
     <div class="collapse navbar-collapse" id="navbarNav">
-      <!-- Menú de Navegación -->
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" [routerLink]="'/inicio'">Inicio</a>
+          <a class="nav-link active" aria-current="page" [routerLink]="'/inicio'">
+            {{ 'NAVBAR.HOME' | translate }}
+          </a>
         </li>
 
         <!-- Menú desplegable para Cuartos -->
-        <li
-          class="nav-item dropdown"
-          (mouseenter)="openDropdown()"
-          (mouseleave)="closeDropdown()"
-        >
+        <li class="nav-item dropdown" (mouseenter)="openDropdown()" (mouseleave)="closeDropdown()">
           <a
             class="nav-link dropdown-toggle"
             id="navbarDropdown"
             role="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
-            (click)="cambiarTipoCuarto('/inicio/cuartos/',0)"
+            (click)="cambiarTipoCuarto('/inicio/cuartos/', 0)"
           >
-            Cuartos
+            {{ 'NAVBAR.ROOMS' | translate }}
           </a>
-          <ul
-            class="dropdown-menu"
-            [class.show]="isDropdownOpen"
-            aria-labelledby="navbarDropdown"
-          >
+          <ul class="dropdown-menu" [class.show]="isDropdownOpen" aria-labelledby="navbarDropdown">
             <li *ngFor="let data of listTipoCuarto">
               <a
                 class="dropdown-item"
                 (click)="cambiarTipoCuarto('/inicio/cuartos/' + data.id, data.id)"
               >
-                {{ data.nombreTipoCuarto }}
+                {{ 'TIPOS_CUARTO.' + data.nombreTipoCuarto | translate }}
               </a>
             </li>
           </ul>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="'/inicio/gastronomia'">Gastronomía</a>
+          <a class="nav-link" [routerLink]="'/inicio/gastronomia'">
+            {{ 'NAVBAR.GASTRONOMY' | translate }}
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="'/inicio/servicio'">Servicios</a>
+          <a class="nav-link" [routerLink]="'/inicio/servicio'">
+            {{ 'NAVBAR.SERVICES' | translate }}
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="'/inicio/compras'">Compras</a>
+          <a class="nav-link" [routerLink]="'/inicio/compras'">
+            {{ 'NAVBAR.SHOPPING' | translate }}
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="'/inicio/facturacion'">Facturación</a>
+          <a class="nav-link" [routerLink]="'/inicio/facturacion'">
+            {{ 'NAVBAR.BILLING' | translate }}
+          </a>
         </li>
       </ul>
 
       <!-- Contenedor del Usuario -->
       <div class="d-flex align-items-center">
-        <span class="me-2 text-truncate fw-semibold" style="max-width: 150px;">{{ nombreCompleto }}</span>
+        <span class="me-2 text-truncate fw-semibold" style="max-width: 150px;">
+          {{ nombreCompleto }}
+        </span>
         <button mat-button [matMenuTriggerFor]="menu" class="d-flex align-items-center">
-          <img [src]="url" alt="Profile Picture" class="rounded-circle shadow-sm" style="width: 45px; height: 45px;">
+          <img
+            [src]="url"
+            alt="{{ 'NAVBAR.USER_MENU.PROFILE_PICTURE_ALT' | translate }}"
+            class="rounded-circle shadow-sm"
+            style="width: 45px; height: 45px;"
+          />
         </button>
         <mat-menu #menu="matMenu">
           <button mat-menu-item (click)="logout()">
             <mat-icon>logout</mat-icon>
-            <span>Salir</span>
+            <span>{{ 'NAVBAR.USER_MENU.LOGOUT' | translate }}</span>
           </button>
         </mat-menu>
       </div>

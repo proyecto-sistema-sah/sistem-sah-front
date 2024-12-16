@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { ISafeAny } from '../models/ISafeAny';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root',
@@ -38,7 +39,7 @@ export class ErrorHandlerService {
     lowPassword: 'La contraseña es muy debil'
   };
 
-  constructor() {}
+  constructor(private translate: TranslateService) {}
 
   getErrorMessages(form: FormGroup, controlName: string): string[] {
     const control: AbstractControl | null = form.get(controlName);
@@ -47,8 +48,7 @@ export class ErrorHandlerService {
       const errors: string[] = [];
       for (const errorKey in control.errors) {
         if (Object.prototype.hasOwnProperty.call(control.errors, errorKey)) {
-          const errorMessageTemplate = this.ERROR_MESSAGES[errorKey as keyof typeof this.ERROR_MESSAGES];
-          if (errorMessageTemplate) {
+          const errorMessageTemplate = this.translate.instant(`ERRORS.${errorKey.toUpperCase()}`, control.errors[errorKey]);          if (errorMessageTemplate) {
             // Obtener el valor del validador para el mensaje de error
             const validatorValue = control.getError(errorKey);
             const errorMessage = this.interpolateErrorMessage(errorMessageTemplate, { [errorKey]: validatorValue });

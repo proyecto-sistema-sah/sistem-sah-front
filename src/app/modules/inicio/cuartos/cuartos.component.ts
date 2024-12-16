@@ -1,5 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
+import { TranslateService } from '@ngx-translate/core';
 import { CuartosDisponibles } from '@sharedModule/models/CuartosDisponibles';
 import { Cuarto } from '@sharedModule/models/ICuarto';
 import { JwtData } from '@sharedModule/models/JwtData';
@@ -9,10 +10,11 @@ import { BlobStorageService } from '@sharedModule/service/blobStorage.service';
 import { CuartoService } from '@sharedModule/service/cuarto.service';
 import { ReservaService } from '@sharedModule/service/reserva.service';
 import { SubjectService } from '@sharedModule/service/subjectService.service';
+import { TranslationService } from '@sharedModule/service/TranslationService.service';
 import { UtilitiesService } from '@sharedModule/service/utilities.service';
 import { jwtDecode } from 'jwt-decode';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { catchError, finalize, of, tap } from 'rxjs';
+import { catchError, finalize, of, Subscription, tap } from 'rxjs';
 
 @Component({
   selector: 'app-cuartos',
@@ -32,6 +34,7 @@ export class CuartosComponent {
   minDate: Date = new Date();
   startDate: Date | null = new Date();
   endDate: Date | null = new Date(new Date().setDate(new Date().getDate() + 1));
+  private languageSubscription!: Subscription;
 
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
 
@@ -41,10 +44,18 @@ export class CuartosComponent {
     private utilitiesService: UtilitiesService,
     private spinner: NgxSpinnerService,
     private blobStorage: BlobStorageService,
-    private reservaService: ReservaService
-  ) {}
+    private reservaService: ReservaService,
+                      private translation:TranslationService,
+                      private translate: TranslateService,
+                      private cdRef: ChangeDetectorRef // Para detectar cambios manualmente
+  ) {
+  }
 
   ngOnInit(): void {
+    this.languageSubscription = this.translation.language$.subscribe(() => {
+      this.updateTranslations(); // Actualizar textos dinámicamente
+    });
+    this.updateTranslations(); // Actualizar textos dinámicamente
     this.loadAvailableRooms();
   }
 
@@ -134,5 +145,17 @@ export class CuartosComponent {
     const startIndex = event ? event.pageIndex * event.pageSize : 0;
     const endIndex = startIndex + (event ? event.pageSize : this.pageSize);
     this.paginatedCuartos = this.filteredCuartos.slice(startIndex, endIndex);
+  }
+
+  private updateTranslations(): void {
+    this.translate.use(this.translation.getCurrentLanguage())
+    this.cdRef.detectChanges(); // Forzar la detección de cambios
+  }
+
+  ngOnDestroy(): void {
+    // Cancelar suscripciones al destruir el componente
+    if (this.languageSubscription) {
+      this.languageSubscription.unsubscribe();
+    }
   }
 }

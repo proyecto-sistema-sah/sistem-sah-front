@@ -2,9 +2,9 @@
   <!-- Título de la página -->
   <div class="row">
     <div class="col-12 text-center mb-4">
-      <h1 class="display-4">Nuestra Gastronomía</h1>
+      <h1 class="display-4">{{ 'GASTRONOMIA.TITULO_PRINCIPAL' | translate }}</h1>
       <p class="lead">
-        Descubre los sabores que hemos preparado especialmente para ti.
+        {{ 'GASTRONOMIA.INTRODUCCION' | translate }}
       </p>
     </div>
   </div>
@@ -14,19 +14,17 @@
     <div class="col-md-6 d-flex justify-content-center align-items-center">
       <img
         src="https://imagenesmf.blob.core.windows.net/imagenes/gastronomia.jpg"
-        alt="Gastronomía"
+        alt="{{ 'GASTRONOMIA.TITULO_PRINCIPAL' | translate }}"
         class="img-fluid rounded shadow"
       />
     </div>
     <div class="col-md-6 d-flex flex-column justify-content-center">
-      <h2 class="mb-3">Sabores Únicos</h2>
+      <h2 class="mb-3">{{ 'GASTRONOMIA.SABORES_UNICOS.TITULO' | translate }}</h2>
       <p>
-        Nuestra selección gastronómica está diseñada para deleitar tu paladar con
-        ingredientes frescos y recetas exquisitas. Desde platos tradicionales hasta
-        opciones internacionales, nuestra cocina es una experiencia culinaria inolvidable.
+        {{ 'GASTRONOMIA.SABORES_UNICOS.DESCRIPCION' | translate }}
       </p>
       <button mat-raised-button color="accent" class="mt-3">
-        Explora nuestras opciones
+        {{ 'GASTRONOMIA.SABORES_UNICOS.BOTON' | translate }}
       </button>
     </div>
   </div>
@@ -34,22 +32,29 @@
   <!-- Sección de alimentos destacados -->
   <div class="row text-center mb-4">
     <div class="col-12">
-      <h2 class="mb-4">Platos Destacados</h2>
+      <h2 class="mb-4">{{ 'GASTRONOMIA.DESTACADOS.TITULO' | translate }}</h2>
     </div>
     <div class="col-md-4" *ngFor="let alimento of featuredAlimentos">
       <mat-card class="alimento-card">
         <img
           mat-card-image
           [src]="alimento.codigoImagen"
-          alt="{{ alimento.nombreAlimento }}"
+          [alt]="'ALIMENTOS.' + alimento.nombreAlimento.toUpperCase() + '.NOMBRE' | translate"
         />
         <mat-card-header>
-          <mat-card-title>{{ alimento.nombreAlimento }}</mat-card-title>
-          <mat-card-subtitle>{{ alimento.tipoAlimentoDtoFk.nombreTipoAlimento }}</mat-card-subtitle>
+          <mat-card-title>
+            {{ 'ALIMENTOS.' + alimento.nombreAlimento.toUpperCase() + '.NOMBRE' | translate }}
+          </mat-card-title>
+          <mat-card-subtitle>
+            {{ 'TIPOS_ALIMENTO.' + alimento.tipoAlimentoDtoFk.nombreTipoAlimento | translate }}
+          </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-          <p>{{ alimento.detalleAlimento }}</p>
-          <p><strong>Tiempo de preparación:</strong> {{ alimento.tiempoPreparacionAlimento }}</p>
+          <p>{{ 'ALIMENTOS.' + alimento.nombreAlimento.toUpperCase() + '.DETALLE' | translate }}</p>
+          <p>
+            <strong>{{ 'GASTRONOMIA.DESTACADOS.TIEMPO_PREPARACION' | translate }}:</strong>
+            {{ alimento.tiempoPreparacionAlimento }}
+          </p>
         </mat-card-content>
       </mat-card>
     </div>
@@ -64,7 +69,7 @@
         (click)="loadAllAlimentos()"
         *ngIf="!showAllAlimentos"
       >
-        Ver todos los alimentos
+        {{ 'GASTRONOMIA.TODOS.BOTON' | translate }}
       </button>
     </div>
   </div>
@@ -72,22 +77,29 @@
   <!-- Sección de todos los alimentos -->
   <div class="row mt-4" *ngIf="showAllAlimentos">
     <div class="col-12 text-center">
-      <h2 class="mb-4">Todos Nuestros Platos</h2>
+      <h2 class="mb-4">{{ 'GASTRONOMIA.TODOS.TITULO' | translate }}</h2>
     </div>
     <div class="col-md-4 mb-4" *ngFor="let alimento of allAlimentos">
       <mat-card class="alimento-card">
         <img
           mat-card-image
           [src]="alimento.codigoImagen"
-          alt="{{ alimento.nombreAlimento }}"
+          [alt]="'ALIMENTOS.' + alimento.nombreAlimento.toUpperCase() + '.NOMBRE' | translate"
         />
         <mat-card-header>
-          <mat-card-title>{{ alimento.nombreAlimento }}</mat-card-title>
-          <mat-card-subtitle>{{ alimento.tipoAlimentoDtoFk.nombreTipoAlimento }}</mat-card-subtitle>
+          <mat-card-title>
+            {{ 'ALIMENTOS.' + alimento.nombreAlimento.toUpperCase() + '.NOMBRE' | translate }}
+          </mat-card-title>
+          <mat-card-subtitle>
+            {{ 'TIPOS_ALIMENTO.' + alimento.tipoAlimentoDtoFk.nombreTipoAlimento | translate }}
+          </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-          <p>{{ alimento.detalleAlimento }}</p>
-          <p><strong>Tiempo de preparación:</strong> {{ alimento.tiempoPreparacionAlimento }}</p>
+          <p>{{ 'ALIMENTOS.' + alimento.nombreAlimento.toUpperCase() + '.DETALLE' | translate }}</p>
+          <p>
+            <strong>{{ 'GASTRONOMIA.DESTACADOS.TIEMPO_PREPARACION' | translate }}:</strong>
+            {{ alimento.tiempoPreparacionAlimento }}
+          </p>
         </mat-card-content>
       </mat-card>
     </div>

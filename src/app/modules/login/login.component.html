@@ -3,21 +3,23 @@
     <div class="col-md-6 col-lg-4">
       <mat-card class="p-4 shadow-lg">
         <mat-card-header>
-          <mat-card-title class="text-center fs-4 fw-bold mb-3">Iniciar Sesión</mat-card-title>
+          <mat-card-title class="text-center fs-4 fw-bold mb-3">
+            {{ 'LOGIN.INICIO' | translate }}
+          </mat-card-title>
         </mat-card-header>
         <mat-card-content>
           <!-- Formulario de inicio de sesión -->
           <form [formGroup]="formLogin" (ngSubmit)="loginUser(formLogin)">
             <!-- Correo Electrónico -->
             <mat-form-field appearance="outline" class="w-100 mb-4">
-              <mat-label>Correo Electrónico</mat-label>
+              <mat-label>{{ 'LOGIN.CORREO' | translate }}</mat-label>
               <input
                 matInput
-                placeholder="Ingresa tu correo"
+                [placeholder]="'LOGIN.PLACEHOLDER.CORREO' | translate"
                 formControlName="correoUsuario"
                 type="email"
                 autocomplete="email"
-                aria-label="Correo Electrónico"
+                [attr.aria-label]="'LOGIN.CORREO' | translate"
               />
               <mat-error *ngFor="let errorMessage of errorHandlerService.getErrorMessages(formLogin, 'correoUsuario')">
                 {{ errorMessage }}
@@ -26,21 +28,21 @@
 
             <!-- Contraseña -->
             <mat-form-field appearance="outline" class="w-100 mb-4">
-              <mat-label>Contraseña</mat-label>
+              <mat-label>{{ 'LOGIN.CONTRASENA' | translate }}</mat-label>
               <input
                 matInput
-                placeholder="Ingresa tu contraseña"
+                [placeholder]="'LOGIN.PLACEHOLDER.CONTRASENA' | translate"
                 formControlName="contrasenaUsuario"
                 [type]="hide ? 'password' : 'text'"
                 autocomplete="current-password"
-                aria-label="Contraseña"
+                [attr.aria-label]="'LOGIN.CONTRASENA' | translate"
               />
               <button
                 mat-icon-button
                 matSuffix
                 type="button"
                 (click)="hide = !hide"
-                [attr.aria-label]="hide ? 'Mostrar contraseña' : 'Ocultar contraseña'"
+                [attr.aria-label]="hide ? ('LOGIN.MOSTRAR' | translate) : ('LOGIN.OCULTAR' | translate)"
                 [attr.aria-pressed]="!hide"
               >
                 <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
@@ -58,14 +60,16 @@
               class="w-100 mt-2 fw-semibold"
               [disabled]="formLogin.invalid"
             >
-              Iniciar Sesión
+              {{ 'LOGIN.BOTON.INICIAR' | translate }}
             </button>
           </form>
 
           <!-- Enlace a registro -->
           <div class="text-center mt-4">
-            <span>¿No tienes una cuenta?</span>
-            <a (click)="onRegisterUser()" class="text-primary text-decoration-underline">Regístrate aquí</a>
+            <span>{{ 'LOGIN.REGISTRO.PREGUNTA' | translate }}</span>
+            <a (click)="onRegisterUser()" class="text-primary text-decoration-underline">
+              {{ 'LOGIN.REGISTRO.ENLACE' | translate }}
+            </a>
           </div>
         </mat-card-content>
       </mat-card>

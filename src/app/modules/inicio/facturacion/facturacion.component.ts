@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { IFacturacion } from '@sharedModule/models/IFacturacion';
 import { JwtData } from '@sharedModule/models/JwtData';
 import { FacturacionService } from '@sharedModule/service/facturacion.service';
+import { TranslationService } from '@sharedModule/service/TranslationService.service';
 import { jwtDecode } from 'jwt-decode';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-facturacion',
@@ -15,6 +18,7 @@ export class FacturacionComponent implements OnInit {
    * Lista de facturaciones del usuario.
    */
   facturaciones: IFacturacion[] = [];
+  private languageSubscription!: Subscription;
 
   /**
    * Constructor que inyecta servicios necesarios.
@@ -23,13 +27,21 @@ export class FacturacionComponent implements OnInit {
    */
   constructor(
     private facturacionService: FacturacionService,
-    private spinner: NgxSpinnerService
-  ) {}
+    private spinner: NgxSpinnerService,
+                  private translation:TranslationService,
+                  private translate: TranslateService,
+                  private cdRef: ChangeDetectorRef // Para detectar cambios manualmente
+  ) {
+  }
 
   /**
    * Método que se ejecuta al inicializar el componente.
    */
   ngOnInit(): void {
+    this.languageSubscription = this.translation.language$.subscribe(() => {
+      this.updateTranslations(); // Actualizar textos dinámicamente
+    });
+    this.updateTranslations(); // Actualizar textos dinámicamente
     this.obtenerFacturaciones();
   }
 
@@ -68,5 +80,17 @@ export class FacturacionComponent implements OnInit {
     a.target = '_blank';
     a.download = `factura_${codigo}.pdf`; // Nombre dinámico del archivo.
     a.click();
+  }
+
+  private updateTranslations(): void {
+    this.translate.use(this.translation.getCurrentLanguage())
+    this.cdRef.detectChanges(); // Forzar la detección de cambios
+  }
+
+  ngOnDestroy(): void {
+    // Cancelar suscripciones al destruir el componente
+    if (this.languageSubscription) {
+      this.languageSubscription.unsubscribe();
+    }
   }
 }
