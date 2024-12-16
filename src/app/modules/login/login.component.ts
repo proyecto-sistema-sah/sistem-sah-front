@@ -97,16 +97,16 @@ export class LoginComponent implements OnInit {
       this.formLogin.markAllAsTouched();
       return;
     }
-
+  
     const { correoUsuario, contrasenaUsuario } = this.formLogin.value;
     const objectUsuario: ILogin = {
       email: correoUsuario,
       contrasena: contrasenaUsuario
     };
-
+  
     sessionStorage.removeItem('userToken');
     this.spinner.show();
-    let error = false
+    let error = false;
     this.authService
       .loginUser(objectUsuario)
       .pipe(
@@ -117,16 +117,22 @@ export class LoginComponent implements OnInit {
         }),
         catchError((err) => {
           console.error('Error:', err);
-          this.utilitiesService.showErrorMessage(err.message);
+          this.translate.get('login.error').subscribe((errorText) => {
+            this.utilitiesService.showErrorMessage(errorText.message);
+          });
           this.spinner.hide();
-          error = true
+          error = true;
           return of(null);
         }),
         finalize(() => {
-          if(error == false){
+          if (error === false) {
             this.spinner.hide().then(() => {
-              this.utilitiesService.showSucessMessage('Inicio de sesión exitoso', 'inicio-sesion', 'Aceptar').then(() => {
-                this.router.navigate(['/inicio']);
+              this.translate.get('login.success').subscribe((successText) => {
+                this.utilitiesService
+                  .showSucessMessage(successText.title, 'inicio-sesion', successText.button)
+                  .then(() => {
+                    this.router.navigate(['/inicio']);
+                  });
               });
             });
           }

@@ -254,5 +254,110 @@
     "PAGADO": "Pagado",
     "CANCELADO": "Cancelado",
     "PENDIENTE": "Pendiente"
+  },
+  "reservation": {
+    "error": {
+      "general": "Hubo un error al cambiar el estado.",
+      "notFound": "Reserva no encontrada:",
+      "newStateRequired": "El estado nuevo es requerido.",
+      "invalidState": "La reserva no tiene un estado asociado válido.",
+      "stateNotFound": "Estado de reserva no encontrado:",
+      "billingNotFound": "Facturación no encontrada para la reserva:"
+    },
+    "success": {
+      "stateUpdated": "Estado cambiado correctamente."
+    }
+  },
+  "user": {
+    "success": {
+      "listFetched": "Se consultaron correctamente el listado de usuarios",
+      "loginSuccessful": "Inicio de sesión exitoso"
+    },
+    "error": {
+      "invalidCredentials": "Credenciales inválidas",
+      "userNotFound": "Usuario no encontrado",
+      "authenticationError": "Error en las credenciales o en el proceso de autenticación"
+    }
+  },
+  "login": {
+    "success": {
+      "title": "Inicio de sesión exitoso",
+      "message": "Has iniciado sesión correctamente.",
+      "button": "Aceptar"
+    },
+    "error": {
+      "title": "Error de inicio de sesión",
+      "message": "Hubo un error al intentar iniciar sesión. Por favor, verifica tus credenciales."
+    }
+  },
+  "rooms": {
+    "error": {
+      "endDateBeforeStart": "La fecha de fin debe ser al menos un día posterior a la fecha de inicio.",
+      "createReservation": "Error al crear la reserva.",
+      "loadRooms": "Error al cargar cuartos."
+    },
+    "success": {
+      "createReservation": "Reserva creada exitosamente."
+    }
+  },
+  "purchases": {
+    "success": {
+      "stateChanged": "El estado de la reserva se actualizó correctamente.",
+      "reservationsLoaded": "Las reservas se cargaron correctamente."
+    },
+    "error": {
+      "stateChange": "Ocurrió un error al cambiar el estado.",
+      "reservationsLoad": "Ocurrió un error al cargar las reservas.",
+      "invalidUser": "Usuario no válido.",
+      "missingToken": "Token no encontrado. Inicia sesión nuevamente."
+    },
+    "table": {
+      "columns": {
+        "codigoReserva": "Código de Reserva",
+        "fechaInicioReserva": "Fecha de Inicio",
+        "fechaFinReserva": "Fecha de Fin",
+        "valorTotalReserva": "Valor Total",
+        "estadoReservaDtoFk": "Estado",
+        "acciones": "Acciones"
+      }
+    }
+  },
+  "languageSelector": {
+    "label": "Idioma:",
+    "options": {
+      "es": "Español",
+      "en": "Inglés"
+    }
+  },
+  "spinner": {
+    "loading": "Cargando..."
+  },
+  "register": {
+    "form": {
+      "name": "Nombres",
+      "lastName": "Apellidos",
+      "email": "Correo Electrónico",
+      "password": "Contraseña",
+      "repeatPassword": "Repetir Contraseña",
+      "userType": "Tipo de Usuario",
+      "uploadImage": "Subir Imagen"
+    },
+    "success": {
+      "created": "Usuario creado exitosamente",
+      "uploadSuccess": "Archivo subido correctamente"
+    },
+    "error": {
+      "uploadError": "Error al subir archivo.",
+      "loadDataError": "Error al cargar los datos iniciales.",
+      "userCreatedError": "Error al crear el usuario.",
+      "fileValidation": "Archivo inválido o demasiado grande.",
+      "passwordMismatch": "Las contraseñas no coinciden.",
+      "userTypeRequired": "Debe seleccionar un tipo de usuario.",
+      "imageRequired": "La imagen es obligatoria."
+    },
+    "messages": {
+      "successTitle": "Usuario Creado",
+      "acceptButton": "Aceptar"
+    }
   }
 }

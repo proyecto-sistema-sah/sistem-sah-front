@@ -1,8 +1,8 @@
 <div class="language-selector text-end p-2">
-  <label for="language-select" class="form-label me-2">Idioma:</label>
+  <label for="language-select" class="form-label me-2">{{ 'languageSelector.label' | translate }}</label>
   <select id="language-select" class="form-select d-inline w-auto" (change)="onChangeLanguage($event)">
-    <option value="es" [selected]="currentLang === 'es'">Español</option>
-    <option value="en" [selected]="currentLang === 'en'">English</option>
+    <option value="es" [selected]="currentLang === 'es'">{{ 'languageSelector.options.es' | translate }}</option>
+    <option value="en" [selected]="currentLang === 'en'">{{ 'languageSelector.options.en' | translate }}</option>
   </select>
 </div>
 
@@ -11,7 +11,8 @@
   size="medium" 
   color="#ffffff" 
   type="square-jelly-box" 
-  [fullScreen]="true" >
+  [fullScreen]="true">
+  <p>{{ 'spinner.loading' | translate }}</p>
 </ngx-spinner>
 
 <router-outlet></router-outlet>

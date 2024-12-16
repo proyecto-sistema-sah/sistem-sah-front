@@ -45,11 +45,10 @@ export class CuartosComponent {
     private spinner: NgxSpinnerService,
     private blobStorage: BlobStorageService,
     private reservaService: ReservaService,
-                      private translation:TranslationService,
-                      private translate: TranslateService,
-                      private cdRef: ChangeDetectorRef // Para detectar cambios manualmente
-  ) {
-  }
+    private translation: TranslationService,
+    private translate: TranslateService,
+    private cdRef: ChangeDetectorRef // Para detectar cambios manualmente
+  ) {}
 
   ngOnInit(): void {
     this.languageSubscription = this.translation.language$.subscribe(() => {
@@ -63,16 +62,15 @@ export class CuartosComponent {
     const token = sessionStorage.getItem('userToken');
     if (!token) return;
 
-    let valido = true
     // Convertimos las fechas a solo la parte de día para evitar problemas con horas
     const start = new Date(this.startDate!);
     const end = new Date(this.endDate!);
 
     // Comparamos los días (el end debe ser al menos un día mayor que start)
     if (start >= end) {
-      this.utilitiesService.showErrorMessage(
-        "La fecha de fin debe ser al menos un día posterior a la fecha de inicio."
-      );
+      this.translate.get('rooms.error.endDateBeforeStart').subscribe((message) => {
+        this.utilitiesService.showErrorMessage(message);
+      });
       return;
     }
 
@@ -87,32 +85,41 @@ export class CuartosComponent {
     };
 
     this.spinner.show();
-    this.reservaService.postCrearReserva(reservaData).pipe(
-      tap(() => {
-        this.utilitiesService.showSucessMessage('Reserva creada exitosamente.');
-        this.loadAvailableRooms(); // Refrescar la lista de cuartos disponibles
-      }),
-      catchError((error) => {
-        console.error('Error al crear la reserva:', error);
-        this.utilitiesService.showErrorMessage('Error al crear la reserva.');
-        return of(null);
-      }),
-      finalize(() => this.spinner.hide())
-    ).subscribe();
+    this.reservaService
+      .postCrearReserva(reservaData)
+      .pipe(
+        tap(() => {
+          this.translate.get('rooms.success.createReservation').subscribe((message) => {
+            this.utilitiesService.showSucessMessage(message);
+          });
+          this.loadAvailableRooms(); // Refrescar la lista de cuartos disponibles
+        }),
+        catchError((error) => {
+          console.error('Error al crear la reserva:', error);
+          this.translate.get('rooms.error.createReservation').subscribe((message) => {
+            this.utilitiesService.showErrorMessage(message);
+          });
+          return of(null);
+        }),
+        finalize(() => this.spinner.hide())
+      )
+      .subscribe();
   }
 
   loadAvailableRooms(): void {
     this.spinner.show();
     const subjectValue = this.subject.getValue();
     const idTipoCuarto = subjectValue ? Number(subjectValue) : 0;
-    
-      const request: CuartosDisponibles = {
-        idTipoCuarto,
-        fechaInicioReserva: this.startDate,
-        fechaFinReserva: this.endDate,
-      };
-  
-      this.cuartoService.getAllCuartos(request).pipe(
+
+    const request: CuartosDisponibles = {
+      idTipoCuarto,
+      fechaInicioReserva: this.startDate,
+      fechaFinReserva: this.endDate,
+    };
+
+    this.cuartoService
+      .getAllCuartos(request)
+      .pipe(
         tap((response: IResponse) => {
           this.cuartos = response.data as Cuarto[];
           this.cuartos.forEach((cuarto) => {
@@ -123,10 +130,14 @@ export class CuartosComponent {
         }),
         catchError((error) => {
           console.error('Error al cargar cuartos:', error);
+          this.translate.get('rooms.error.loadRooms').subscribe((message) => {
+            this.utilitiesService.showErrorMessage(message);
+          });
           return of(null);
         }),
         finalize(() => this.spinner.hide())
-      ).subscribe();
+      )
+      .subscribe();
   }
 
   setPriceRange(): void {
@@ -148,7 +159,7 @@ export class CuartosComponent {
   }
 
   private updateTranslations(): void {
-    this.translate.use(this.translation.getCurrentLanguage())
+    this.translate.use(this.translation.getCurrentLanguage());
     this.cdRef.detectChanges(); // Forzar la detección de cambios
   }
 

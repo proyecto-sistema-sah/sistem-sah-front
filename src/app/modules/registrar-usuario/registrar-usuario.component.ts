@@ -21,13 +21,13 @@ import { catchError, finalize, of, Subscription, tap } from 'rxjs';
   styleUrl: './registrar-usuario.component.css',
 })
 export class RegistrarUsuarioComponent implements OnInit {
-  selectedImageUrl: string | null = null; // Vista previa de la imagen seleccionada
-  files: string[] = []; // Lista de URLs de archivos en Blob Storage
-  allTiposUsuario: ITipoUsuario[] = []; // Lista de tipos de usuario
-  public formRegister!: FormGroup; // Formulario reactivo
-  public hide = true; // Mostrar/ocultar contraseña
-  imagePreview: string | ArrayBuffer | null = null; // Almacena la imagen para previsualización
-  private nombre: string = ''; // Nombre del archivo subido al Blob Storage
+  selectedImageUrl: string | null = null;
+  files: string[] = [];
+  allTiposUsuario: ITipoUsuario[] = [];
+  public formRegister!: FormGroup;
+  public hide = true;
+  imagePreview: string | ArrayBuffer | null = null;
+  private nombre: string = '';
   private languageSubscription!: Subscription;
 
   constructor(
@@ -39,27 +39,24 @@ export class RegistrarUsuarioComponent implements OnInit {
     private usuarioService: UsuarioService,
     private tipoUsuarioService: TipoUsuarioService,
     private router: Router,
-    private translation:TranslationService,
+    private translation: TranslationService,
     private translate: TranslateService,
-    private cdRef: ChangeDetectorRef // Para detectar cambios manualmente
-    ) {
-    }
+    private cdRef: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
-    this.buildFormRegister(); // Construir el formulario
+    this.buildFormRegister();
     this.languageSubscription = this.translation.language$.subscribe(() => {
-      this.updateTranslations(); // Actualizar textos dinámicamente
+      this.updateTranslations();
     });
-    this.updateTranslations(); // Actualizar textos dinámicamente
-    this.getDataDefault(); // Cargar datos iniciales
+    this.updateTranslations();
+    this.getDataDefault();
   }
 
-  // Redirige a la página de inicio de sesión
   onLogin(): void {
     this.router.navigate(['/login']);
   }
 
-  // Construye el formulario reactivo con validaciones
   buildFormRegister(): void {
     this.formRegister = this.formBuilder.group({
       nombres: new FormControl<string>('', [Validators.required]),
@@ -76,7 +73,6 @@ export class RegistrarUsuarioComponent implements OnInit {
     });
   }
 
-  // Obtiene los tipos de usuario del servicio
   getDataDefault(): void {
     this.spinner.show();
     this.tipoUsuarioService
@@ -85,19 +81,17 @@ export class RegistrarUsuarioComponent implements OnInit {
         tap((data: IResponse) => {
           this.allTiposUsuario = data.data;
         }),
-        catchError((err) => {
-          console.error('Error:', err);
-          this.utilitiesService.showErrorMessage(err.message);
+        catchError(() => {
+          this.translate.get('register.error.loadDataError').subscribe((message) => {
+            this.utilitiesService.showErrorMessage(message);
+          });
           return of(null);
         }),
-        finalize(() => {
-          this.spinner.hide();
-        })
+        finalize(() => this.spinner.hide())
       )
       .subscribe();
   }
 
-  // Maneja la selección de archivo para subir
   onFileSelected(event: Event): void {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
@@ -105,14 +99,12 @@ export class RegistrarUsuarioComponent implements OnInit {
       this.formRegister.get('imagen')?.markAsTouched();
       this.formRegister.get('imagen')?.updateValueAndValidity();
 
-      // Generar vista previa de la imagen
       const reader = new FileReader();
       reader.onload = () => (this.imagePreview = reader.result);
       reader.readAsDataURL(file);
     }
   }
 
-  // Método para crear el usuario
   createUsuario(): void {
     this.spinner.show();
     const file = this.formRegister.get('imagen')?.value;
@@ -120,7 +112,7 @@ export class RegistrarUsuarioComponent implements OnInit {
       this.blobStorageService
         .uploadFile(file)
         .then((response) => {
-          this.nombre = response; // Guardar nombre de archivo subido
+          this.nombre = response;
           const tipoUsuarioData = this.formRegister.get('tipoUsuario')?.value.split('-');
           const tipoUsuario: ITipoUsuario = {
             id: Number(tipoUsuarioData[0]),
@@ -138,61 +130,62 @@ export class RegistrarUsuarioComponent implements OnInit {
 
           this.registerUser(usuario);
         })
-        .catch((error) => {
-          console.error('Error al subir archivo:', error);
-          this.utilitiesService.showErrorMessage(error.message);
+        .catch(() => {
+          this.translate.get('register.error.uploadError').subscribe((message) => {
+            this.utilitiesService.showErrorMessage(message);
+          });
           this.spinner.hide();
-          return of(null);
         });
+    } else {
+      this.translate.get('register.error.imageRequired').subscribe((message) => {
+        this.utilitiesService.showErrorMessage(message);
+      });
+      this.spinner.hide();
     }
   }
 
-  // Registra al usuario en el backend
   private registerUser(usuario: Usuario): void {
-    let mensaje = '';
-    let valido = true;
+    if (
+      this.formRegister.get('contrasenaUsuario')?.value !==
+      this.formRegister.get('repeatContrasenaUsuario')?.value
+    ) {
+      this.translate.get('register.error.passwordMismatch').subscribe((message) => {
+        this.utilitiesService.showErrorMessage(message);
+      });
+      return;
+    }
+
     this.usuarioService
       .crearUsuario(usuario)
       .pipe(
         tap((data: IResponse) => {
-          mensaje = data.message;
+          this.translate.get('register.success.created').subscribe((message) => {
+            this.utilitiesService.showSucessMessage(
+              message,
+              this.translate.instant('register.messages.successTitle'),
+              this.translate.instant('register.messages.acceptButton')
+            );
+          });
         }),
-        catchError((err) => {
-          console.error('Error al crear usuario:', err);
-          this.utilitiesService.showErrorMessage(err.message);
-          valido = false
+        catchError(() => {
+          this.translate.get('register.error.userCreatedError').subscribe((message) => {
+            this.utilitiesService.showErrorMessage(message);
+          });
           return of(null);
         }),
-        finalize(() => {
-          this.spinner.hide().then(() => {
-            if(valido){
-              this.utilitiesService
-              .showSucessMessage(mensaje, 'Usuario Creado', 'Aceptar')
-              .then(() => {
-                this.router.navigate(['/login']);
-              });
-            }
-          });
-        })
+        finalize(() => this.spinner.hide())
       )
       .subscribe();
   }
 
-  // Lista los archivos en Blob Storage (opcional)
-  async listFiles(): Promise<void> {
-    this.files = await this.blobStorageService.listBlobs();
-  }
-
   private updateTranslations(): void {
-    this.translate.use(this.translation.getCurrentLanguage())
-    this.cdRef.detectChanges(); // Forzar la detección de cambios
+    this.translate.use(this.translation.getCurrentLanguage());
+    this.cdRef.detectChanges();
   }
 
   ngOnDestroy(): void {
-    // Cancelar suscripciones al destruir el componente
     if (this.languageSubscription) {
       this.languageSubscription.unsubscribe();
     }
   }
-
 }

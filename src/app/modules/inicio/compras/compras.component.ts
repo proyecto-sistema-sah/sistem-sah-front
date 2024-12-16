@@ -39,11 +39,10 @@ export class ComprasComponent implements OnInit {
     private reservaService: ReservaService,
     private spinner: NgxSpinnerService,
     private utilidades: UtilitiesService,
-                          private translation:TranslationService,
-                          private translate: TranslateService,
-                          private cdRef: ChangeDetectorRef // Para detectar cambios manualmente
-  ) {
-  }
+    private translation: TranslationService,
+    private translate: TranslateService,
+    private cdRef: ChangeDetectorRef // Para detectar cambios manualmente
+  ) {}
 
   /**
    * Método de inicialización del componente.
@@ -72,18 +71,25 @@ export class ComprasComponent implements OnInit {
 
     this.spinner.show();
 
-    this.reservaService.cambiarEstadoReserva(data).pipe(
-      tap((response: IResponse) => {
-        this.utilidades.showSucessMessage(response.message);
-        this.fetchReservas(); // Actualiza la tabla tras el cambio
-      }),
-      catchError((err) => {
-        console.error('Error al cambiar estado de la reserva:', err);
-        this.utilidades.showErrorMessage('Ocurrió un error al cambiar el estado.');
-        return of(null);
-      }),
-      finalize(() => this.spinner.hide())
-    ).subscribe();
+    this.reservaService
+      .cambiarEstadoReserva(data)
+      .pipe(
+        tap((response: IResponse) => {
+          this.translate.get('purchases.success.stateChanged').subscribe((message) => {
+            this.utilidades.showSucessMessage(message);
+          });
+          this.fetchReservas(); // Actualiza la tabla tras el cambio
+        }),
+        catchError((err) => {
+          console.error('Error al cambiar estado de la reserva:', err);
+          this.translate.get('purchases.error.stateChange').subscribe((message) => {
+            this.utilidades.showErrorMessage(message);
+          });
+          return of(null);
+        }),
+        finalize(() => this.spinner.hide())
+      )
+      .subscribe();
   }
 
   /**
@@ -93,39 +99,55 @@ export class ComprasComponent implements OnInit {
     const token = sessionStorage.getItem('userToken');
 
     if (!token) {
-      this.utilidades.showErrorMessage('Token no encontrado. Inicia sesión nuevamente.');
+      this.translate.get('purchases.error.missingToken').subscribe((message) => {
+        this.utilidades.showErrorMessage(message);
+      });
       return;
     }
 
     const { codigoUsuario }: JwtData = jwtDecode(token);
 
     if (!codigoUsuario) {
-      this.utilidades.showErrorMessage('Usuario no válido.');
+      this.translate.get('purchases.error.invalidUser').subscribe((message) => {
+        this.utilidades.showErrorMessage(message);
+      });
       return;
     }
 
     this.spinner.show();
 
-    this.reservaService.getReservasUsuario(codigoUsuario).pipe(
-      tap((response: IResponse) => {
-        this.dataSource.data = response.data as ReservaCuarto[];
-      }),
-      catchError((err) => {
-        console.error('Error al obtener reservas:', err);
-        this.utilidades.showErrorMessage('Ocurrió un error al cargar las reservas.');
-        return of(null);
-      }),
-      finalize(() => {
-        this.dataSource.paginator = this.paginator;
-        this.spinner.hide();
-      })
-    ).subscribe();
+    this.reservaService
+      .getReservasUsuario(codigoUsuario)
+      .pipe(
+        tap((response: IResponse) => {
+          this.dataSource.data = response.data as ReservaCuarto[];
+        }),
+        catchError((err) => {
+          console.error('Error al obtener reservas:', err);
+          this.translate.get('purchases.error.reservationsLoad').subscribe((message) => {
+            this.utilidades.showErrorMessage(message);
+          });
+          return of(null);
+        }),
+        finalize(() => {
+          this.dataSource.paginator = this.paginator;
+          this.spinner.hide();
+        })
+      )
+      .subscribe();
   }
+
+  /**
+   * Actualiza las traducciones dinámicamente cuando cambia el idioma.
+   */
   private updateTranslations(): void {
-    this.translate.use(this.translation.getCurrentLanguage())
+    this.translate.use(this.translation.getCurrentLanguage());
     this.cdRef.detectChanges(); // Forzar la detección de cambios
   }
 
+  /**
+   * Método que se ejecuta al destruir el componente para liberar recursos.
+   */
   ngOnDestroy(): void {
     // Cancelar suscripciones al destruir el componente
     if (this.languageSubscription) {

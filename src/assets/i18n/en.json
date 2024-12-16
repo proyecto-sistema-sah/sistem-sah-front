@@ -255,5 +255,110 @@
     "PAGADO": "Paid",
     "CANCELADO": "Cancelled",
     "PENDIENTE": "Pending"
+  },
+  "reservation": {
+    "error": {
+      "general": "There was an error changing the state.",
+      "notFound": "Reservation not found:",
+      "newStateRequired": "The new state is required.",
+      "invalidState": "The reservation does not have a valid associated state.",
+      "stateNotFound": "Reservation state not found:",
+      "billingNotFound": "Billing not found for reservation:"
+    },
+    "success": {
+      "stateUpdated": "State changed successfully."
+    }
+  },
+  "user": {
+    "success": {
+      "listFetched": "The list of users was successfully retrieved",
+      "loginSuccessful": "Login successful"
+    },
+    "error": {
+      "invalidCredentials": "Invalid credentials",
+      "userNotFound": "User not found",
+      "authenticationError": "Error in credentials or authentication process"
+    }
+  },
+  "login": {
+    "success": {
+      "title": "Login successful",
+      "message": "You have successfully logged in.",
+      "button": "Accept"
+    },
+    "error": {
+      "title": "Login error",
+      "message": "There was an error trying to log in. Please check your credentials."
+    }
+  },
+  "rooms": {
+    "error": {
+      "endDateBeforeStart": "The end date must be at least one day after the start date.",
+      "createReservation": "Error creating the reservation.",
+      "loadRooms": "Error loading rooms."
+    },
+    "success": {
+      "createReservation": "Reservation created successfully."
+    }
+  },
+  "purchases": {
+    "success": {
+      "stateChanged": "The reservation status was successfully updated.",
+      "reservationsLoaded": "Reservations were successfully loaded."
+    },
+    "error": {
+      "stateChange": "An error occurred while changing the status.",
+      "reservationsLoad": "An error occurred while loading reservations.",
+      "invalidUser": "Invalid user.",
+      "missingToken": "Token not found. Please log in again."
+    },
+    "table": {
+      "columns": {
+        "codigoReserva": "Reservation Code",
+        "fechaInicioReserva": "Start Date",
+        "fechaFinReserva": "End Date",
+        "valorTotalReserva": "Total Value",
+        "estadoReservaDtoFk": "Status",
+        "acciones": "Actions"
+      }
+    }
+  },
+  "languageSelector": {
+    "label": "Language:",
+    "options": {
+      "es": "Spanish",
+      "en": "English"
+    }
+  },
+  "spinner": {
+    "loading": "Loading..."
+  },
+  "register": {
+    "form": {
+      "name": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "password": "Password",
+      "repeatPassword": "Repeat Password",
+      "userType": "User Type",
+      "uploadImage": "Upload Image"
+    },
+    "success": {
+      "created": "User created successfully",
+      "uploadSuccess": "File uploaded successfully"
+    },
+    "error": {
+      "uploadError": "Error uploading file.",
+      "loadDataError": "Error loading initial data.",
+      "userCreatedError": "Error creating the user.",
+      "fileValidation": "Invalid or oversized file.",
+      "passwordMismatch": "Passwords do not match.",
+      "userTypeRequired": "A user type must be selected.",
+      "imageRequired": "Image is required."
+    },
+    "messages": {
+      "successTitle": "User Created",
+      "acceptButton": "Accept"
+    }
   }
 }
